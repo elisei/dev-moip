@@ -14,22 +14,19 @@
 <!---
 Forneça a versão exata do Magento (exemplo: 2.4.1), a versão do módulo e qualquer informação importante sobre o ambiente onde o bug pode ser reproduzido.
 -->
-1.
-2.
+1. Magento 2.4.1
+2. Moip 2.0.0
 
 ### Passos para reproduzir o problema (*)
 <!---
 Descreva como podemos reproduzir esse problema.
 -->
-1.
-2.
+1. Tentei fazer a ação x clicando em...
 
 ### Expected result (*)
 <!--- Informe qual resultado esperava obter. -->
 1. [Prints de tela, logs ou descrições]
-2.
 
 ### Actual result (*)
 <!--- Descreva o que ocorre -->
 1. [Prints de tela, logs ou descrições]
-2.
