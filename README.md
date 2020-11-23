@@ -1,6 +1,6 @@
 <img src="view/adminhtml/web/images/logo.svg" align="right" />
 
-# Moip para Magento 2 por Wirecard Brasil
+# Moip para Magento 2
 
 A solução completa para receber pagamentos e simplificar as finanças do seu negócio. Nossa solução tem tudo que você precisa para aceitar todos meios de pagamento.
 
