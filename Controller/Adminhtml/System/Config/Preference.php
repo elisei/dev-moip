@@ -116,7 +116,7 @@ class Preference extends \Magento\Backend\App\Action
         if (isset($webhookCapture['code'])) {
             if ($webhookCapture['code'] === 'API-009') {
                 $this->messageManager->addError(
-                    __('Seu módulo está autorizado, mas você atingiu o limite de preferências de url de notificação.')
+                    __('Your module is authorized, but you have reached the notification url preference limit.')
                 );
                 $this->cacheTypeList->cleanType('config');
                 $resultRedirect->setUrl($this->getUrlConfig());
@@ -131,7 +131,7 @@ class Preference extends \Magento\Backend\App\Action
         if (isset($webhookCancel['code'])) {
             if ($webhookCancel['code'] === 'API-009') {
                 $this->messageManager->addError(
-                    __('Seu módulo está autorizado, mas você atingiu o limite de preferências de url de notificação.')
+                    __('Your module is authorized, but you have reached the notification url preference limit.')
                 );
                 $this->cacheTypeList->cleanType('config');
                 $resultRedirect->setUrl($this->getUrlConfig());
@@ -147,7 +147,7 @@ class Preference extends \Magento\Backend\App\Action
         if (isset($webhookRefund['code'])) {
             if ($webhookRefund['code'] === 'API-009') {
                 $this->messageManager->addError(
-                    __('Seu módulo está autorizado, mas você atingiu o limite de preferências de url de notificação.')
+                    __('Your module is authorized, but you have reached the notification url preference limit.')
                 );
                 $this->cacheTypeList->cleanType('config');
                 $resultRedirect->setUrl($this->getUrlConfig());
@@ -157,7 +157,7 @@ class Preference extends \Magento\Backend\App\Action
         }
         $this->setUrlInfoRefund($webhookRefund);
 
-        $this->messageManager->addSuccess(__('Seu módulo está autorizado. =)'));
+        $this->messageManager->addSuccess(__('Your module is authorized. =)'));
         $this->cacheTypeList->cleanType('config');
         $resultRedirect->setUrl($this->getUrlConfig());
 

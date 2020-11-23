@@ -88,8 +88,8 @@ class FetchTransactionInfoClient implements ClientInterface
             $responseBody = $client->request()->getBody();
             $data = $this->json->unserialize($responseBody);
             if (isset($data['status'])) {
-                $cancelDetailsAdmin = __('Não registramos o pagamento.');
-                $cancelDetailsCus = __('Prazo limite para o pagamento foi excedido');
+                $cancelDetailsAdmin = __('We did not record the payment.');
+                $cancelDetailsCus = __('The payment deadline has been exceeded.');
                 if (isset($data['payments'])) {
                     foreach ($data['payments'] as $payment) {
                         if (isset($payment['cancellationDetails'])) {

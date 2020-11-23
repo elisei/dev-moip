@@ -103,7 +103,7 @@ class Oauth extends \Magento\Backend\App\Action
             }
         }
 
-        $this->messageManager->addError(__('Não foi possivel obter o code, tente novamente. =('));
+        $this->messageManager->addError(__('Unable to get the code, try again. =('));
         $resultRedirect->setUrl($this->getUrlConfig());
 
         return $resultRedirect;

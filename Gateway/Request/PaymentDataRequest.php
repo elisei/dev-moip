@@ -300,7 +300,7 @@ class PaymentDataRequest implements BuilderInterface
             $typeDocument = 'CNPJ';
         }
 
-        if ($taxDocument) {
+        if ($typeDocument) {
             // phpcs:ignore Generic.Files.LineLength
             $instruction[self::PAYMENT_INSTRUMENT][self::FUNDING_INSTRUMENT][self::TYPE_CREDIT_CARD][self::CREDIT_HOLDER][self::CREDIT_HOLDER_TAX_DOCUMENT] = [
                 self::CREDIT_HOLDER_TAX_DOCUMENT_TYPE   => $typeDocument,

@@ -68,7 +68,7 @@ class FetchTransactionInfoHandler implements HandlerInterface
             $payment->setAmountAuthorized($amount);
             $payment->setBaseAmountAuthorized($baseAmount);
             /** Pog dado ao erro 13466 */
-            $comment = __('Seu pagamento foi recebido com sucesso.');
+            $comment = __('Your payment has been successfully received.');
             $history = $order->addStatusHistoryComment($comment);
             $history->setIsVisibleOnFront(1);
             $history->setIsCustomerNotified(1);

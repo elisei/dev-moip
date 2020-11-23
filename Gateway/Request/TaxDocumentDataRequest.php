@@ -137,7 +137,7 @@ class TaxDocumentDataRequest implements BuilderInterface
             $typeDocument = 'CNPJ';
         }
 
-        if ($taxDocument) {
+        if ($typeDocument) {
             $result[CustomerDataRequest::CUSTOMER][self::TAX_DOCUMENT] = [
                 self::TAX_DOCUMENT_TYPE   => $typeDocument,
                 self::TAX_DOCUMENT_NUMBER => $taxDocument,

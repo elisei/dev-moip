@@ -83,10 +83,10 @@ class MassUpdate extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassA
         }
 
         if ($countUpdate) {
-            $this->messageManager->addSuccess(__('%1 pagamentos foram atualizados.', $countUpdate));
+            $this->messageManager->addSuccess(__('%1 payments have been updated.', $countUpdate));
         }
         if ($countNotUpdate) {
-            $this->messageManager->addWarning(__('%1 pagamentos ainda não tem atualização.', $countNotUpdate));
+            $this->messageManager->addWarning(__('%1 payments have not yet been updated.', $countNotUpdate));
         }
 
         $resultRedirect = $this->resultRedirectFactory->create();
