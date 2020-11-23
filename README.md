@@ -18,4 +18,4 @@ Visite nossa [Wiki][wiki] e veja como configurar e instalar nosso módulo.
 
 [Open Source License](LICENSE.txt)
 
-   [Wiki]: <https://github.com/moip/magento2/wiki>
+   [wiki]: <https://github.com/moip/magento2/wiki>
