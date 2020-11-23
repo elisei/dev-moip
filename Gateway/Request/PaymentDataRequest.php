@@ -245,9 +245,9 @@ class PaymentDataRequest implements BuilderInterface
                         self::BOLETO_INSTRUCTION_LINES_THIRD  => $this->configBoleto->getInstructionLineThird($storeId),
                     ],
                     self::BOLETO_LOGO_URI => null,
-                    ],
                 ],
-            ];
+            ],
+        ];
 
         return $instruction;
     }
