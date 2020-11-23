@@ -1,4 +1,4 @@
-# Moip para Magento 2
+# Moip para Magento 2 por Wirecard Brasil
 ![Moip](view/adminhtml/web/images/logo.svg)
 
 ## Estatística
