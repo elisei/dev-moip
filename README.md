@@ -23,8 +23,8 @@ Versões
 ## Recursos
 
 Receba pagamentos de forma transparente por:
-  - Cartão de Crédito
-  - Boleto Bancário
+*   Cartão de Crédito
+*   Boleto Bancário
 
 ## Instalação e Configuração
 
