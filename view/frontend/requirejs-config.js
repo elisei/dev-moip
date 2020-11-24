@@ -8,9 +8,6 @@ var config = {
         mixins: {
             "Magento_Payment/js/model/credit-card-validation/credit-card-number-validator/credit-card-type": {
                 "Moip_Magento2/js/mixins/credit-card-type-mixin": true
-            },
-            "Magento_Ui/js/lib/validation": {
-                "Moip_Magento2/js/mixins/validation-mixin": true
             }
         }
     }

@@ -145,7 +145,7 @@
                                       title: $t('Credit Card Number'),
                                       placeholder: $t('Credit Card Number'),
                                       'data-container': getCode() + '-cc-number',
-                                      'data-validate': JSON.stringify({'required-number':true, 'validate-card-type':getCcAvailableTypesValues(), 'validate-card-number':'#' + getCode() + '_cc_type', 'validate-cc-type':'#' + getCode() + '_cc_type'})},
+                                      'data-validate': JSON.stringify({'required-number':true, 'validate-card-type-moip':getCcAvailableTypesValues(), 'validate-card-number-moip':'#' + getCode() + '_cc_number', 'validate-cc-type-moip':'#' + getCode() + '_cc_type'})},
                                 enable: isActive($parents),
                                 value: creditCardNumber,
                                 valueUpdate: 'keyup' "/>
@@ -186,7 +186,7 @@
                           title: $t('CVV - Card Verification Number'),
                           placeholder: $t('CVV - Card Verification Number'),
                           'data-container': getCode() + '-cc-cvv',
-                          'data-validate': JSON.stringify({'required-number':true, 'validate-card-cvv':'#' + getCode() + '_cc_type'})},
+                          'data-validate': JSON.stringify({'required-number':true, 'validate-card-cvv-moip':'#' + getCode() + '_cc_type'})},
                           enable: isActive($parents),
                           value: creditCardVerificationNumber" />
               <div class="field-tooltip toggle">

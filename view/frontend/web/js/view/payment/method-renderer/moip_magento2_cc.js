@@ -8,6 +8,7 @@ define([
     "jquery",
     "Magento_Payment/js/view/payment/cc-form",
     "Magento_Payment/js/model/credit-card-validation/credit-card-data",
+    "Moip_Magento2/js/model/credit-card-validation/custom",
     "Moip_Magento2/js/view/payment/lib/jquery/jquery.mask",
     "Magento_Checkout/js/model/quote",
     "Magento_Catalog/js/price-utils",
@@ -16,7 +17,7 @@ define([
     "mage/calendar",
     "Moip_Magento2/js/view/payment/gateway/moip",
     "Magento_Payment/js/model/credit-card-validation/validator"
-], function (_, $, Component, creditCardData, mask, quote, priceUtils, $t, ko, calendar) {
+], function (_, $, Component, creditCardData, custom, mask, quote, priceUtils, $t, ko, calendar) {
     "use strict";
 
     return Component.extend({

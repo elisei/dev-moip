@@ -4,11 +4,11 @@
  * See COPYING.txt for license details.
  */
 define([
-    "jquery"
+    "jquery",
+    "mageUtils"
 ], function ($, utils) {
     "use strict";
-
-    var types = [
+     var typesMoip = [
         {
             title: "Visa",
             type: "VI",
@@ -55,39 +55,6 @@ define([
             }
         },
         {
-            title: "Discover",
-            type: "DI",
-            pattern: "^(6011(0|[2-4]|74|7[7-9]|8[6-9]|9)|6(4[4-9]|5))\\d*$",
-            gaps: [4, 8, 12],
-            lengths: [16, 17, 18, 19],
-            code: {
-                name: "CID",
-                size: 3
-            }
-        },
-        {
-            title: "JCB",
-            type: "JCB",
-            pattern: "^35(2[8-9]|[3-8])\\d*$",
-            gaps: [4, 8, 12],
-            lengths: [16, 17, 18, 19],
-            code: {
-                name: "CVV",
-                size: 3
-            }
-        },
-        {
-            title: "UnionPay",
-            type: "UN",
-            pattern: "^(622(1(2[6-9]|[3-9])|[3-8]|9([[0-1]|2[0-5]))|62[4-6]|628([2-8]))\\d*?$",
-            gaps: [4, 8, 12],
-            lengths: [16, 17, 18, 19],
-            code: {
-                name: "CVN",
-                size: 3
-            }
-        },
-        {
             title: "Hipercard",
             type: "HC",
             pattern: "^(606282|3841)[0-9]{5,}$",
@@ -128,46 +95,30 @@ define([
                 name: "CVC",
                 size: 3
             }
-        },
-        {
-            title: "Aura",
-            type: "AU",
-            pattern: "^5078\\d*$",
-            gaps: [4, 8, 12],
-            lengths: [19],
-            code: {
-                name: "CVC",
-                size: 3
-            }
         }
     ];
 
-    return {
-        /**
-         * @param {*} cardNumber
-         * @return {Array}
-         */
-        getCardTypes: function (cardNumber) {
+    var mixin = {
+         getCardTypes: function (cardNumber) {
             var i, value,
                 result = [];
-
             if (utils.isEmpty(cardNumber)) {
                 return result;
             }
-
             if (cardNumber === "") {
-                return $.extend(true, {}, types);
+                return $.extend(true, {}, typesMoip);
             }
-
-            for (i = 0; i < types.length; i++) {
-                value = types[i];
-
+            for (i = 0; i < typesMoip.length; i++) {
+                value = typesMoip[i];
                 if (new RegExp(value.pattern).test(cardNumber)) {
                     result.push($.extend(true, {}, value));
                 }
             }
-
             return result;
         }
+    };
+
+    return function (target) {
+        return mixin;
     };
 });

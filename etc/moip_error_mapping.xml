@@ -153,5 +153,6 @@
 		<message code="PAY-655" translate="true">A uri de redirecionamento informada é inválido.</message>
 		<message code="PAY-656" translate="true">Não foi possível desfazer o pagamento, pois ele já está capturado na adquirente.</message>
 		<message code="PAY-657" translate="true">Dados de pagamento MPOS inválidos.</message>
+		<message code="PAY-681" translate="true">Verifique o CPF/CNPJ, ele não foi informado.</message>
     </message_list>
 </mapping>
