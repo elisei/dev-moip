@@ -53,7 +53,7 @@ class StatusUpdateOrderCc
         $this->order = $order;
         $this->logger = $logger;
         $this->configCc = $configCc;
-        $this->collectionFactory = $orderColFactory;
+        $this->collectionFactory = $collectionFactory;
     }
 
     public function execute()
