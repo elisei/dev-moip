@@ -17,10 +17,10 @@ use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\App\Config\ConfigResource\ConfigInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Framework\HTTP\ZendClient;
 use Magento\Framework\HTTP\ZendClientFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\Encryption\EncryptorInterface;
 use Moip\Magento2\Gateway\Config\Config as ConfigBase;
 
 class Oauth extends \Magento\Backend\App\Action
