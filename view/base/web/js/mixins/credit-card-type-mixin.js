@@ -99,7 +99,7 @@ define([
     ];
 
     var mixin = {
-         getCardTypes: function (cardNumber) {
+         getCardTypes(cardNumber) {
             var i, value,
                 result = [];
             if (utils.isEmpty(cardNumber)) {

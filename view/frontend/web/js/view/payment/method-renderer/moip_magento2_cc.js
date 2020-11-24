@@ -8,7 +8,7 @@ define([
     "jquery",
     "Magento_Payment/js/view/payment/cc-form",
     "Magento_Payment/js/model/credit-card-validation/credit-card-data",
-    "Moip_Magento2/js/model/credit-card-validation/custom",
+    "Moip_Magento2/js/view/payment/gateway/custom-validation",
     "Moip_Magento2/js/view/payment/lib/jquery/jquery.mask",
     "Magento_Checkout/js/model/quote",
     "Magento_Catalog/js/price-utils",
