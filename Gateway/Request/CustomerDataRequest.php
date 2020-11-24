@@ -122,16 +122,16 @@ class CustomerDataRequest implements BuilderInterface
         $cust_ddd = '11';
         $cust_telephone = preg_replace('/[^0-9]/', '', $param_telefone);
         if (strlen($cust_telephone) == 11) {
-            $st = strlen($cust_telephone) - 9;
+            $str = strlen($cust_telephone) - 9;
             $indice = 9;
         } else {
-            $st = strlen($cust_telephone) - 8;
+            $str = strlen($cust_telephone) - 8;
             $indice = 8;
         }
 
-        if ($st > 0) {
+        if ($str > 0) {
             $cust_ddd = substr($cust_telephone, 0, 2);
-            $cust_telephone = substr($cust_telephone, $st, $indice);
+            $cust_telephone = substr($cust_telephone, $str, $indice);
         }
         if ($return_ddd === false) {
             $number = $cust_telephone;

@@ -247,8 +247,6 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      */
     public function getApiUrl($storeId = null)
     {
-        $pathPattern = 'payment/%s/%s';
-
         $environment = $this->getEnvironmentMode($storeId);
 
         return $environment === 'sandbox'

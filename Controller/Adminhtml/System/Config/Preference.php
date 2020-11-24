@@ -334,7 +334,6 @@ class Preference extends \Magento\Backend\App\Action
     private function setWebhooks($webhook)
     {
         $params = $this->getRequest()->getParams();
-        $documento = 'Content-Type: application/json; charset=utf-8';
         $url = ConfigBase::ENDPOINT_PREFERENCES_PRODUCTION;
         $environment = $this->configBase->getEnvironmentMode();
         if ($environment === ConfigBase::ENVIRONMENT_SANDBOX) {

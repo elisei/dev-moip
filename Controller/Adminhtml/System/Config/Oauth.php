@@ -17,7 +17,6 @@ use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\App\Config\ConfigResource\ConfigInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Framework\HTTP\ZendClient;
 use Magento\Framework\HTTP\ZendClientFactory;
 use Magento\Store\Model\StoreManagerInterface;
@@ -37,16 +36,8 @@ class Oauth extends \Magento\Backend\App\Action
 
     protected $configBase;
 
-    /**
-     * @var EncryptorInterface
-     */
-    private $encryptor;
-
     protected $storeManager;
 
-    /**
-     * @var ZendClientFactory
-     */
     private $httpClientFactory;
 
     public function __construct(
@@ -57,7 +48,6 @@ class Oauth extends \Magento\Backend\App\Action
         ConfigInterface $configInterface,
         Config $resourceConfig,
         ConfigBase $configBase,
-        EncryptorInterface $encryptor,
         StoreManagerInterface $storeManager,
         ZendClientFactory $httpClientFactory
     ) {
@@ -67,7 +57,6 @@ class Oauth extends \Magento\Backend\App\Action
         $this->configInterface = $configInterface;
         $this->resourceConfig = $resourceConfig;
         $this->configBase = $configBase;
-        $this->encryptor = $encryptor;
         $this->storeManager = $storeManager;
         $this->httpClientFactory = $httpClientFactory;
         parent::__construct($context);
@@ -202,7 +191,6 @@ class Oauth extends \Magento\Backend\App\Action
 
     private function getKeyPublic($oauth)
     {
-        $documento = 'Content-Type: application/json; charset=utf-8';
         $url = ConfigBase::URL_KEY_PRODUCTION;
         $environment = $this->configBase->getEnvironmentMode();
         if ($environment === ConfigBase::ENVIRONMENT_SANDBOX) {
