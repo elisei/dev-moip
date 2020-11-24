@@ -31,7 +31,7 @@ class StatusUpdateOrderBoleto
     /**
      * @var CollectionFactory
      */
-    protected $orderCollectionFactory;
+    protected $collectionFactory;
 
     /**
      * @var ConfigBoleto
@@ -42,23 +42,23 @@ class StatusUpdateOrderBoleto
      * @param order
      * @param logger
      * @param configBoleto
-     * @param orderCollectionFactory
+     * @param collectionFactory
      */
     public function __construct(
         Order $order,
         Logger $logger,
         ConfigBoleto $configBoleto,
-        CollectionFactory $orderCollectionFactory
+        CollectionFactory $collectionFactory
     ) {
         $this->order = $order;
         $this->logger = $logger;
         $this->configBoleto = $configBoleto;
-        $this->orderCollectionFactory = $orderCollectionFactory;
+        $this->collectionFactory = $collectionFactory;
     }
 
     public function execute()
     {
-        $orders = $this->orderCollectionFactory->create()
+        $orders = $this->collectionFactory->create()
         ->addFieldToFilter('status', [
             'in' => [
                 Order::STATE_PAYMENT_REVIEW,

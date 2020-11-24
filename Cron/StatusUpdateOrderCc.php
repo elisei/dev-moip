@@ -29,9 +29,9 @@ class StatusUpdateOrderCc
     protected $order;
 
     /**
-     * @var CollectionFactory
+     * @var collectionFactory
      */
-    protected $orderCollectionFactory;
+    protected $collectionFactory;
 
     /**
      * @var ConfigCc
@@ -42,23 +42,23 @@ class StatusUpdateOrderCc
      * @param order
      * @param logger
      * @param ConfigCc
-     * @param orderCollectionFactory
+     * @param collectionFactory
      */
     public function __construct(
         Order $order,
         Logger $logger,
         ConfigCc $configCc,
-        CollectionFactory $orderCollectionFactory
+        CollectionFactory $collectionFactory
     ) {
         $this->order = $order;
         $this->logger = $logger;
         $this->configCc = $configCc;
-        $this->orderCollectionFactory = $orderCollectionFactory;
+        $this->collectionFactory = $orderColFactory;
     }
 
     public function execute()
     {
-        $orders = $this->orderCollectionFactory->create()
+        $orders = $this->collectionFactory->create()
         ->addFieldToFilter('status', [
             'in' => [
                 Order::STATE_PAYMENT_REVIEW,
