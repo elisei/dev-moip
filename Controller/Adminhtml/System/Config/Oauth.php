@@ -20,6 +20,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\HTTP\ZendClient;
 use Magento\Framework\HTTP\ZendClientFactory;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\Encryption\EncryptorInterface;
 use Moip\Magento2\Gateway\Config\Config as ConfigBase;
 
 class Oauth extends \Magento\Backend\App\Action
@@ -38,6 +39,8 @@ class Oauth extends \Magento\Backend\App\Action
 
     protected $storeManager;
 
+    private $encryptor;
+
     private $httpClientFactory;
 
     public function __construct(
@@ -49,6 +52,7 @@ class Oauth extends \Magento\Backend\App\Action
         Config $resourceConfig,
         ConfigBase $configBase,
         StoreManagerInterface $storeManager,
+        EncryptorInterface $encryptor,
         ZendClientFactory $httpClientFactory
     ) {
         $this->cacheTypeList = $cacheTypeList;
@@ -58,6 +62,7 @@ class Oauth extends \Magento\Backend\App\Action
         $this->resourceConfig = $resourceConfig;
         $this->configBase = $configBase;
         $this->storeManager = $storeManager;
+        $this->encryptor = $encryptor;
         $this->httpClientFactory = $httpClientFactory;
         parent::__construct($context);
     }
