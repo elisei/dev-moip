@@ -1,18 +1,41 @@
 {
   "name": "moip/magento2",
-  "description": "Moip - Exclusive to Brazil",
-  "require": {
-    "php": ">=7.0"
-  },
+  "description": "MOIP Magento2 Extension for Magento 2 By Moip",
   "type": "magento2-module",
   "license": [
-    "OSL-3.0",
-    "AFL-3.0"
-  ],
+        "OSL-3.0",
+        "AFL-3.0"
+   ],
+  "require": {
+    "php": ">=7.0",
+    "magento/framework": "102.0.*||103.0.*",
+    "magento/module-customer": "102.0.*||103.0.*",
+    "magento/module-config": "101.0.*||101.1.*",
+    "magento/module-sales": "102.0.*||103.0.*",
+    "magento/module-directory": "100.3.*||100.4.*",
+    "magento/module-payment": "100.2.*||100.3.*",
+    "magento/module-checkout": "100.3.*||100.4.*",
+    "magento/module-backend": "101.0.*||102.0.*",
+    "magento/module-vault": "101.2.*||101.1.*",
+    "magento/module-catalog": "104.0.*||103.0.*",
+    "magento/module-quote": "102.0.*||101.1.*",
+    "magento/module-theme": "101.1.*||100.1.*",
+    "magento/module-ui": "101.0.*||101.1.*",
+    "ext-json": "*"
+  },
   "autoload": {
-    "files": [ "registration.php" ],
+    "files": [
+      "registration.php"
+    ],
     "psr-4": {
       "Moip\\Magento2\\": ""
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://repo.magento.com/"
+    }
+  ],
+  "minimum-stability": "dev"
 }
