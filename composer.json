@@ -13,7 +13,7 @@
     "magento/module-config": "101.2.*",
     "magento/module-sales": "103.0.*",
     "magento/module-directory": "100.4.*",
-    "magento/module-payment": "100.3.*",
+    "magento/module-payment": "100.4.*",
     "magento/module-checkout": "100.4.*",
     "magento/module-backend": "102.0.*",
     "magento/module-vault": "101.1.*",
