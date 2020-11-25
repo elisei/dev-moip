@@ -8,19 +8,7 @@
    ],
   "require": {
     "php": ">=7.2",
-    "magento/framework": "102.0.*||103.0.*",
-    "magento/module-customer": "102.0.*||103.0.*",
-    "magento/module-config": "101.0.*||101.1.*",
-    "magento/module-sales": "102.0.*||103.0.*",
-    "magento/module-directory": "100.3.*||100.4.*",
-    "magento/module-payment": "100.2.*||100.3.*",
-    "magento/module-checkout": "100.3.*||100.4.*",
-    "magento/module-backend": "101.0.*||102.0.*",
-    "magento/module-vault": "101.2.*||101.1.*",
-    "magento/module-catalog": "104.0.*||103.0.*",
-    "magento/module-quote": "102.0.*||101.1.*",
-    "magento/module-theme": "101.1.*||100.1.*",
-    "magento/module-ui": "101.0.*||101.1.*",
+    "magento/product-community-edition": ">=2.4.0",
     "ext-json": "*"
   },
   "autoload": {
