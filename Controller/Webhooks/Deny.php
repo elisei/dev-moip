@@ -149,12 +149,11 @@ class Deny extends Action implements CsrfAwareActionInterface
                 }
 
                 return $resultPage->setJsonData(
-                        // phpcs:ignore Generic.Files.LineLength
-                        json_encode([
-                            'success'   => 1,
-                            'status'    => $order->getStatus(),
-                            'state'     => $order->getState(),
-                        ])
+                    json_encode([
+                        'success'   => 1,
+                        'status'    => $order->getStatus(),
+                        'state'     => $order->getState(),
+                    ])
                 );
             }
 
