@@ -112,13 +112,13 @@ class Accept extends Action implements CsrfAwareActionInterface
      */
     public function execute()
     {
-
         if (!$this->getRequest()->isPost()) {
             $resultPage = $this->resultJsonFactory->create();
             $resultPage->setHttpResponseCode(404);
+
             return $resultPage;
         }
-        
+
         $resultPage = $this->resultJsonFactory->create();
         $response = $this->getRequest()->getContent();
         $originalNotification = json_decode($response, true);
@@ -149,23 +149,25 @@ class Accept extends Action implements CsrfAwareActionInterface
                 }
 
                 return $resultPage->setJsonData(
-                        json_encode([
-                            'success'   => 1,
-                            'status' => $order->getStatus(),
-                            'state'   => $order->getState(),
-                        ])
-                    );
+                    json_encode([
+                        'success'   => 1,
+                        'status'    => $order->getStatus(),
+                        'state'     => $order->getState(),
+                    ])
+                );
             }
 
             $resultPage->setHttpResponseCode(400);
+
             return $resultPage->setJsonData(
-                        json_encode([
-                            'error'   => 400,
-                            'message' => 'The transaction could not be refund',
-                        ])
-                    );
+                json_encode([
+                    'error'   => 400,
+                    'message' => 'The transaction could not be refund',
+                ])
+            );
         }
         $resultPage->setHttpResponseCode(401);
+
         return $resultPage;
     }
 }
