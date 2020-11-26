@@ -112,10 +112,10 @@ class Refund extends Action implements CsrfAwareActionInterface
      */
     public function execute()
     {
-
         if (!$this->getRequest()->isPost()) {
             $resultPage = $this->resultJsonFactory->create();
             $resultPage->setHttpResponseCode(404);
+
             return $resultPage;
         }
 
@@ -157,21 +157,23 @@ class Refund extends Action implements CsrfAwareActionInterface
                         // phpcs:ignore Generic.Files.LineLength
                         json_encode([
                             'success'   => 1,
-                            'status' => $order->getStatus(),
-                            'state'   => $order->getState(),
+                            'status'    => $order->getStatus(),
+                            'state'     => $order->getState(),
                         ])
-                    );
+                );
             }
 
             $resultPage->setHttpResponseCode(201);
+
             return $resultPage->setJsonData(
-                        json_encode([
-                            'error'   => 400,
-                            'message' => 'The transaction could not be refund',
-                        ])
-                    );
+                json_encode([
+                    'error'   => 400,
+                    'message' => 'The transaction could not be refund',
+                ])
+            );
         }
         $resultPage->setHttpResponseCode(401);
+
         return $resultPage;
     }
 }
