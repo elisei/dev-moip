@@ -12,7 +12,7 @@ env:
     - MODULE_NAME=Magento2
     - DB=magento_db
     - MAGENTO_DIR=magento
-    - TRAVIS_SCRIPTS_REPOSITORY=https://github.com/akai-z/magento2-travis-ci-scripts.git
+    - TRAVIS_SCRIPTS_REPOSITORY=https://github.com/elisei/magento2-travis-ci-scripts.git
     - TRAVIS_SCRIPTS_DIR=travis_scripts
     - TRAVIS_SCRIPTS_PATH=${TRAVIS_SCRIPTS_DIR}/scripts
     - MODULE_DEPLOY_PATH=app/code/${VENDOR_NAME}/${MODULE_NAME}
