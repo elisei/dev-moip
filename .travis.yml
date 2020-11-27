@@ -1,40 +1,19 @@
-sudo: required
-dist: trusty
 language: php
+
 php:
-  - 7.3
-  - 7.4
-services:
-  - mysql
-env:
-  global:
-    - VENDOR_NAME=Moip
-    - MODULE_NAME=Magento2
-    - DB=magento_db
-    - MAGENTO_DIR=magento
-    - TRAVIS_SCRIPTS_REPOSITORY=https://github.com/elisei/magento2-travis-ci-scripts.git
-    - TRAVIS_SCRIPTS_DIR=travis_scripts
-    - TRAVIS_SCRIPTS_PATH=${TRAVIS_SCRIPTS_DIR}/scripts
-    - MODULE_DEPLOY_PATH=app/code/${VENDOR_NAME}/${MODULE_NAME}
-    - COMPOSER_BIN_DIR=~/bin
-  matrix:
-    - MAGENTO_VERSION=2.4.0
-    - MAGENTO_VERSION=2.4.1
-matrix:
-  exclude:
-  - php: 7.4
-    env: MAGENTO_VERSION=2.4.0
-  - php: 7.4
-    env: MAGENTO_VERSION=2.4.1
+  - '7.3'
+  - '7.4'
+
+install: [
+  "mkdir -p app/etc var",
+  "echo \"{\\\"http-basic\\\":{\\\"repo.magento.com\\\":{\\\"username\\\":\\\"${MAGENTO_USERNAME}\\\",\\\"password\\\":\\\"${MAGENTO_PASSWORD}\\\"}}}\" > auth.json",
+  "composer install --prefer-dist"
+]
+
 cache:
-  apt: true
-  directories: ${HOME}/.composer/cache
-before_install:
-  - cd ../..
-  - git clone $TRAVIS_SCRIPTS_REPOSITORY $TRAVIS_SCRIPTS_DIR
-  - ./${TRAVIS_SCRIPTS_PATH}/before_install.sh
-install:
-  - ./${TRAVIS_SCRIPTS_PATH}/install.sh
+  directories:
+    - $HOME/.composer/cache
+
 script:
-  - ./${TRAVIS_SCRIPTS_PATH}/script.sh
-  - ./${MAGENTO_DIR}/${MODULE_DEPLOY_PATH}/dev/travis_ci/script.sh
+  - vendor/bin/phpcs --config-set installed_paths vendor/magento/magento-coding-standard/
+  - vendor/bin/phpcs --standard=vendor/magento/magento-coding-standard/Magento2 --ignore=vendor,pub ./
