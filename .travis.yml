@@ -11,7 +11,8 @@ install: [
 ]
 
 before_install:
-  - php /home/travis/.phpenv/versions/7.3/bin/composer.phar self-update -1
+  - composer self-update -1
+  - composer --version
 
 cache:
   directories:
