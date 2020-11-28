@@ -34,6 +34,5 @@ Visite nossa [Wiki][wiki] e veja como configurar e instalar nosso módulo.
 
 [Open Source License](LICENSE.txt)
 
-Tes
 
    [wiki]: <https://github.com/moip/magento2/wiki>
