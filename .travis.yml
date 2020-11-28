@@ -13,8 +13,7 @@ install: [
 before_install:
   - composer self-update --1
   - composer --version
-after_install:
-  - composer require --dev magento/magento-coding-standard
+  - composer create-project magento/magento-coding-standard --stability=dev vendor/magento/magento-coding-standard
 
 cache:
   directories:
