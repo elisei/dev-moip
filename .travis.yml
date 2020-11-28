@@ -5,15 +5,14 @@ php:
   - '7.4'
 
 install: [
-  "mkdir -p app/etc var",
   "echo \"{\\\"http-basic\\\":{\\\"repo.magento.com\\\":{\\\"username\\\":\\\"${MAGENTO_USERNAME}\\\",\\\"password\\\":\\\"${MAGENTO_PASSWORD}\\\"}}}\" > auth.json",
-  "composer install --prefer-dist"
+  "composer install"
+  "composer require magento/magento-coding-standard --stability=dev vendor/magento/magento-coding-standard"
 ]
 
 before_install:
   - composer self-update --1
   - composer --version
-  - composer create-project magento/magento-coding-standard --stability=dev vendor/magento/magento-coding-standard
 
 cache:
   directories:
@@ -21,4 +20,4 @@ cache:
 
 script:
   - vendor/bin/phpcs --config-set installed_paths vendor/magento/magento-coding-standard/
-  - vendor/bin/phpcs --standard=vendor/magento/magento-coding-standard/Magento2 --ignore=vendor,pub ./
+  - vendor/bin/phpcs --standard=vendor/magento/magento-coding-standard/Magento2 --ignore=vendor ./
