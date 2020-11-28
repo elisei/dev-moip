@@ -11,8 +11,10 @@ install: [
 ]
 
 before_install:
-  - sudo composer self-update --1
+  - composer self-update --1
   - composer --version
+after_install:
+  - composer require --dev magento/magento-coding-standard
 
 cache:
   directories:
