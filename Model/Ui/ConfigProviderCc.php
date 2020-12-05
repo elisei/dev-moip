@@ -25,6 +25,11 @@ class ConfigProviderCc implements ConfigProviderInterface
      */
     const CODE = 'moip_magento2_cc';
 
+    /*
+     * @var VAULT CODE
+     */
+    const VAULT_CODE = 'moip_magento2_cc_vault';
+
     /**
      * @var Config Base
      */
@@ -99,6 +104,7 @@ class ConfigProviderCc implements ConfigProviderInterface
                     'info_interest'        => $this->config->getInfoInterest($storeId),
                     'min_installment'      => $this->config->getMinInstallment($storeId),
                     'max_installment'      => $this->config->getMaxInstallment($storeId),
+                    'ccVaultCode'          => self::VAULT_CODE
                 ],
             ],
         ];

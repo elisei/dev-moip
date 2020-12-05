@@ -190,10 +190,6 @@ class CustomerDataRequest implements BuilderInterface
         }
 
         //* sobrescreve na order o name caso seja capturado no formulario de pagamento
-        if ($payment->getAdditionalInformation('cc_holder_fullname')) {
-            $name = $payment->getAdditionalInformation('cc_holder_fullname');
-        }
-
         if ($payment->getAdditionalInformation('boleto_payer_fullname')) {
             $name = $payment->getAdditionalInformation('boleto_payer_fullname');
         }
