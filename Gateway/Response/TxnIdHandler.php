@@ -66,7 +66,6 @@ class TxnIdHandler implements HandlerInterface
      */
     const PAYER_HOLDER_PHONE = 'cc_holder_phone';
 
-
     /**
      * Handles.
      *

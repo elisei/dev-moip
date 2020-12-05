@@ -104,7 +104,7 @@ class ConfigProviderCc implements ConfigProviderInterface
                     'info_interest'        => $this->config->getInfoInterest($storeId),
                     'min_installment'      => $this->config->getMinInstallment($storeId),
                     'max_installment'      => $this->config->getMaxInstallment($storeId),
-                    'ccVaultCode'          => self::VAULT_CODE
+                    'ccVaultCode'          => self::VAULT_CODE,
                 ],
             ],
         ];
