@@ -128,7 +128,7 @@ class ConfigProviderCc implements ConfigProviderInterface
                 $asset = $this->ccConfig->createAsset('Moip_Magento2::images/cc/'.strtolower($label).'.svg');
                 $placeholder = $this->assetSource->findSource($asset);
                 if ($placeholder) {
-                    list($width, $height) = getimagesize($asset->getSourceFile());
+                    list($width, $height) = getimagesizefromstring($asset->getSourceFile());
                     $this->icons[$label] = [
                         'url'    => $asset->getUrl(),
                         'width'  => $width,
