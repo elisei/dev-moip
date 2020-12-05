@@ -8,16 +8,16 @@
 
 namespace Moip\Magento2\Gateway\Response;
 
-
 use Magento\Framework\ObjectManagerInterface;
-use Magento\Vault\Api\Data\PaymentTokenInterface;
-use Magento\Vault\Api\Data\PaymentTokenInterfaceFactory;
-use Magento\Vault\Api\Data\PaymentTokenFactoryInterface;
-use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
+use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Sales\Api\Data\OrderPaymentExtensionInterface;
 use Magento\Sales\Api\Data\OrderPaymentExtensionInterfaceFactory;
+use Magento\Vault\Api\Data\PaymentTokenFactoryInterface;
+use Magento\Vault\Api\Data\PaymentTokenInterface;
+use Magento\Vault\Api\Data\PaymentTokenInterfaceFactory;
+
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -50,7 +50,8 @@ class VaultDetailsHandler implements HandlerInterface
 
     /**
      * AccountPaymentTokenFactory constructor.
-     * @param ObjectManagerInterface $objectManager
+     *
+     * @param ObjectManagerInterface       $objectManager
      * @param PaymentTokenFactoryInterface $paymentTokenFactory
      */
     public function __construct(
@@ -82,7 +83,7 @@ class VaultDetailsHandler implements HandlerInterface
 
         $payment = $paymentDO->getPayment();
 
-        if ($payment->getMethod() === 'moip_magento2_cc') {    
+        if ($payment->getMethod() === 'moip_magento2_cc') {
             $paymentToken = $this->getVaultPaymentToken($response, $payment);
             if (null !== $paymentToken) {
                 $extensionAttributes = $this->getExtensionAttributes($payment);
@@ -92,14 +93,14 @@ class VaultDetailsHandler implements HandlerInterface
     }
 
     /**
-     * Get vault payment token entity
+     * Get vault payment token entity.
      *
      * @param $response
+     *
      * @return PaymentTokenInterface|null
      */
     protected function getVaultPaymentToken($response, $payment)
     {
-        
         $paymentAddtional = $response['fundingInstrument'];
         $ccExpYear = $payment->getAdditionalInformation('cc_exp_year');
         $ccExpMonth = $payment->getAdditionalInformation('cc_exp_month');
@@ -131,9 +132,10 @@ class VaultDetailsHandler implements HandlerInterface
     }
 
     /**
-     * Get payment extension attributes
+     * Get payment extension attributes.
      *
      * @param InfoInterface $payment
+     *
      * @return OrderPaymentExtensionInterface
      */
     private function getExtensionAttributes(InfoInterface $payment): OrderPaymentExtensionInterface
@@ -143,6 +145,7 @@ class VaultDetailsHandler implements HandlerInterface
             $extensionAttributes = $this->paymentExtensionFactory->create();
             $payment->setExtensionAttributes($extensionAttributes);
         }
+
         return $extensionAttributes;
     }
 

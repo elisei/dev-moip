@@ -3,19 +3,21 @@
  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Moip\Magento2\Block\Customer;
 
-use Moip\Magento2\Model\Ui\ConfigProviderBase;
 use Magento\Vault\Api\Data\PaymentTokenInterface;
 use Magento\Vault\Block\AbstractCardRenderer;
+use Moip\Magento2\Model\Ui\ConfigProviderBase;
 
 class CardRenderer extends AbstractCardRenderer
 {
     /**
-     * Can render specified token
+     * Can render specified token.
      *
      * @param PaymentTokenInterface $token
-     * @return boolean
+     *
+     * @return bool
      */
     public function canRender(PaymentTokenInterface $token): bool
     {
@@ -35,7 +37,7 @@ class CardRenderer extends AbstractCardRenderer
      */
     public function getExpDate(): string
     {
-        return $this->getTokenDetails()['cc_exp_month'] .'/' . $this->getTokenDetails()['cc_exp_year'];
+        return $this->getTokenDetails()['cc_exp_month'].'/'.$this->getTokenDetails()['cc_exp_year'];
     }
 
     /**

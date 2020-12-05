@@ -264,6 +264,7 @@ class PaymentDataRequest implements BuilderInterface
 
         return $instruction;
     }
+
     /**
      * Data for CC Vault.
      *
@@ -274,7 +275,7 @@ class PaymentDataRequest implements BuilderInterface
      * @return array
      */
     public function getDataPaymetCCVault($payment, $storeId)
-    {   
+    {
         $extensionAttributes = $payment->getExtensionAttributes();
         $paymentToken = $extensionAttributes->getVaultPaymentToken();
 
@@ -284,8 +285,8 @@ class PaymentDataRequest implements BuilderInterface
             self::FUNDING_INSTRUMENT   => [
                 self::METHOD           => 'CREDIT_CARD',
                 self::TYPE_CREDIT_CARD => [
-                    self::CREDIT_CARD_ID   =>  $paymentToken->getGatewayToken(),
-                    self::CREDIT_CARD_CVV  =>  $payment->getAdditionalInformation('cc_cvv')
+                    self::CREDIT_CARD_ID   => $paymentToken->getGatewayToken(),
+                    self::CREDIT_CARD_CVV  => $payment->getAdditionalInformation('cc_cvv'),
                 ],
             ],
         ];
@@ -294,6 +295,7 @@ class PaymentDataRequest implements BuilderInterface
 
         return $instruction;
     }
+
     /**
      * Data for CC.
      *
@@ -320,7 +322,7 @@ class PaymentDataRequest implements BuilderInterface
                 self::METHOD           => 'CREDIT_CARD',
                 self::TYPE_CREDIT_CARD => [
                     self::CREDIT_CARD_HASH   => $payment->getAdditionalInformation('cc_hash'),
-                    self::CREDIT_CARD_STORE  => (bool)$payment->getAdditionalInformation('is_active_payment_token_enabler'),
+                    self::CREDIT_CARD_STORE  => (bool) $payment->getAdditionalInformation('is_active_payment_token_enabler'),
                     self::CREDIT_HOLDER      => [
                         self::CREDIT_HOLDER_FULLNAME   => $payment->getAdditionalInformation('cc_holder_fullname'),
                         self::CREDIT_HOLDER_BIRTH_DATA => date('Y-m-d', strtotime($dob)),

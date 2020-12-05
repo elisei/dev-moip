@@ -8,15 +8,14 @@
 
 namespace Moip\Magento2\Model\Ui\Vault;
 
-use Moip\Magento2\Gateway\Config\ConfigCcVault;
-use Moip\Magento2\Gateway\Config\ConfigCc;
-use Magento\Framework\View\Element\Template;
-use Magento\Framework\View\Asset\Source;
-use Magento\Payment\Model\CcConfig;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Framework\Exception\InputException;
-use Magento\Quote\Api\Data\CartInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\View\Asset\Source;
+use Magento\Payment\Model\CcConfig;
+use Magento\Quote\Api\Data\CartInterface;
+use Moip\Magento2\Gateway\Config\ConfigCc;
+use Moip\Magento2\Gateway\Config\ConfigCcVault;
 
 class ConfigProvider implements ConfigProviderInterface
 {
@@ -71,22 +70,24 @@ class ConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * Retrieve assoc array of checkout configuration
+     * Retrieve assoc array of checkout configuration.
      *
-     * @return array
      * @throws InputException
      * @throws NoSuchEntityException
+     *
+     * @return array
      */
     public function getConfig()
     {
         $storeId = $this->cart->getStoreId();
+
         return [
             'payment' => [
                 self::CODE => [
                     'useCvv' => $this->configCcVault->useCvv($storeId),
-                    'icons'  => $this->getIcons()
-                ]
-            ]
+                    'icons'  => $this->getIcons(),
+                ],
+            ],
         ];
     }
 

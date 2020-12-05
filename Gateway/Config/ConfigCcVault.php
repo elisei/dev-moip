@@ -9,9 +9,9 @@
 namespace Moip\Magento2\Gateway\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Store\Model\ScopeInterface;
 
 class ConfigCcVault extends \Magento\Payment\Gateway\Config\Config
 {
@@ -33,7 +33,7 @@ class ConfigCcVault extends \Magento\Payment\Gateway\Config\Config
      * Config constructor.
      *
      * @param ScopeConfigInterface $scopeConfig
-     * @param null $methodCode
+     * @param null                 $methodCode
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -44,9 +44,10 @@ class ConfigCcVault extends \Magento\Payment\Gateway\Config\Config
     }
 
     /**
-     * @return bool
      * @throws InputException
      * @throws NoSuchEntityException
+     *
+     * @return bool
      */
     public function useCvv($storeId = null)
     {

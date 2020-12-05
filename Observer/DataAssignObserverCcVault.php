@@ -27,7 +27,7 @@ class DataAssignObserverCcVault extends AbstractDataAssignObserver
      * @const Method Name
      */
     const METHOD_NAME_TYPE = 'Cartão de Crédito - Cofre';
-  
+
     /**
      * @const Credit Card - CVV
      */
@@ -43,7 +43,7 @@ class DataAssignObserverCcVault extends AbstractDataAssignObserver
      */
     protected $addInformationList = [
         self::PAYER_CC_CVV,
-        self::PAYER_CC_INSTALLMENTS
+        self::PAYER_CC_INSTALLMENTS,
     ];
 
     /**
