@@ -125,6 +125,7 @@ class VaultDetailsHandler implements HandlerInterface
         $paymentToken->setGatewayToken($ccId);
         $paymentToken->setExpiresAt(strtotime('+1 year'));
         $paymentToken->setType(PaymentTokenFactoryInterface::TOKEN_TYPE_CREDIT_CARD);
+        // phpcs:ignore Generic.Files.LineLength
         $details = ['cc_last4' => $ccLast4, 'cc_exp_year' => $ccExpYear, 'cc_exp_month' => $ccExpMonth, 'cc_type' => $ccType];
         $paymentToken->setTokenDetails(json_encode($details));
 

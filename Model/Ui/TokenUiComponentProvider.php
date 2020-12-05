@@ -42,6 +42,7 @@ class TokenUiComponentProvider implements TokenUiComponentProviderInterface
         $component = $this->componentFactory->create(
             [
                 'config' => [
+                    // phpcs:ignore Generic.Files.LineLength
                     'code'                                                   => ConfigProviderBase::METHOD_CODE_CC_VAULT,
                     TokenUiComponentProviderInterface::COMPONENT_DETAILS     => $jsonDetails,
                     TokenUiComponentProviderInterface::COMPONENT_PUBLIC_HASH => $paymentToken->getPublicHash(),

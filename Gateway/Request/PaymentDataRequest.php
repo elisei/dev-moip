@@ -315,6 +315,7 @@ class PaymentDataRequest implements BuilderInterface
         if (!$dob) {
             $dob = $orderAdapter->getCustomerDob() ? $orderAdapter->getCustomerDob() : '1985-10-10';
         }
+        $stored = $payment->getAdditionalInformation('is_active_payment_token_enabler');
         $instruction[self::PAYMENT_INSTRUMENT] = [
             self::INSTALLMENT_COUNT    => $payment->getAdditionalInformation('cc_installments'),
             self::STATEMENT_DESCRIPTOR => substr($this->config->getStatementDescriptor($storeId), 0, 13),
@@ -322,7 +323,7 @@ class PaymentDataRequest implements BuilderInterface
                 self::METHOD           => 'CREDIT_CARD',
                 self::TYPE_CREDIT_CARD => [
                     self::CREDIT_CARD_HASH   => $payment->getAdditionalInformation('cc_hash'),
-                    self::CREDIT_CARD_STORE  => (bool) $payment->getAdditionalInformation('is_active_payment_token_enabler'),
+                    self::CREDIT_CARD_STORE  => (bool) $stored,
                     self::CREDIT_HOLDER      => [
                         self::CREDIT_HOLDER_FULLNAME   => $payment->getAdditionalInformation('cc_holder_fullname'),
                         self::CREDIT_HOLDER_BIRTH_DATA => date('Y-m-d', strtotime($dob)),
