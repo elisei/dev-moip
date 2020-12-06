@@ -170,7 +170,7 @@ class ConfigProviderCc implements ConfigProviderInterface
         $asset = $this->ccConfig->createAsset('Moip_Magento2::images/cc/credit-card.svg');
         $placeholder = $this->assetSource->findSource($asset);
         if ($placeholder) {
-            list($width, $height) = getimagesize($asset->getSourceFile());
+            list($width, $height) = getimagesizefromstring($asset->getSourceFile());
             $logo = [
                 'url'    => $asset->getUrl(),
                 'width'  => $width,
