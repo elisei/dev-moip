@@ -280,18 +280,18 @@ class PaymentDataRequest implements BuilderInterface
         $paymentToken = $extensionAttributes->getVaultPaymentToken();
 
         $instruction[self::PAYMENT_INSTRUMENT] = [
-            self::INSTALLMENT_COUNT    => $payment->getAdditionalInformation('cc_installments'),
+            self::INSTALLMENT_COUNT    => $payment->getAdditionalInformation('cc_installments') ?: 1,
             self::STATEMENT_DESCRIPTOR => substr($this->config->getStatementDescriptor($storeId), 0, 13),
             self::FUNDING_INSTRUMENT   => [
                 self::METHOD           => 'CREDIT_CARD',
                 self::TYPE_CREDIT_CARD => [
                     self::CREDIT_CARD_ID   => $paymentToken->getGatewayToken(),
-                    self::CREDIT_CARD_CVV  => $payment->getAdditionalInformation('cc_cvv'),
+                    self::CREDIT_CARD_CVV  => $payment->getAdditionalInformation('cc_cid'),
                 ],
             ],
         ];
 
-        $payment->unsAdditionalInformation('cc_cvv');
+        $payment->unsAdditionalInformation('cc_cid');
 
         return $instruction;
     }
@@ -317,7 +317,7 @@ class PaymentDataRequest implements BuilderInterface
         }
         $stored = $payment->getAdditionalInformation('is_active_payment_token_enabler');
         $instruction[self::PAYMENT_INSTRUMENT] = [
-            self::INSTALLMENT_COUNT    => $payment->getAdditionalInformation('cc_installments'),
+            self::INSTALLMENT_COUNT    => $payment->getAdditionalInformation('cc_installments') ?: 1,
             self::STATEMENT_DESCRIPTOR => substr($this->config->getStatementDescriptor($storeId), 0, 13),
             self::FUNDING_INSTRUMENT   => [
                 self::METHOD           => 'CREDIT_CARD',
