@@ -9,9 +9,6 @@
     <event name="payment_method_assign_data_moip_magento2_cc">
         <observer name="moip_magento2_cc_data_assign" instance="Moip\Magento2\Observer\DataAssignObserverCc" />
     </event>
-    <event name="payment_method_assign_data_moip_magento2_cc_vault">
-        <observer name="moip_magento2_cc_vault_data_assign" instance="Moip\Magento2\Observer\DataAssignObserverCcVault" />
-    </event>
     <event name="payment_method_assign_data_moip_magento2_boleto">
         <observer name="moip_magento2_boleto_data_assign" instance="Moip\Magento2\Observer\DataAssignBoletoObserver" />
     </event>

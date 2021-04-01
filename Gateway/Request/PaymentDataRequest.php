@@ -69,7 +69,7 @@ class PaymentDataRequest implements BuilderInterface
     /**
      * Credit card CVV - Card CVV data.
      */
-    const CREDIT_CARD_CVV = 'cvv';
+    const CREDIT_CARD_CVV = 'cvc';
 
     /**
      * Credit card holder - Block name.

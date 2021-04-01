@@ -84,6 +84,11 @@ class DataAssignObserverCc extends AbstractDataAssignObserver
     const PAYER_CC_SAVE = 'is_active_payment_token_enabler';
 
     /**
+     * @const Credit Card - CVV
+     */
+    const PAYER_CC_CID = 'cc_cid';
+
+    /**
      * @var array
      */
     protected $addInformationList = [
@@ -98,6 +103,7 @@ class DataAssignObserverCc extends AbstractDataAssignObserver
         self::PAYER_HOLDER_BIRTH_DATE,
         self::PAYER_HOLDER_PHONE,
         self::PAYER_CC_SAVE,
+        self::PAYER_CC_CID
     ];
 
     /**

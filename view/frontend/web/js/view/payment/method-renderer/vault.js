@@ -17,8 +17,6 @@ define([
     return VaultComponent.extend({
         defaults: {
             active: false,
-            creditCardInstallment: "",
-            creditCardCvv: "",
             template: "Moip_Magento2/payment/vault",
             vaultForm: "Moip_Magento2/payment/vault-form"
         },
@@ -30,7 +28,7 @@ define([
         },
 
         initObservable() {
-            this._super().observe(["active","creditCardInstallment","creditCardCvv"]);
+            this._super().observe(["active"]);
             return this;
         },
 
@@ -39,11 +37,10 @@ define([
         },
 
         getData() {
-           
             var data = {
                 'method': this.getCode(),
                 "additional_data": {
-                    "cc_cvv": $("#"+ this.getId() + '_cc_cvv').val(),
+                    "cc_cid": $("#"+ this.getId() + '_cc_cid').val(),
                     "cc_installments": $("#"+ this.getId() + '_installments').val(),
                     'public_hash': this.getToken()
                 }

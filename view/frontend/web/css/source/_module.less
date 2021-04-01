@@ -88,7 +88,9 @@
       .field {
         display: inline-block;
         width: 100%;
-
+        &.choice {
+          margin-bottom: @indent__base;
+        }
         &.wirecard-input-group {
           position: relative;
           margin-bottom: @indent__base;
@@ -220,7 +222,11 @@
     }
 
   }
-  
+  #payment_form_moip_magento2_cc_vault {
+    .field-to-pay {
+      margin: 0 0;
+    }
+  }
   .checkout-onepage-success {
     .field .control._with-tooltip {
       input {
