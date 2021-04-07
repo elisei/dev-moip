@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Moip\Magento2\Plugin;
 
-use Magento\Vault\Api\PaymentTokenManagementInterface;
-use Magento\Vault\Api\Data\PaymentTokenInterface;
 use Magento\Sales\Api\Data\OrderPaymentInterface;
+use Magento\Vault\Api\Data\PaymentTokenInterface;
+use Magento\Vault\Api\PaymentTokenManagementInterface;
 
 /**
  * Class PaymentTokenManagementInterface - Fixed Issue #84.
@@ -24,13 +24,13 @@ class PaymentToken
         callable $proceed,
         PaymentTokenInterface $token,
         OrderPaymentInterface $payment
-    ) : bool {
+    ): bool {
         $order = $payment->getOrder();
 
         if ($order->getCustomerIsGuest()) {
             return $proceed($token, $payment);
         }
-        
+
         $existingToken = $paymentTokenManagement->getByGatewayToken(
             $token->getGatewayToken(),
             $payment->getMethodInstance()->getCode(),
@@ -42,6 +42,7 @@ class PaymentToken
         }
 
         $existingToken->addData($token->getData());
+
         return $proceed($existingToken, $payment);
     }
 }
