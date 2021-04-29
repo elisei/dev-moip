@@ -42,7 +42,7 @@ class SellerDataRequest implements BuilderInterface
 
     /**
      * Secondary Type Receiver.
-     * required
+     * required.
      */
     const RECEIVERS_TYPE_SECONDARY = 'SECONDARY';
 
@@ -125,7 +125,7 @@ class SellerDataRequest implements BuilderInterface
 
         $storeId = $order->getStoreId();
         $useSplit = $this->config->getSplitValue('use_split', $storeId);
-        if(!$useSplit) {
+        if (!$useSplit) {
             return $result;
         }
 
@@ -137,7 +137,7 @@ class SellerDataRequest implements BuilderInterface
         $commissionUseShipping = $this->config->getSplitValue('secondary_percent_include_shipping', $storeId);
         $commissionUseInterest = $this->config->getSplitValue('secondary_percent_include_interest', $storeId);
 
-        if($commissionUseInterest) {
+        if ($commissionUseInterest) {
             if ($payment->getMethod() === 'moip_magento2_cc' || $payment->getMethod() === 'moip_magento2_cc_vault') {
                 if ($installment = $payment->getAdditionalInformation('cc_installments')) {
                     if ($installment > 1) {
@@ -147,7 +147,7 @@ class SellerDataRequest implements BuilderInterface
                         if ($typeInstallment === 'simple') {
                             $installmentInterest = $this->getInterestSimple($total, $interest[$installment], $installment);
                         }
-                        if($installmentInterest) {
+                        if ($installmentInterest) {
                             $total_parcelado = $installmentInterest * $installment;
                             $additionalPrice = $total_parcelado - $total;
                             $additionalPrice = number_format((float) $additionalPrice, 2, '.', '');
@@ -161,25 +161,25 @@ class SellerDataRequest implements BuilderInterface
                 }
             }
         }
-        
-        if(!$commissionUseShipping) {
+
+        if (!$commissionUseShipping) {
             $total = $total - $orderAdapter->getShippingAmount();
         }
-       
-        if($commissionUseShipping) {
+
+        if ($commissionUseShipping) {
             $total = $total + $addition;
         }
 
-        $commission = $total * ($secondaryPercent/100);
+        $commission = $total * ($secondaryPercent / 100);
 
         $result[self::RECEIVERS][] = [
             self::RECEIVERS_MOIP_ACCOUNT => [
-                self::RECEIVERS_MOIP_ACCOUNT_ID => $secondaryMPA
+                self::RECEIVERS_MOIP_ACCOUNT_ID => $secondaryMPA,
             ],
-            self::RECEIVERS_TYPE => self::RECEIVERS_TYPE_SECONDARY,
+            self::RECEIVERS_TYPE   => self::RECEIVERS_TYPE_SECONDARY,
             self::RECEIVERS_AMOUNT => [
-                self::RECEIVERS_TYPE_FIXED => $this->config->formatPrice(round($commission, 2))
-            ]
+                self::RECEIVERS_TYPE_FIXED => $this->config->formatPrice(round($commission, 2)),
+            ],
         ];
 
         return $result;
