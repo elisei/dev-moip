@@ -143,9 +143,17 @@ class SellerDataRequest implements BuilderInterface
                     if ($installment > 1) {
                         $typeInstallment = $this->configCc->getTypeInstallment($storeId);
                         $interest = $this->configCc->getInfoInterest($storeId);
-                        $installmentInterest = $this->getInterestCompound($total, $interest[$installment], $installment);
+                        $installmentInterest = $this->getInterestCompound(
+                            $total,
+                            $interest[$installment],
+                            $installment
+                        );
                         if ($typeInstallment === 'simple') {
-                            $installmentInterest = $this->getInterestSimple($total, $interest[$installment], $installment);
+                            $installmentInterest = $this->getInterestSimple(
+                                $total,
+                                $interest[$installment],
+                                $installment
+                            );
                         }
                         if ($installmentInterest) {
                             $total_parcelado = $installmentInterest * $installment;
