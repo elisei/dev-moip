@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Moip\Magento2\Controller\Webhooks;
 
 use Exception;
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\CsrfAwareActionInterface;
@@ -18,16 +19,15 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Payment\Model\Method\Logger;
+use Magento\Sales\Api\CreditmemoRepositoryInterface;
 use Magento\Sales\Api\Data\OrderInterfaceFactory;
+use Magento\Sales\Model\Order\Creditmemo;
 use Magento\Sales\Model\Order\CreditmemoFactory;
 use Magento\Sales\Model\Order\Invoice;
 use Magento\Sales\Model\Service\CreditmemoService;
 use Magento\Store\Model\StoreManagerInterface;
 use Moip\Magento2\Gateway\Config\Config;
-use Magento\Sales\Api\Data\CreditmemoInterface;
-use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Sales\Api\CreditmemoRepositoryInterface;
-use Magento\Sales\Model\Order\Creditmemo;
+
 /**
  * Class Refund - Receives communication for refunded payment.
  */
@@ -80,7 +80,7 @@ class Refund extends Action implements CsrfAwareActionInterface
      * @var storeManager
      */
     protected $storeManager;
-    
+
     /**
      * @var Json
      */
@@ -90,12 +90,11 @@ class Refund extends Action implements CsrfAwareActionInterface
      * @var CreditmemoRepositoryInterface
      */
     private $creditmemoRepository;
- 
+
     /**
      * @var SearchCriteriaBuilder
      */
     protected $searchCriteriaBuilder;
- 
 
     /**
      * @param Context               $context
@@ -143,6 +142,7 @@ class Refund extends Action implements CsrfAwareActionInterface
         if (!$this->getRequest()->isPost()) {
             $resultPage = $this->resultJsonFactory->create();
             $resultPage->setHttpResponseCode(404);
+
             return $resultPage;
         }
 
@@ -155,16 +155,14 @@ class Refund extends Action implements CsrfAwareActionInterface
 
         if ($storeCaptureToken === $authorization) {
             $resource = $originalNotification['resource'];
-            
+
             $transactionId = $originalNotification['id'];
 
             $creditmemos = $this->getCreditMemoByTransactionId($transactionId);
-            if(count($creditmemos)){
-            
+            if (count($creditmemos)) {
                 foreach ($creditmemos as $creditmemo) {
-
                     $creditmemo->setState(Creditmemo::STATE_REFUNDED);
-                    
+
                     try {
                         $creditmemo->save();
                     } catch (\Exception $exc) {
@@ -176,21 +174,22 @@ class Refund extends Action implements CsrfAwareActionInterface
                             ])
                         );
                     }
-                    
+
                     continue;
                 }
             } else {
                 $extOrderId = $resource['order']['id'];
                 $extRefundId = $resource['id'];
-                
+
                 $creditmemo = $this->createNewCreditMemo($extOrderId);
-                if($creditmemo) {
-                    
+                if ($creditmemo) {
+
                     //Creditmemo::STATE_OPEN
                     //Creditmemo::STATE_REFUNDED
                     //Creditmemo::STATE_CANCELED
 
                     $creditmemo->setState(Creditmemo::STATE_OPEN);
+
                     try {
                         $this->creditmemoService->refund($creditmemo);
                     } catch (\Exception $exc) {
@@ -215,7 +214,7 @@ class Refund extends Action implements CsrfAwareActionInterface
             return $resultPage->setJsonData(
                 $this->json->serialize([
                     'success'   => 1,
-                    'state'     => $creditmemo->getState()
+                    'state'     => $creditmemo->getState(),
                 ])
             );
         }
@@ -229,19 +228,22 @@ class Refund extends Action implements CsrfAwareActionInterface
      * Get Creditmemo.
      *
      * @params $extOrderId
+     *
      * @return creditmemo
      */
     public function getCreditMemoByTransactionId(string $transactionId)
     {
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter('transaction_id', $transactionId)->create();
+
         try {
             $creditmemos = $this->creditmemoRepository->getList($searchCriteria);
             $creditmemoRecords = $creditmemos->getItems();
-        } catch (Exception $exception)  {
+        } catch (Exception $exception) {
             $this->logger->critical($exception->getMessage());
             $creditmemoRecords = null;
         }
+
         return $creditmemoRecords;
     }
 
@@ -250,17 +252,19 @@ class Refund extends Action implements CsrfAwareActionInterface
      *
      * @params $extOrderId
      * @parmas $extRefundId
+     *
      * @return creditmemo
      */
-    public function createNewCreditMemo(string $extOrderId, string $extRefundId){
+    public function createNewCreditMemo(string $extOrderId, string $extRefundId)
+    {
         $order = $this->orderFactory->create()->load($extOrderId, 'ext_order_id');
-        $creditmemo = null; 
+        $creditmemo = null;
         $this->logger->debug([
             'webhook'            => 'refund',
             'ext_order_id'       => $extOrderId,
-            'increment_order_id' => $order->getIncrementId()
+            'increment_order_id' => $order->getIncrementId(),
         ]);
-        
+
         $payment = $order->getPayment();
         $invoices = $order->getInvoiceCollection();
 
@@ -273,6 +277,7 @@ class Refund extends Action implements CsrfAwareActionInterface
             $payment->setTransactionId($extRefundId);
             $creditmemo->setInvoice($invoiceobj);
         }
+
         return $creditmemo;
     }
 }

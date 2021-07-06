@@ -88,15 +88,15 @@ class RefundClient implements ClientInterface
             $client->setMethod(ZendClient::POST);
 
             $responseBody = $client->request()->getBody();
-           
+
             $data = $this->json->unserialize($responseBody);
-           
+
             if (isset($data['id'])) {
                 $response = array_merge(
                     [
                         'RESULT_CODE'   => 1,
                         'STATUS'        => $data['status'],
-                        'REFUND_ID'     => $data['id']
+                        'REFUND_ID'     => $data['id'],
                     ],
                     $data
                 );
@@ -115,7 +115,6 @@ class RefundClient implements ClientInterface
                     'response' => $responseBody,
                 ]
             );
-            
         } catch (InvalidArgumentException $e) {
             $this->logger->debug(
                 [

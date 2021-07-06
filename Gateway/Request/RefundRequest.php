@@ -81,12 +81,12 @@ class RefundRequest implements BuilderInterface
         $creditmemo = $payment->getCreditMemo();
 
         $total = $creditmemo->getGrandTotal();
-        
+
         $result = [
             self::MOIP_ORDER_ID => $order->getExtOrderId(),
-            'send' => [
+            'send'              => [
                 'amount' => $this->configPayment->formatPrice($total),
-            ]
+            ],
         ];
 
         if ($order->getPayment()->getMethodInstance()->getCode() === ConfigProviderBoleto::CODE) {
@@ -97,7 +97,7 @@ class RefundRequest implements BuilderInterface
             $accountCheckNumber = $creditmemo->getData(self::ACCOUNT_CHECK_NUMBER);
             $holderFullname = $creditmemo->getData(self::HOLDER_FULLNAME);
             $holderDocumment = $creditmemo->getData(self::HOLDER_DOCUMENT_NUMBER);
-            
+
             $typeDocument = 'CPF';
             $taxDocument = preg_replace('/[^0-9]/', '', $holderDocumment);
             if (strlen($taxDocument) === 14) {
@@ -106,26 +106,26 @@ class RefundRequest implements BuilderInterface
 
             $resultBoleto = [
                 'send' => [
-                    'amount' => $this->configPayment->formatPrice($total),
+                    'amount'              => $this->configPayment->formatPrice($total),
                     'refundingInstrument' => [
-                        'method' =>  "BANK_ACCOUNT",
+                        'method'      => 'BANK_ACCOUNT',
                         'bankAccount' => [
-                            "type" => "CHECKING",
-                            'bankNumber' => $bankNumber,
-                            'agencyNumber'  => $agencyNumber,
-                            'agencyCheckNumber' => $agencyCheckNumber,
-                            'accountNumber' => $accountNumber,
+                            'type'               => 'CHECKING',
+                            'bankNumber'         => $bankNumber,
+                            'agencyNumber'       => $agencyNumber,
+                            'agencyCheckNumber'  => $agencyCheckNumber,
+                            'accountNumber'      => $accountNumber,
                             'accountCheckNumber' => $accountCheckNumber,
-                            'holder' => [
-                                'fullname' => $holderFullname,
+                            'holder'             => [
+                                'fullname'    => $holderFullname,
                                 'taxDocument' => [
-                                    'type' => $typeDocument,
-                                    'number' => $taxDocument
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
+                                    'type'   => $typeDocument,
+                                    'number' => $taxDocument,
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ];
 
             $result = array_merge($result, $resultBoleto);
