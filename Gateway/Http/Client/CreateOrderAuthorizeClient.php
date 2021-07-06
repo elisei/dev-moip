@@ -112,9 +112,9 @@ class CreateOrderAuthorizeClient implements ClientInterface
             $this->logger->debug(
                 [
                     'exception' => $e->getMessage(),
-                    'url'      => $url.'orders',
-                    'request'  => $this->json->serialize($transferObject->getBody()),
-                    'response' => $responseBody,
+                    'url'       => $url.'orders',
+                    'request'   => $this->json->serialize($transferObject->getBody()),
+                    'response'  => $responseBody,
                 ]
             );
             // phpcs:ignore Magento2.Exceptions.DirectThrow

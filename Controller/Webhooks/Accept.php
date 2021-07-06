@@ -141,7 +141,7 @@ class Accept extends Action implements CsrfAwareActionInterface
                 'webhook'            => 'accept',
                 'ext_order_id'       => $data['id'],
                 'increment_order_id' => $order->getIncrementId(),
-                'webhook_data'       => $response
+                'webhook_data'       => $response,
             ]);
             $payment = $order->getPayment();
             if (!$order->getInvoiceCollection()->count()) {
