@@ -13,7 +13,7 @@ use Exception;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\App\CsrfAwareActionInterface;
+use Magento\Framework\App\CsrfAwareActionInterface as Crsf;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
@@ -31,7 +31,7 @@ use Moip\Magento2\Gateway\Config\Config;
 /**
  * Class Refund - Receives communication for refunded payment.
  */
-class Refund extends Action implements CsrfAwareActionInterface
+class Refund extends Action implements Crsf
 {
     /**
      * createCsrfValidationException.
@@ -92,9 +92,9 @@ class Refund extends Action implements CsrfAwareActionInterface
     private $creditmemoRepository;
 
     /**
-     * @var SearchCriteriaBuilder
+     * @var schCriteriaBuilder
      */
-    protected $searchCriteriaBuilder;
+    protected $schCriteriaBuilder;
 
     /**
      * @param Context               $context
@@ -116,7 +116,7 @@ class Refund extends Action implements CsrfAwareActionInterface
         JsonFactory $resultJsonFactory,
         Json $json,
         CreditmemoRepositoryInterface $creditmemoRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $schCriteriaBuilder
     ) {
         parent::__construct($context);
         $this->config = $config;
@@ -129,7 +129,7 @@ class Refund extends Action implements CsrfAwareActionInterface
         $this->resultJsonFactory = $resultJsonFactory;
         $this->json = $json;
         $this->creditmemoRepository = $creditmemoRepository;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->schCriteriaBuilder = $schCriteriaBuilder;
     }
 
     /**
@@ -181,7 +181,7 @@ class Refund extends Action implements CsrfAwareActionInterface
                 $extOrderId = $resource['order']['id'];
                 $extRefundId = $resource['id'];
 
-                $creditmemo = $this->createNewCreditMemo($extOrderId);
+                $creditmemo = $this->createNewCreditMemo($extOrderId, $extRefundId);
                 if ($creditmemo) {
 
                     //Creditmemo::STATE_OPEN
@@ -233,7 +233,7 @@ class Refund extends Action implements CsrfAwareActionInterface
      */
     public function getCreditMemoByTransactionId(string $transactionId)
     {
-        $searchCriteria = $this->searchCriteriaBuilder
+        $searchCriteria = $this->schCriteriaBuilder
             ->addFilter('transaction_id', $transactionId)->create();
 
         try {

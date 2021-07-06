@@ -11,7 +11,7 @@ namespace Moip\Magento2\Controller\Webhooks;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\App\CsrfAwareActionInterface;
+use Magento\Framework\App\CsrfAwareActionInterface as Csrf;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
@@ -28,7 +28,7 @@ use Moip\Magento2\Gateway\Config\Config;
 /**
  * Class Deny - Receives communication for deny payment.
  */
-class Deny extends Action implements CsrfAwareActionInterface
+class Deny extends Action implements Csrf
 {
     /**
      * createCsrfValidationException.
