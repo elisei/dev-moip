@@ -9,12 +9,14 @@ declare(strict_types=1);
 
 namespace Moip\Magento2\Controller\Webhooks;
 
+use Exception;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Payment\Model\Method\Logger;
 use Magento\Sales\Api\Data\OrderInterfaceFactory;
 use Magento\Sales\Model\Order\CreditmemoFactory;
@@ -22,7 +24,10 @@ use Magento\Sales\Model\Order\Invoice;
 use Magento\Sales\Model\Service\CreditmemoService;
 use Magento\Store\Model\StoreManagerInterface;
 use Moip\Magento2\Gateway\Config\Config;
-
+use Magento\Sales\Api\Data\CreditmemoInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Sales\Api\CreditmemoRepositoryInterface;
+use Magento\Sales\Model\Order\Creditmemo;
 /**
  * Class Refund - Receives communication for refunded payment.
  */
@@ -75,6 +80,22 @@ class Refund extends Action implements CsrfAwareActionInterface
      * @var storeManager
      */
     protected $storeManager;
+    
+    /**
+     * @var Json
+     */
+    protected $json;
+
+    /**
+     * @var CreditmemoRepositoryInterface
+     */
+    private $creditmemoRepository;
+ 
+    /**
+     * @var SearchCriteriaBuilder
+     */
+    protected $searchCriteriaBuilder;
+ 
 
     /**
      * @param Context               $context
@@ -82,6 +103,7 @@ class Refund extends Action implements CsrfAwareActionInterface
      * @param Config                $config
      * @param OrderInterfaceFactory $orderFactory
      * @param JsonFactory           $resultJsonFactory
+     * @param Json                  $json
      */
     public function __construct(
         Context $context,
@@ -92,7 +114,10 @@ class Refund extends Action implements CsrfAwareActionInterface
         CreditmemoService $creditmemoService,
         Invoice $invoice,
         StoreManagerInterface $storeManager,
-        JsonFactory $resultJsonFactory
+        JsonFactory $resultJsonFactory,
+        Json $json,
+        CreditmemoRepositoryInterface $creditmemoRepository,
+        SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
         parent::__construct($context);
         $this->config = $config;
@@ -103,10 +128,13 @@ class Refund extends Action implements CsrfAwareActionInterface
         $this->invoice = $invoice;
         $this->storeManager = $storeManager;
         $this->resultJsonFactory = $resultJsonFactory;
+        $this->json = $json;
+        $this->creditmemoRepository = $creditmemoRepository;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     /**
-     * Command Accept.
+     * Command Refund.
      *
      * @return json
      */
@@ -115,65 +143,136 @@ class Refund extends Action implements CsrfAwareActionInterface
         if (!$this->getRequest()->isPost()) {
             $resultPage = $this->resultJsonFactory->create();
             $resultPage->setHttpResponseCode(404);
-
             return $resultPage;
         }
 
         $resultPage = $this->resultJsonFactory->create();
         $response = $this->getRequest()->getContent();
-        $originalNotification = json_decode($response, true);
+        $originalNotification = $this->json->unserialize($response);
         $authorization = $this->getRequest()->getHeader('Authorization');
         $storeId = $this->storeManager->getStore()->getId();
         $storeCaptureToken = $this->config->getMerchantGatewayRefundToken($storeId);
-        if ($storeCaptureToken === $authorization) {
-            $orderMoip = $originalNotification['resource']['order']['id'];
-            $order = $this->orderFactory->create()->load($orderMoip, 'ext_order_id');
-            $this->logger->debug([
-                'webhook'            => 'refund',
-                'ext_order_id'       => $originalNotification['resource']['order']['id'],
-                'increment_order_id' => $order->getIncrementId(),
-            ]);
-            $invoices = $order->getInvoiceCollection();
-            if ($invoices) {
-                foreach ($invoices as $invoiceLoad) {
-                    $invoiceincrementid = $invoiceLoad->getIncrementId();
-                }
-                $invoiceobj = $this->invoice->loadByIncrementId($invoiceincrementid);
-                $creditmemo = $this->creditmemoFactory->createByOrder($order);
-                $creditmemo->setInvoice($invoiceobj);
 
-                try {
-                    $this->creditmemoService->refund($creditmemo);
-                } catch (\Exception $exc) {
-                    $resultPage->setHttpResponseCode(500);
-                    $resultPage->setJsonData(
-                        json_encode([
-                            'error'   => 400,
-                            'message' => $exc->getMessage(),
+        if ($storeCaptureToken === $authorization) {
+            $resource = $originalNotification['resource'];
+            
+            $transactionId = $originalNotification['id'];
+
+            $creditmemos = $this->getCreditMemoByTransactionId($transactionId);
+            if(count($creditmemos)){
+            
+                foreach ($creditmemos as $creditmemo) {
+
+                    $creditmemo->setState(Creditmemo::STATE_REFUNDED);
+                    
+                    try {
+                        $creditmemo->save();
+                    } catch (\Exception $exc) {
+                        $resultPage->setHttpResponseCode(500);
+                        $resultPage->setJsonData(
+                            $this->json->serialize([
+                                'error'   => 400,
+                                'message' => $exc->getMessage(),
+                            ])
+                        );
+                    }
+                    
+                    continue;
+                }
+            } else {
+                $extOrderId = $resource['order']['id'];
+                $extRefundId = $resource['id'];
+                
+                $creditmemo = $this->createNewCreditMemo($extOrderId);
+                if($creditmemo) {
+                    
+                    //Creditmemo::STATE_OPEN
+                    //Creditmemo::STATE_REFUNDED
+                    //Creditmemo::STATE_CANCELED
+
+                    $creditmemo->setState(Creditmemo::STATE_OPEN);
+                    try {
+                        $this->creditmemoService->refund($creditmemo);
+                    } catch (\Exception $exc) {
+                        $resultPage->setHttpResponseCode(500);
+                        $resultPage->setJsonData(
+                            $this->json->serialize([
+                                'error'   => 400,
+                                'message' => $exc->getMessage(),
+                            ])
+                        );
+                    }
+                } else {
+                    return $resultPage->setJsonData(
+                        $this->json->serialize([
+                            'error'   => 404,
+                            'message' => 'The transaction could not be refund',
                         ])
                     );
                 }
-
-                return $resultPage->setJsonData(
-                    json_encode([
-                        'success'   => 1,
-                        'status'    => $order->getStatus(),
-                        'state'     => $order->getState(),
-                    ])
-                );
             }
 
-            $resultPage->setHttpResponseCode(201);
-
             return $resultPage->setJsonData(
-                json_encode([
-                    'error'   => 400,
-                    'message' => 'The transaction could not be refund',
+                $this->json->serialize([
+                    'success'   => 1,
+                    'state'     => $creditmemo->getState()
                 ])
             );
         }
+
         $resultPage->setHttpResponseCode(401);
 
         return $resultPage;
+    }
+
+    /**
+     * Get Creditmemo.
+     *
+     * @params $extOrderId
+     * @return creditmemo
+     */
+    public function getCreditMemoByTransactionId(string $transactionId)
+    {
+        $searchCriteria = $this->searchCriteriaBuilder
+            ->addFilter('transaction_id', $transactionId)->create();
+        try {
+            $creditmemos = $this->creditmemoRepository->getList($searchCriteria);
+            $creditmemoRecords = $creditmemos->getItems();
+        } catch (Exception $exception)  {
+            $this->logger->critical($exception->getMessage());
+            $creditmemoRecords = null;
+        }
+        return $creditmemoRecords;
+    }
+
+    /**
+     * Create new creditmemo.
+     *
+     * @params $extOrderId
+     * @parmas $extRefundId
+     * @return creditmemo
+     */
+    public function createNewCreditMemo(string $extOrderId, string $extRefundId){
+        $order = $this->orderFactory->create()->load($extOrderId, 'ext_order_id');
+        $creditmemo = null; 
+        $this->logger->debug([
+            'webhook'            => 'refund',
+            'ext_order_id'       => $extOrderId,
+            'increment_order_id' => $order->getIncrementId()
+        ]);
+        
+        $payment = $order->getPayment();
+        $invoices = $order->getInvoiceCollection();
+
+        if ($invoices) {
+            foreach ($invoices as $invoiceLoad) {
+                $invoiceincrementid = $invoiceLoad->getIncrementId();
+            }
+            $invoiceobj = $this->invoice->loadByIncrementId($invoiceincrementid);
+            $creditmemo = $this->creditmemoFactory->createByOrder($order);
+            $payment->setTransactionId($extRefundId);
+            $creditmemo->setInvoice($invoiceobj);
+        }
+        return $creditmemo;
     }
 }

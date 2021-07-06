@@ -101,6 +101,7 @@ class PaymentGroup extends \Magento\Config\Block\System\Config\Form\Fieldset
 
         $groupConfig = $element->getGroup();
 
+        
         $htmlId = $element->getHtmlId();
         $html .= '<div class="button-container"><button type="button"'.
             ' class="button action-configure'.
