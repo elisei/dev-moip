@@ -153,7 +153,6 @@ class Refund extends Action implements Crsf
         $storeId = $this->storeManager->getStore()->getId();
         $storeCaptureToken = $this->config->getMerchantGatewayRefundToken($storeId);
 
-        
         if ($storeCaptureToken === $authorization) {
             $resource = $originalNotification['resource'];
             $extRefundId = $resource['refund']['id'];
@@ -162,12 +161,11 @@ class Refund extends Action implements Crsf
             $creditmemos = $this->getCreditMemoByTransactionId($extRefundId);
             if (count($creditmemos)) {
                 foreach ($creditmemos as $creditmemo) {
-                    
-                    if($extStatus === 'REQUESTED') {
-                       $creditmemo->setState(Creditmemo::STATE_OPEN);
-                    } elseif($extStatus === 'COMPLETED') {
-                        $creditmemo->setState(Creditmemo::STATE_REFUNDED); 
-                    } elseif($extStatus === 'FAILED') {
+                    if ($extStatus === 'REQUESTED') {
+                        $creditmemo->setState(Creditmemo::STATE_OPEN);
+                    } elseif ($extStatus === 'COMPLETED') {
+                        $creditmemo->setState(Creditmemo::STATE_REFUNDED);
+                    } elseif ($extStatus === 'FAILED') {
                         $creditmemo->setState(Creditmemo::STATE_CANCELED);
                     }
 
@@ -189,12 +187,11 @@ class Refund extends Action implements Crsf
                 $extOrderId = $resource['refund']['_links']['order']['title'];
                 $creditmemo = $this->createNewCreditMemo($extOrderId, $extRefundId);
                 if ($creditmemo) {
-
-                    if($extStatus === 'REQUESTED') {
-                       $creditmemo->setState(Creditmemo::STATE_OPEN);
-                    } elseif($extStatus === 'COMPLETED') {
-                        $creditmemo->setState(Creditmemo::STATE_REFUNDED); 
-                    } elseif($extStatus === 'FAILED') {
+                    if ($extStatus === 'REQUESTED') {
+                        $creditmemo->setState(Creditmemo::STATE_OPEN);
+                    } elseif ($extStatus === 'COMPLETED') {
+                        $creditmemo->setState(Creditmemo::STATE_REFUNDED);
+                    } elseif ($extStatus === 'FAILED') {
                         $creditmemo->setState(Creditmemo::STATE_CANCELED);
                     }
 
@@ -221,9 +218,9 @@ class Refund extends Action implements Crsf
 
             return $resultPage->setJsonData(
                 $this->json->serialize([
-                    'success'   => 1,
+                    'success'    => 1,
                     'extOrderId' => $extRefundId,
-                    'state'     => $creditmemo->getState(),
+                    'state'      => $creditmemo->getState(),
                 ])
             );
         }
@@ -268,7 +265,7 @@ class Refund extends Action implements Crsf
     {
         $order = $this->orderFactory->create()->load($extOrderId, 'ext_order_id');
         $creditmemo = null;
-        
+
         $payment = $order->getPayment();
         $invoices = $order->getInvoiceCollection();
 
