@@ -55,7 +55,7 @@ class SetBoletoDataToCreditmemo implements ObserverInterface
 
             $comment = !empty($input[CreditmemoBlock::CREDITMEMO_COMMENT_TEXT]) ? $input[CreditmemoBlock::CREDITMEMO_COMMENT_TEXT] : null;
             $comment = $comment.'\n'.__('Refund Request to Bank %1, Agency Number %2, Agency Check Number %3, Account Number %4, Account Check Number %5, Holder Name %6, Holder Tax Document %7', $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, $holderFullname, $holderDocumment);
-            $creditmemo->setData(CreditmemoBlock::CREDITMEMO_COMMENT_TEXT, $comment);
+            $creditmemo->setComment($comment);
         }
 
         return $this;

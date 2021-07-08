@@ -26,6 +26,8 @@ class Creditmemo extends \Magento\Backend\Block\Template
 
     const HOLDER_DOCUMENT_NUMBER = 'moip_magento2_boleto_account_holder_document_number';
 
+    const CREDITMEMO_COMMENT_TEXT = 'comment_text';
+
     /**
      * @var \Magento\Framework\Registry
      */
@@ -57,7 +59,7 @@ class Creditmemo extends \Magento\Backend\Block\Template
     }
 
     /**
-     * Check whether can refund to payment by boleto.
+     * Check whether can refund to payment by boleto
      *
      * @return bool
      */
@@ -74,49 +76,44 @@ class Creditmemo extends \Magento\Backend\Block\Template
     }
 
     /**
-     * Json configuration for tooltip.
+     * Json configuration for tooltip
      *
      * @parms $field
-     *
      * @return string json
      */
     public function getTooltipConfig($field)
     {
         $tooltipConfig = [
             'tooltip' => [
-                'trigger'  => '[data-tooltip-trigger=moip_magento2_tooltip_'.$field.']',
-                'action'   => 'click',
-                'delay'    => 0,
-                'track'    => false,
-                'position' => 'top',
-            ],
+                'trigger' => '[data-tooltip-trigger=moip_magento2_tooltip_'.$field.']',
+                'action' => 'click',
+                'delay' => 0,
+                'track' => false,
+                'position' => 'top'
+            ]
         ];
 
         return str_replace('"', "'", \Zend_Json::encode($tooltipConfig));
     }
 
-    public function getBankNumber()
-    {
+    public function getBankNumber(){
+
         return $this->getCreditmemo()->getData(self::BANK_NUMBER);
     }
 
-    public function getAgencyNumber()
-    {
+    public function getAgencyNumber(){
         return $this->getCreditmemo()->getData(self::AGENCY_NUMBER);
     }
 
-    public function getAgencyCheckNumber()
-    {
+    public function getAgencyCheckNumber(){
         return $this->getCreditmemo()->getData(self::AGENCY_CHECK_NUMBER);
     }
 
-    public function getAccountNumber()
-    {
+    public function getAccountNumber(){
         return $this->getCreditmemo()->getData(self::ACCOUNT_NUMBER);
     }
 
-    public function getAccountCheckNumber()
-    {
+    public function getAccountCheckNumber(){
         return $this->getCreditmemo()->getData(self::ACCOUNT_CHECK_NUMBER);
     }
 }
