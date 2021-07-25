@@ -18,8 +18,8 @@ namespace Moip\Magento2\Api;
 interface MoipInterestManagementInterface
 {
     /**
-     * Set in the moip interest amount per installment number
-     * 
+     * Set in the moip interest amount per installment number.
+     *
      * @param int                                           $cartId
      * @param \Moip\Magento2\Api\Data\MoipInterestInterface $installment
      *
