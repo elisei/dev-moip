@@ -29,14 +29,14 @@ class MoipInterest extends AbstractTotal
     public function collect(Invoice $invoice)
     {
         $order = $invoice->getOrder();
-        $moipInterestAmountInvoiced = $order->getMoipInterestAmount();
+        $moipInterest = $order->getMoipInterestAmount();
         $baseMoipInterestAmount = $order->getBaseMoipInterestAmount();
 
-        $invoice->setMoipInterestAmount($moipInterestAmountInvoiced);
+        $invoice->setMoipInterestAmount($moipInterest);
         $invoice->setBaseMoipInterestAmount($baseMoipInterestAmount);
-        $invoice->setGrandTotal($invoice->getGrandTotal() + $moipInterestAmountInvoiced);
+        $invoice->setGrandTotal($invoice->getGrandTotal() + $moipInterest);
         $invoice->setBaseGrandTotal($invoice->getBaseGrandTotal() + $baseMoipInterestAmount);
-        $order->setMoipInterestAmountInvoiced($moipInterestAmountInvoiced);
+        $order->setMoipInterestAmountInvoiced($moipInterest);
         $order->setBaseMoipInterestAmountInvoiced($baseMoipInterestAmount);
 
         return $this;

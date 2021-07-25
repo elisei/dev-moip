@@ -88,11 +88,6 @@ class DetailTotalsDataRequest implements BuilderInterface
     private $priceHelper;
 
     /**
-     * @var moipInterest
-     */
-    private $moipInterest;
-
-    /**
      * @param SubjectReader       $subjectReader
      * @param OrderAdapterFactory $orderAdapterFactory
      * @param Config              $Config
@@ -128,7 +123,7 @@ class DetailTotalsDataRequest implements BuilderInterface
         );
 
         $order = $paymentDO->getOrder();
-        $quoteId = $orderAdapter->getQuoteId();
+        // $quoteId = $orderAdapter->getQuoteId();
         $storeId = $order->getStoreId();
         $addition = $orderAdapter->getTaxAmount();
         $interest = $orderAdapter->getBaseMoipInterestAmount();

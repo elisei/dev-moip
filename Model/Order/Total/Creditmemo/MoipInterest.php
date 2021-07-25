@@ -27,21 +27,21 @@ class MoipInterest extends AbstractTotal
     {
         $order = $creditmemo->getOrder();
 
-        $moipInterestAmountInvoiced = $order->getMoipInterestAmountInvoiced();
-        $baseMoipInterestAmountInvoiced = $order->getBaseMoipInterestAmountInvoiced();
+        $moipInterest = $order->getMoipInterestAmountInvoiced();
+        $baseMoipInterest = $order->getBaseMoipInterestAmountInvoiced();
 
-        if ((int) $moipInterestAmountInvoiced === 0) {
+        if ((int) $moipInterest === 0) {
             return $this;
         }
 
         $moipInterestAmountRefunded = $order->getMoipInterestAmountRefunded();
         if ((int) $moipInterestAmountRefunded === 0) {
-            $creditmemo->setGrandTotal($creditmemo->getGrandTotal() + $moipInterestAmountInvoiced);
-            $creditmemo->setBaseGrandTotal($creditmemo->getBaseGrandTotal() + $baseMoipInterestAmountInvoiced);
-            $creditmemo->setMoipInterestAmount($moipInterestAmountInvoiced);
-            $creditmemo->setBaseMoipInterestAmount($baseMoipInterestAmountInvoiced);
-            $order->setMoipInterestAmountRefunded($moipInterestAmountInvoiced);
-            $order->setBaseMoipInterestAmountRefunded($baseMoipInterestAmountInvoiced);
+            $creditmemo->setGrandTotal($creditmemo->getGrandTotal() + $moipInterest);
+            $creditmemo->setBaseGrandTotal($creditmemo->getBaseGrandTotal() + $baseMoipInterest);
+            $creditmemo->setMoipInterestAmount($moipInterest);
+            $creditmemo->setBaseMoipInterestAmount($baseMoipInterest);
+            $order->setMoipInterestAmountRefunded($moipInterest);
+            $order->setBaseMoipInterestAmountRefunded($baseMoipInterest);
         }
 
         return $this;

@@ -132,9 +132,12 @@ class SellerDataRequest implements BuilderInterface
         $addition = $orderAdapter->getTaxAmount();
         $interest = $orderAdapter->getBaseMoipInterestAmount();
         $grandTotal = $order->getGrandTotalAmount();
-        $total = $grandTotal + $interest;
         $discount = $orderAdapter->getDiscountAmount();
-
+        $total = $grandTotal + $interest;
+        if ($interest > 0) {
+            $total = $grandTotal - $interest;
+        }
+        
         $secondaryMPA = $this->config->getSplitValue('secondary_mpa', $storeId);
         $secondaryPercent = $this->config->getSplitValue('secondary_percent', $storeId);
         $commiUseShipping = $this->config->getSplitValue('secondary_percent_include_shipping', $storeId);
@@ -150,16 +153,17 @@ class SellerDataRequest implements BuilderInterface
                         if ($typeInstallment === 'simple') {
                             $installmentInterest = $this->getInterestSimple($total, $interestInfo[$installment], $installment);
                         }
+
                         if ($installmentInterest) {
-                            $total_parcelado = $installmentInterest * $installment;
-                            $additionalPrice = $total_parcelado - $total;
-                            $additionalPrice = number_format((float) $additionalPrice, 2, '.', '');
+                            $installmentInterest = number_format((float) $installmentInterest, 2, '.', '');
                             $payment->setAdditionalInformation(
                                 self::INSTALLMENT_INTEREST,
-                                $this->priceHelper->currency($additionalPrice, true, false)
+                                $this->priceHelper->currency($installmentInterest, true, false)
                             );
-                            $orderAdapter->setMoipInterestAmount($additionalPrice)->setBaseMoipInterestAmount($additionalPrice);
-                            $addition = $addition + $additionalPrice;
+                            if (!$interest) {
+                                $orderAdapter->setMoipInterestAmount($installmentInterest)->setBaseMoipInterestAmount($installmentInterest);
+                            }
+                            $addition = $addition + $installmentInterest;
                         }
                     }
                 } elseif ((int) $installment === 1) {
@@ -167,6 +171,14 @@ class SellerDataRequest implements BuilderInterface
                         $totalWithDiscount = $grandTotal + ($interest * -1);
                         $discountInterest = $this->getInterestDiscount($totalWithDiscount, $interestInfo[$installment]);
                         $discountInterest = number_format((float) $discountInterest, 2, '.', '');
+
+                        $payment->setAdditionalInformation(
+                            self::INSTALLMENT_INTEREST,
+                            $this->priceHelper->currency($discountInterest, true, false)
+                        );
+                        if (!$interest) {
+                            $orderAdapter->setMoipInterestAmount($discountInterest)->setBaseMoipInterestAmount($discountInterest);
+                        }
                         $interest = $discountInterest;
                     }
                 }
