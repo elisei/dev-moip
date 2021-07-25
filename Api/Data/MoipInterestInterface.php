@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Moip\Magento2\Api\Data;
 
 /**
- * Interface MoipInterestInterface - Data Moip Interest
+ * Interface MoipInterestInterface - Data Moip Interest.
  */
 interface MoipInterestInterface
 {
@@ -26,14 +26,14 @@ interface MoipInterestInterface
     const BASE_MOIP_INTEREST_AMOUNT = 'base_moip_interest_amount';
 
     /**
-     * Get Installment for Moip Interest
+     * Get Installment for Moip Interest.
      *
      * @return float
      */
     public function getInstallmentForInterest();
 
     /**
-     * Set Installment for Moip Interest
+     * Set Installment for Moip Interest.
      *
      * @param float $moipInterest
      *

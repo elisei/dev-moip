@@ -14,14 +14,15 @@ use Magento\Sales\Model\Order\Invoice;
 use Magento\Sales\Model\Order\Invoice\Total\AbstractTotal;
 
 /**
- * Class MoipInterest - Model data Total Invoice
+ * Class MoipInterest - Model data Total Invoice.
  */
 class MoipInterest extends AbstractTotal
 {
     /**
-     * Collect invoice subtotal
+     * Collect invoice subtotal.
      *
      * @param Invoice $invoice
+     *
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

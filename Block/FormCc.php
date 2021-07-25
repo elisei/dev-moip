@@ -142,6 +142,7 @@ class FormCc extends Cc
                 $plotlist[$key] = $key.__('x of ').$installmentPrice;
             }
         }
+
         return $plotlist;
     }
 
@@ -159,7 +160,7 @@ class FormCc extends Cc
             return ($total + $valinterest) / $portion;
         }
 
-        return $total/$portion;
+        return $total / $portion;
     }
 
     /**

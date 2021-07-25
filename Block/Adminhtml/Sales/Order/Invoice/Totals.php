@@ -14,13 +14,12 @@ use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\Template;
 
 /**
- * Class Totals - Invoice
+ * Class Totals - Invoice.
  */
 class Totals extends Template
 {
-
     /**
-     * Get data (totals) source model
+     * Get data (totals) source model.
      *
      * @return DataObject
      */
@@ -30,16 +29,17 @@ class Totals extends Template
     }
 
     /**
-     * Get Invoice data
-     * 
+     * Get Invoice data.
+     *
      * @return invoice
      */
     public function getInvoice()
     {
         return $this->getParentBlock()->getInvoice();
     }
+
     /**
-     * Initialize payment moip_interest totals
+     * Initialize payment moip_interest totals.
      *
      * @return $this
      */
@@ -49,19 +49,20 @@ class Totals extends Template
         $this->getInvoice();
         $this->getSource();
 
-        if(!$this->getSource()->getMoipInterestAmount()) {
+        if (!$this->getSource()->getMoipInterestAmount()) {
             return $this;
         }
 
         $total = new DataObject(
             [
-                'code' => 'moip_interest',
+                'code'  => 'moip_interest',
                 'value' => $this->getSource()->getMoipInterestAmount(),
                 'label' => __('Moip Interest Amount'),
             ]
         );
 
         $this->getParentBlock()->addTotalBefore($total, 'grand_total');
+
         return $this;
     }
 }

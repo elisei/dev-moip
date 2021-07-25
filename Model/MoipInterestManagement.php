@@ -9,23 +9,21 @@
 declare(strict_types=1);
 
 namespace Moip\Magento2\Model;
+
 use Exception;
+use Magento\Directory\Model\PriceCurrency;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Quote\Api\CartRepositoryInterface;
+use Magento\Quote\Api\Data\CartInterface as QuoteCartInterface;
+use Magento\Quote\Api\Data\TotalsInterface as QuoteTotalsInterface;
 use Moip\Magento2\Api\Data\MoipInterestInterface;
 use Moip\Magento2\Api\MoipInterestManagementInterface;
 use Moip\Magento2\Gateway\Config\Config;
 use Moip\Magento2\Gateway\Config\ConfigCc;
-use Magento\Directory\Model\PriceCurrency;
-
-use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Quote\Api\CartRepositoryInterface;
-
-
-use Magento\Quote\Api\Data\TotalsInterface as QuoteTotalsInterface;
-use Magento\Quote\Api\Data\CartInterface as QuoteCartInterface;
 
 /**
- * Class MoipInterestManagement - Calc Insterest by Installment
+ * Class MoipInterestManagement - Calc Insterest by Installment.
  */
 class MoipInterestManagement implements MoipInterestManagementInterface
 {
@@ -41,12 +39,12 @@ class MoipInterestManagement implements MoipInterestManagementInterface
      */
     protected $priceCurrency;
 
-     /**
+    /**
      * @var total
      */
     protected $total;
 
-      /**
+    /**
      * @var Config
      */
     private $config;
@@ -60,9 +58,9 @@ class MoipInterestManagement implements MoipInterestManagementInterface
      * MoipInterestManagement constructor.
      *
      * @param CartRepositoryInterface $quoteRepository
-     * @param PriceCurrency $priceCurrency,
-     * @param Config $config,
-     * @param ConfigCC $configCc
+     * @param PriceCurrency           $priceCurrency,
+     * @param Config                  $config,
+     * @param ConfigCC                $configCc
      */
     public function __construct(
         CartRepositoryInterface $quoteRepository,
@@ -77,13 +75,15 @@ class MoipInterestManagement implements MoipInterestManagementInterface
     }
 
     /**
-     * Save moip interest number in the quote
+     * Save moip interest number in the quote.
      *
-     * @param int $cartId
+     * @param int                   $cartId
      * @param MoipInterestInterface $moipInterest
-     * @return null|string
+     *
      * @throws CouldNotSaveException
      * @throws NoSuchEntityException
+     *
+     * @return null|string
      */
     public function saveMoipInterest(
         $cartId,
@@ -96,6 +96,7 @@ class MoipInterestManagement implements MoipInterestManagementInterface
         }
         $installment = $moipInterest->getInstallmentForInterest();
         $moipInterestValue = $this->calcInterest($quote, $installment);
+
         try {
             $quote->setData(MoipInterestInterface::MOIP_INTEREST_AMOUNT, $moipInterestValue);
             $quote->setData(MoipInterestInterface::BASE_MOIP_INTEREST_AMOUNT, $moipInterestValue);
@@ -107,20 +108,23 @@ class MoipInterestManagement implements MoipInterestManagementInterface
         $moip = [
             'interest_by_installment' => [
                 'installment' => $installment,
-                'interest' => $moipInterestValue
+                'interest'    => $moipInterestValue,
             ],
         ];
+
         return $moip;
     }
 
     /**
-     * Calc value Interest
-     * 
+     * Calc value Interest.
+     *
      * @param $quote
      * @param $installment
+     *
      * @return $installmentInterest
      */
-    public function calcInterest($quote, $installment){
+    public function calcInterest($quote, $installment)
+    {
         $storeId = $quote->getData(QuoteCartInterface::KEY_STORE_ID);
         $grandTotal = $quote->getData(QuoteTotalsInterface::KEY_GRAND_TOTAL);
         $total = $grandTotal - $quote->getData(MoipInterestInterface::MOIP_INTEREST_AMOUNT);
@@ -129,16 +133,16 @@ class MoipInterestManagement implements MoipInterestManagementInterface
         if ($installment) {
             $typeInstallment = $this->configCc->getTypeInstallment($storeId);
             $interest = $this->configCc->getInfoInterest($storeId);
-            if($interest[$installment] > 0) {
+            if ($interest[$installment] > 0) {
                 $installmentInterest = $this->getInterestCompound($total, $interest[$installment], $installment);
                 if ($typeInstallment === 'simple') {
                     $installmentInterest = $this->getInterestSimple($total, $interest[$installment], $installment);
                 }
-            } elseif($interest[$installment] < 0) {
+            } elseif ($interest[$installment] < 0) {
                 $installmentInterest = $this->getInterestSimple($total, $interest[$installment]);
             }
-            
         }
+
         return $this->priceCurrency->round($installmentInterest);
     }
 
@@ -154,6 +158,7 @@ class MoipInterestManagement implements MoipInterestManagementInterface
     {
         if ($interest) {
             $taxa = $interest / 100;
+
             return $total * $taxa;
         }
 
@@ -174,6 +179,7 @@ class MoipInterestManagement implements MoipInterestManagementInterface
         if ($interest) {
             $taxa = $interest / 100;
             $calc = (($total * $taxa) * 1) / (1 - (pow(1 / (1 + $taxa), $portion)));
+
             return $total - $calc;
         }
 

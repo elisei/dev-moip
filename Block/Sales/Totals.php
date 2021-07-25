@@ -15,7 +15,7 @@ use Magento\Framework\View\Element\Template;
 use Magento\Sales\Model\Order;
 
 /**
- * Class Totals - Template
+ * Class Totals - Template.
  */
 class Totals extends Template
 {
@@ -38,7 +38,7 @@ class Totals extends Template
     }
 
     /**
-     * Get data (totals) source model
+     * Get data (totals) source model.
      *
      * @return DataObject
      */
@@ -64,7 +64,7 @@ class Totals extends Template
     }
 
     /**
-     * Initialize payment moip_interest totals
+     * Initialize payment moip_interest totals.
      *
      * @return $this
      */
@@ -73,7 +73,7 @@ class Totals extends Template
         $parent = $this->getParentBlock();
         $this->_order = $parent->getOrder();
         $this->_source = $parent->getSource();
-        
+
         if (!$this->_source->getMoipInterestAmount()) {
             return $this;
         }
@@ -82,14 +82,14 @@ class Totals extends Template
         $label = $this->getLabelByInterest($valueInterest);
         $moipInterest = new DataObject(
             [
-                'code' => 'moip_interest',
+                'code'   => 'moip_interest',
                 'strong' => false,
-                'value' => $valueInterest,
-                'label' => $label,
+                'value'  => $valueInterest,
+                'label'  => $label,
             ]
         );
 
-        if((int)$valueInterest !== 0.0000) {
+        if ((int) $valueInterest !== 0.0000) {
             $parent->addTotal($moipInterest, 'moip_interest');
         }
 
@@ -97,16 +97,18 @@ class Totals extends Template
     }
 
     /**
-     * Get Subtotal label by Interest
+     * Get Subtotal label by Interest.
      *
      * @param $interest | float
+     *
      * @return Phrase
      */
     public function getLabelByInterest($interest)
     {
-        if($interest >= 0) {
-            return __('Installment Interest'); 
+        if ($interest >= 0) {
+            return __('Installment Interest');
         }
-        return __('Discount Cash'); 
+
+        return __('Discount Cash');
     }
 }

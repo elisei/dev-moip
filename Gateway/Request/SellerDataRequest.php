@@ -145,7 +145,7 @@ class SellerDataRequest implements BuilderInterface
                 $interestInfo = $this->configCc->getInfoInterest($storeId);
                 if ($installment > 1) {
                     $typeInstallment = $this->configCc->getTypeInstallment($storeId);
-                    if($interestInfo[$installment] > 0) {
+                    if ($interestInfo[$installment] > 0) {
                         $installmentInterest = $this->getInterestCompound($total, $interestInfo[$installment], $installment);
                         if ($typeInstallment === 'simple') {
                             $installmentInterest = $this->getInterestSimple($total, $interestInfo[$installment], $installment);
@@ -162,9 +162,9 @@ class SellerDataRequest implements BuilderInterface
                             $addition = $addition + $additionalPrice;
                         }
                     }
-                } elseif((int)$installment === 1) {
-                    if($interestInfo[$installment] < 0) {
-                        $totalWithDiscount = $grandTotal + ($interest*-1); 
+                } elseif ((int) $installment === 1) {
+                    if ($interestInfo[$installment] < 0) {
+                        $totalWithDiscount = $grandTotal + ($interest * -1);
                         $discountInterest = $this->getInterestDiscount($totalWithDiscount, $interestInfo[$installment]);
                         $discountInterest = number_format((float) $discountInterest, 2, '.', '');
                         $interest = $discountInterest;
@@ -173,19 +173,16 @@ class SellerDataRequest implements BuilderInterface
             }
         }
 
-        
-
         if (!$commiUseShipping) {
             $total = $total - $orderAdapter->getShippingAmount();
         }
 
         if ($commiUseInterest) {
-            if($interest > 0) {
+            if ($interest > 0) {
                 $total = $total + $addition;
-            } elseif($interest < 0) {
+            } elseif ($interest < 0) {
                 $total = $total + $interest;
             }
-            
         }
 
         $commission = $total * ($secondaryPercent / 100);

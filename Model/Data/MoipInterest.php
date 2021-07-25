@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Moip\Magento2\Model\Data;
 
-use Moip\Magento2\Api\Data\MoipInterestInterface;
 use Magento\Framework\Api\AbstractSimpleObject;
+use Moip\Magento2\Api\Data\MoipInterestInterface;
 
 /**
- * Class MoipInterest - Model data
+ * Class MoipInterest - Model data.
  */
 class MoipInterest extends AbstractSimpleObject implements MoipInterestInterface
 {
