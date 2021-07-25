@@ -137,7 +137,7 @@ class SellerDataRequest implements BuilderInterface
         if ($interest > 0) {
             $total = $grandTotal - $interest;
         }
-        
+
         $secondaryMPA = $this->config->getSplitValue('secondary_mpa', $storeId);
         $secondaryPercent = $this->config->getSplitValue('secondary_percent', $storeId);
         $commiUseShipping = $this->config->getSplitValue('secondary_percent_include_shipping', $storeId);
