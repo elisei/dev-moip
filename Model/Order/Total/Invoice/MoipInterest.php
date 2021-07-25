@@ -35,7 +35,7 @@ class MoipInterest extends AbstractTotal
         if ((int) $moipInterest === 0) {
             return $this;
         }
-        
+
         $invoice->setMoipInterestAmount($moipInterest);
         $invoice->setBaseMoipInterestAmount($baseMoipInterestAmount);
         $invoice->setGrandTotal($invoice->getGrandTotal() + $moipInterest);
