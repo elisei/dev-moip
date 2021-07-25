@@ -34,16 +34,12 @@ class MoipInterest extends AbstractTotal
             return $this;
         }
 
-        $moipInterestAmountRefunded = $order->getMoipInterestAmountRefunded();
-        if ((int) $moipInterestAmountRefunded === 0) {
-            $creditmemo->setGrandTotal($creditmemo->getGrandTotal() + $moipInterest);
-            $creditmemo->setBaseGrandTotal($creditmemo->getBaseGrandTotal() + $baseMoipInterest);
-            $creditmemo->setMoipInterestAmount($moipInterest);
-            $creditmemo->setBaseMoipInterestAmount($baseMoipInterest);
-            $order->setMoipInterestAmountRefunded($moipInterest);
-            $order->setBaseMoipInterestAmountRefunded($baseMoipInterest);
-        }
-
+        $creditmemo->setGrandTotal($creditmemo->getGrandTotal() + $moipInterest);
+        $creditmemo->setBaseGrandTotal($creditmemo->getBaseGrandTotal() + $baseMoipInterest);
+        $creditmemo->setMoipInterestAmount($moipInterest);
+        $creditmemo->setBaseMoipInterestAmount($baseMoipInterest);
+        $order->setMoipInterestAmountRefunded($moipInterest);
+        $order->setBaseMoipInterestAmountRefunded($baseMoipInterest);
         return $this;
     }
 }
