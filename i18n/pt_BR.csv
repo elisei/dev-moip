@@ -277,3 +277,8 @@ MPA - Secondary,MPA - Secundário
 Include Freight on Commission,Incluir o valor do frete no cálculo da comissão
 Include credit card interest in the commission,Incluir o valor de juros de parcelamento no cálculo da comissão
 Percentage sent to the commissioner,Percentagem de comissão enviada
+%1x of %2 not interest,%1x de %2 sem juros
+%1% of discount cash with total of %2, %2 à vista com %1% de desconto
+%1x of %2 in the total value of %3,%1x de %2 no valor total de %3
+Installment Interest,Juros de Parcelamento
+Discount Cash,Desconto à vista

@@ -130,30 +130,25 @@ class SellerDataRequest implements BuilderInterface
         }
 
         $addition = $orderAdapter->getTaxAmount();
-        $total = $order->getGrandTotalAmount();
+        $interest = $orderAdapter->getBaseMoipInterestAmount();
+        $grandTotal = $order->getGrandTotalAmount();
+        $total = $grandTotal + $interest;
+        $discount = $orderAdapter->getDiscountAmount();
 
         $secondaryMPA = $this->config->getSplitValue('secondary_mpa', $storeId);
         $secondaryPercent = $this->config->getSplitValue('secondary_percent', $storeId);
         $commiUseShipping = $this->config->getSplitValue('secondary_percent_include_shipping', $storeId);
         $commiUseInterest = $this->config->getSplitValue('secondary_percent_include_interest', $storeId);
 
-        if ($commissionUseInterest) {
-            if ($payment->getMethod() === 'moip_magento2_cc' || $payment->getMethod() === 'moip_magento2_cc_vault') {
-                if ($installment = $payment->getAdditionalInformation('cc_installments')) {
-                    if ($installment > 1) {
-                        $typeInstallment = $this->configCc->getTypeInstallment($storeId);
-                        $interest = $this->configCc->getInfoInterest($storeId);
-                        $installmentInterest = $this->getInterestCompound(
-                            $total,
-                            $interest[$installment],
-                            $installment
-                        );
+        if ($payment->getMethod() === 'moip_magento2_cc' || $payment->getMethod() === 'moip_magento2_cc_vault') {
+            if ($installment = $payment->getAdditionalInformation('cc_installments')) {
+                $interestInfo = $this->configCc->getInfoInterest($storeId);
+                if ($installment > 1) {
+                    $typeInstallment = $this->configCc->getTypeInstallment($storeId);
+                    if($interestInfo[$installment] > 0) {
+                        $installmentInterest = $this->getInterestCompound($total, $interestInfo[$installment], $installment);
                         if ($typeInstallment === 'simple') {
-                            $installmentInterest = $this->getInterestSimple(
-                                $total,
-                                $interest[$installment],
-                                $installment
-                            );
+                            $installmentInterest = $this->getInterestSimple($total, $interestInfo[$installment], $installment);
                         }
                         if ($installmentInterest) {
                             $total_parcelado = $installmentInterest * $installment;
@@ -163,19 +158,34 @@ class SellerDataRequest implements BuilderInterface
                                 self::INSTALLMENT_INTEREST,
                                 $this->priceHelper->currency($additionalPrice, true, false)
                             );
+                            $orderAdapter->setMoipInterestAmount($additionalPrice)->setBaseMoipInterestAmount($additionalPrice);
                             $addition = $addition + $additionalPrice;
                         }
+                    }
+                } elseif((int)$installment === 1) {
+                    if($interestInfo[$installment] < 0) {
+                        $totalWithDiscount = $grandTotal + ($interest*-1); 
+                        $discountInterest = $this->getInterestDiscount($totalWithDiscount, $interestInfo[$installment]);
+                        $discountInterest = number_format((float) $discountInterest, 2, '.', '');
+                        $interest = $discountInterest;
                     }
                 }
             }
         }
+
+        
 
         if (!$commiUseShipping) {
             $total = $total - $orderAdapter->getShippingAmount();
         }
 
         if ($commiUseInterest) {
-            $total = $total + $addition;
+            if($interest > 0) {
+                $total = $total + $addition;
+            } elseif($interest < 0) {
+                $total = $total + $interest;
+            }
+            
         }
 
         $commission = $total * ($secondaryPercent / 100);
@@ -191,6 +201,26 @@ class SellerDataRequest implements BuilderInterface
         ];
 
         return $result;
+    }
+
+    /**
+     * Get Intereset Discount.
+     *
+     * @param $total
+     * @param $interest
+     *
+     * @return string
+     */
+    public function getInterestDiscount($total, $interest)
+    {
+        if ($interest) {
+            $taxa = $interest / 100;
+            $valinterest = $total * $taxa;
+
+            return $valinterest;
+        }
+
+        return 0;
     }
 
     /**
