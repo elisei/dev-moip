@@ -40,6 +40,7 @@ class MoipInterest extends AbstractTotal
         $creditmemo->setBaseMoipInterestAmount($baseMoipInterest);
         $order->setMoipInterestAmountRefunded($moipInterest);
         $order->setBaseMoipInterestAmountRefunded($baseMoipInterest);
+
         return $this;
     }
 }
