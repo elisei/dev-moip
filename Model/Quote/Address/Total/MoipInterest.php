@@ -8,7 +8,6 @@
 
 declare(strict_types=1);
 
-
 namespace Moip\Magento2\Model\Quote\Address\Total;
 
 use Magento\Checkout\Model\Session;
@@ -21,7 +20,7 @@ use Magento\Quote\Model\Quote\Address\Total\AbstractTotal;
 use Magento\Quote\Model\QuoteValidator;
 
 /**
- * Class MoipInterest - Model data Total Address
+ * Class MoipInterest - Model data Total Address.
  */
 class MoipInterest extends AbstractTotal
 {
@@ -47,9 +46,9 @@ class MoipInterest extends AbstractTotal
 
     /**
      * Payment MoipInterest constructor.
-     * 
-     * @param QuoteValidator $quoteValidator
-     * @param Session $checkoutSession
+     *
+     * @param QuoteValidator   $quoteValidator
+     * @param Session          $checkoutSession
      * @param PaymentInterface $payment
      */
     public function __construct(
@@ -65,9 +64,10 @@ class MoipInterest extends AbstractTotal
     /**
      * Collect totals process.
      *
-     * @param Quote $quote
+     * @param Quote                       $quote
      * @param ShippingAssignmentInterface $shippingAssignment
-     * @param Total $total
+     * @param Total                       $total
+     *
      * @return $this
      */
     public function collect(
@@ -80,27 +80,28 @@ class MoipInterest extends AbstractTotal
         if (!count($shippingAssignment->getItems())) {
             return $this;
         }
-        
+
         $moipInterest = $quote->getMoipInterestAmount();
         $baseMoipInterest = $quote->getBaseMoipInterestAmount();
 
         $total->setMoipInterestAmount($moipInterest);
         $total->setBaseMoipInterestAmount($baseMoipInterest);
-        
+
         $total->setTotalAmount('moip_interest_amount', $moipInterest);
         $total->setBaseTotalAmount('base_moip_interest_amount', $baseMoipInterest);
-        
-        $total->setGrandTotal((float)$total->getGrandTotal());
-        $total->setBaseGrandTotal((float)$total->getBaseGrandTotal());
-       
+
+        $total->setGrandTotal((float) $total->getGrandTotal());
+        $total->setBaseGrandTotal((float) $total->getBaseGrandTotal());
+
         return $this;
     }
 
     /**
-     * Assign subtotal amount and label to address object
+     * Assign subtotal amount and label to address object.
      *
      * @param Quote $quote
      * @param Total $total
+     *
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -114,15 +115,16 @@ class MoipInterest extends AbstractTotal
             return $this;
         }
         $result = [
-            'code' => $this->getCode(),
+            'code'  => $this->getCode(),
             'title' => $labelByInterest,
-            'value' => $interest
+            'value' => $interest,
         ];
+
         return $result;
     }
 
     /**
-     * Get Subtotal label
+     * Get Subtotal label.
      *
      * @return Phrase
      */
@@ -132,16 +134,18 @@ class MoipInterest extends AbstractTotal
     }
 
     /**
-     * Get Subtotal label by Interest
+     * Get Subtotal label by Interest.
      *
      * @param $interest | float
+     *
      * @return Phrase
      */
     public function getLabelByInterest($interest)
     {
-        if($interest >= 0) {
-            return __('Installment Interest'); 
+        if ($interest >= 0) {
+            return __('Installment Interest');
         }
-        return __('Discount Cash'); 
+
+        return __('Discount Cash');
     }
 }

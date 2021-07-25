@@ -113,18 +113,18 @@ class BillingAddressDataRequest implements BuilderInterface
     {
         $value = (int) $this->config->getAddtionalValue($field);
 
-        if($field === self::STREET) {
+        if ($field === self::STREET) {
             $limitSend = 57;
-        } elseif($field === self::STREET_NUMBER) {
+        } elseif ($field === self::STREET_NUMBER) {
             $limitSend = 6;
         } elseif ($field === self::STREET_DISTRICT) {
             $limitSend = 60;
-        } elseif($field === self::STREET_COMPLEMENT) {
+        } elseif ($field === self::STREET_COMPLEMENT) {
             $limitSend = 30;
         }
 
         if ($value === 0) {
-            return substr($adress->getStreetLine1(),0,$limitSend);
+            return substr($adress->getStreetLine1(), 0, $limitSend);
         } elseif ($value === 1) {
             return substr($adress->getStreetLine2(), 0, $limitSend);
         } elseif ($value === 2) {

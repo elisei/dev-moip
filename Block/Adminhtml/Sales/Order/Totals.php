@@ -13,13 +13,12 @@ use Magento\Framework\View\Element\Template;
 use Magento\Sales\Model\Order;
 
 /**
- * Class Totals - Invoice
+ * Class Totals - Invoice.
  */
 class Totals extends Template
 {
-
     /**
-     * Retrieve current order model instance
+     * Retrieve current order model instance.
      *
      * @return Order
      */
@@ -29,8 +28,8 @@ class Totals extends Template
     }
 
     /**
-     * Get Source
-     * 
+     * Get Source.
+     *
      * @return source
      */
     public function getSource()
@@ -47,13 +46,13 @@ class Totals extends Template
         $this->getOrder();
         $this->getSource();
 
-        if(!$this->getSource()->getMoipInterestAmount()) {
+        if (!$this->getSource()->getMoipInterestAmount()) {
             return $this;
         }
 
         $total = new DataObject(
             [
-                'code' => 'moip_interest',
+                'code'  => 'moip_interest',
                 'value' => $this->getSource()->getMoipInterestAmount(),
                 'label' => __('Moip Interest Amount'),
             ]

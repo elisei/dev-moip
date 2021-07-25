@@ -14,13 +14,12 @@ use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\Template;
 
 /**
- * Class Totals - Creditmemo
+ * Class Totals - Creditmemo.
  */
 class Totals extends Template
 {
-
     /**
-     * Get data (totals) source model
+     * Get data (totals) source model.
      *
      * @return DataObject
      */
@@ -30,8 +29,8 @@ class Totals extends Template
     }
 
     /**
-     * Get Creditmemo
-     * 
+     * Get Creditmemo.
+     *
      * @return creditmemo
      */
     public function getCreditmemo()
@@ -40,7 +39,7 @@ class Totals extends Template
     }
 
     /**
-     * Initialize payment moip_interest totals
+     * Initialize payment moip_interest totals.
      *
      * @return $this
      */
@@ -50,16 +49,16 @@ class Totals extends Template
         $this->getCreditmemo();
         $this->getSource();
 
-        if(!$this->getSource()->getMoipInterestAmount()) {
+        if (!$this->getSource()->getMoipInterestAmount()) {
             return $this;
         }
 
         $moip_interest = new DataObject(
             [
-                'code' => 'moip_interest',
+                'code'   => 'moip_interest',
                 'strong' => false,
-                'value' => $this->getSource()->getMoipInterestAmount(),
-                'label' => __('Moip Interest Amount'),
+                'value'  => $this->getSource()->getMoipInterestAmount(),
+                'label'  => __('Moip Interest Amount'),
             ]
         );
 
