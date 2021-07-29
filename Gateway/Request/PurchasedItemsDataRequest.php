@@ -100,7 +100,7 @@ class PurchasedItemsDataRequest implements BuilderInterface
                         self::PURCHASED_ITEM_QUANTITY => $item->getQtyOrdered(),
                         self::PURCHASED_ITEM_DETAIL   => $item->getSku(),
                         self::PURCHASED_ITEM_PRICE    => $this->config->formatPrice($item->getPrice()),
-                        self::PURCHASED_ITEM_CATEGORY => $this->config->getMoipCategory($storeId)
+                        self::PURCHASED_ITEM_CATEGORY => $this->config->getMoipCategory($storeId),
                     ];
                 }
             }

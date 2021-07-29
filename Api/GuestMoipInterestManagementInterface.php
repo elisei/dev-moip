@@ -20,7 +20,7 @@ interface GuestMoipInterestManagementInterface
     /**
      * Set in the moip interest amount per installment number.
      *
-     * @param string                                           $cartId
+     * @param string                                        $cartId
      * @param \Moip\Magento2\Api\Data\MoipInterestInterface $installment
      *
      * @return string

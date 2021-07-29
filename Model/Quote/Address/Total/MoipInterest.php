@@ -83,7 +83,7 @@ class MoipInterest extends AbstractTotal
 
         $moipInterest = $quote->getMoipInterestAmount();
         $baseMoipInterest = $quote->getBaseMoipInterestAmount();
-       
+
         $total->setMoipInterestAmount($moipInterest);
         $total->setBaseMoipInterestAmount($baseMoipInterest);
 
@@ -112,7 +112,7 @@ class MoipInterest extends AbstractTotal
         $result = null;
         $interest = $total->getMoipInterestAmount();
         $labelByInterest = $this->getLabelByInterest($interest);
-        if ((int)$interest !== 0) {
+        if ((int) $interest !== 0) {
             $result = [
                 'code'  => $this->getCode(),
                 'title' => $labelByInterest,
