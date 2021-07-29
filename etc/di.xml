@@ -15,6 +15,7 @@
     </type>
     <preference for="Moip\Magento2\Api\Data\MoipInterestInterface" type="Moip\Magento2\Model\Data\MoipInterest" />
     <preference for="Moip\Magento2\Api\MoipInterestManagementInterface" type="Moip\Magento2\Model\MoipInterestManagement" />
+    <preference for="Moip\Magento2\Api\GuestMoipInterestManagementInterface" type="Moip\Magento2\Model\GuestMoipInterestManagement" />
     <!-- Payment Method Facade configuration -->
     <virtualType name="Magento2BaseFacade" type="Magento\Payment\Model\Method\Adapter">
         <arguments>

@@ -46,10 +46,10 @@ class Totals extends Template
         $this->getOrder();
         $this->getSource();
 
-        if (!$this->getSource()->getMoipInterestAmount()) {
+        if (!$this->getSource()->getMoipInterestAmount() || (int)$this->getSource()->getMoipInterestAmount() === 0) {
             return $this;
         }
-
+        
         $total = new DataObject(
             [
                 'code'  => 'moip_interest',

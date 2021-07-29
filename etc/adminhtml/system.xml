@@ -83,6 +83,13 @@
                         <config_path>payment/moip_magento2/statement_descriptor</config_path>
                         <validate>required-entry</validate>
                     </field>
+                    <field id="category" translate="label select" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="0">
+                        <label>Store segment</label>
+                        <source_model>Moip\Magento2\Block\Adminhtml\System\Config\Category</source_model>
+                        <config_path>payment/moip_magento2/category</config_path>
+                        <validate>required-entry validate-select</validate>
+                        <comment>Select the category that best defines your store's products.</comment>
+                    </field>
                 </group>
                 <group id="moip_magento2_cc" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Moip - Cartão de Crédito</label>

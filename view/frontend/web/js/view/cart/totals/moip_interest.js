@@ -18,7 +18,7 @@ define(
              * @returns {boolean}
              */
             isDisplayed() {
-                return this.getPureValue() != 0;
+                return this.getPureValue() !== 0;
             }
         });
     }

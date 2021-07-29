@@ -26,13 +26,17 @@ define(
             },
 
             isActive() {
-                return this.getPureValue() != 0;
+                return this.getPureValue() !== 0;
             },
 
             getPureValue() {
-                var price = 0;
-                if (this.totals() && totals.getSegment("moip_interest_amount").value) {
-                    price = parseFloat(totals.getSegment("moip_interest_amount").value);
+                var price = 0,
+                    priceInterest;
+                if (this.totals() && totals.getSegment("moip_interest_amount")) {
+                    priceInterest = totals.getSegment("moip_interest_amount").value
+                    if(priceInterest !== 0.000) {
+                        return priceInterest;
+                    }
                 }
                 return price;
             },

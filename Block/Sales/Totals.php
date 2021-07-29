@@ -74,7 +74,7 @@ class Totals extends Template
         $this->_order = $parent->getOrder();
         $this->_source = $parent->getSource();
 
-        if (!$this->_source->getMoipInterestAmount()) {
+        if (!$this->_source->getMoipInterestAmount() || (int) $this->_source->getMoipInterestAmount() === 0) {
             return $this;
         }
 

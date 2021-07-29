@@ -10,29 +10,45 @@ define(
         "Magento_Checkout/js/model/url-builder",
         "Magento_Checkout/js/model/error-processor",
         "mage/url",
-        "Magento_Checkout/js/action/get-totals"
+        "Magento_Checkout/js/action/get-totals",
+        'Magento_Customer/js/model/customer',
     ],
-    function ($, quote, urlBuilder, errorProcessor, urlFormatter, getTotalsAction) {
+    function ($, quote, urlBuilder, errorProcessor, urlFormatter, getTotalsAction, customer) {
     "use strict";
     return {
         /**
-         * Save SimpleNote ibn the quote
+         * Save Moip Interest by Installment
          *
          * @param installment
          */
         save(installment) {
-            var quoteId = quote.getQuoteId();
-            var url = urlBuilder.createUrl("/carts/mine/set-installment-for-moip-interest", {});
-            var payload = {
-                cartId: quoteId,
-                installment: {
-                    installment_for_interest: installment
-                }
-            };
-            
+            var serviceUrl,
+                payload,
+                quoteId = quote.getQuoteId();
+
+            if (!customer.isLoggedIn()) {
+                serviceUrl = urlBuilder.createUrl('/guest-carts/:cartId/set-installment-for-moip-interest', {
+                    cartId: quoteId
+                });
+                payload = {
+                    cartId: quoteId,
+                    installment: {
+                        installment_for_interest: installment
+                    }
+                };
+            } else {
+                serviceUrl = urlBuilder.createUrl('/carts/mine/set-installment-for-moip-interest', {});
+                payload = {
+                    cartId: quoteId,
+                    installment: {
+                        installment_for_interest: installment
+                    }
+                };
+            }
+
             var result = true;
             $.ajax({
-                url: urlFormatter.build(url),
+                url: urlFormatter.build(serviceUrl),
                 data: JSON.stringify(payload),
                 global: false,
                 contentType: "application/json",

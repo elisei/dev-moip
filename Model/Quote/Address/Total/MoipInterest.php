@@ -27,7 +27,7 @@ class MoipInterest extends AbstractTotal
     /**
      * @var string
      */
-    protected $_code = 'moip_interest';
+    protected $_code = 'moip_interest_amount';
 
     /**
      * @var Session
@@ -83,7 +83,7 @@ class MoipInterest extends AbstractTotal
 
         $moipInterest = $quote->getMoipInterestAmount();
         $baseMoipInterest = $quote->getBaseMoipInterestAmount();
-
+       
         $total->setMoipInterestAmount($moipInterest);
         $total->setBaseMoipInterestAmount($baseMoipInterest);
 
@@ -109,16 +109,16 @@ class MoipInterest extends AbstractTotal
         Quote $quote,
         Total $total
     ) {
+        $result = null;
         $interest = $total->getMoipInterestAmount();
         $labelByInterest = $this->getLabelByInterest($interest);
-        if (!$interest) {
-            return $this;
+        if ((int)$interest !== 0) {
+            $result = [
+                'code'  => $this->getCode(),
+                'title' => $labelByInterest,
+                'value' => $interest,
+            ];
         }
-        $result = [
-            'code'  => $this->getCode(),
-            'title' => $labelByInterest,
-            'value' => $interest,
-        ];
 
         return $result;
     }
