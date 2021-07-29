@@ -123,6 +123,7 @@ class FormCc extends Cc
      * Installments - Cc.
      *
      * @param float $amount
+     *
      * @var string
      */
     public function getInstallments($amount)

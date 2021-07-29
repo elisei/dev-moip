@@ -10,12 +10,10 @@ declare(strict_types=1);
 
 namespace Moip\Magento2\Model;
 
-use Exception;
 use Magento\Quote\Model\QuoteIdMaskFactory;
 use Moip\Magento2\Api\Data\MoipInterestInterface;
 use Moip\Magento2\Api\GuestMoipInterestManagementInterface;
 use Moip\Magento2\Api\MoipInterestManagementInterface;
-
 
 /**
  * Class MoipInterestManagement - Calc Insterest by Installment.
@@ -33,7 +31,7 @@ class GuestMoipInterestManagement implements GuestMoipInterestManagementInterfac
     protected $shippingInformationManagement;
 
     /**
-     * @param \Magento\Quote\Model\QuoteIdMaskFactory $quoteIdMaskFactory
+     * @param \Magento\Quote\Model\QuoteIdMaskFactory                      $quoteIdMaskFactory
      * @param \Magento\Checkout\Api\ShippingInformationManagementInterface $shippingInformationManagement
      * @codeCoverageIgnore
      */
@@ -54,6 +52,7 @@ class GuestMoipInterestManagement implements GuestMoipInterestManagementInterfac
     ) {
         /** @var $quoteIdMask \Magento\Quote\Model\QuoteIdMask */
         $quoteIdMask = $this->quoteIdMaskFactory->create()->load($cartId, 'masked_id');
+
         return $this->moipInterestManagement->saveMoipInterest(
             $quoteIdMask->getQuoteId(),
             $moipInterest
