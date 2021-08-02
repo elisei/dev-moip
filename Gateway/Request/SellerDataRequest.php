@@ -141,8 +141,8 @@ class SellerDataRequest implements BuilderInterface
         $commiUseInterest = $this->config->getSplitValue('secondary_percent_include_interest', $storeId);
 
         if (!$commiUseInterest) {
-            if($interest > 0) {
-                $total = $grandTotal - $interest;  
+            if ($interest > 0) {
+                $total = $grandTotal - $interest;
             } elseif ($interest < 0) {
                 $total = $grandTotal + $interest;
             }
