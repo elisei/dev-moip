@@ -47,13 +47,6 @@ class All extends AbstractModel
     private $moipConfig;
 
     /**
-     * Validator.
-     *
-     * @var \Magento\Framework\Url\Validator
-     */
-    private $validator;
-
-    /**
      * ZendClientFactory.
      *
      * @var \Magento\Framework\HTTP\ZendClientFactory

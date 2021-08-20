@@ -47,13 +47,6 @@ class Delete extends AbstractModel
     private $moipConfig;
 
     /**
-     * Validator.
-     *
-     * @var \Magento\Framework\Url\Validator
-     */
-    private $validator;
-
-    /**
      * ZendClientFactory.
      *
      * @var \Magento\Framework\HTTP\ZendClientFactory
@@ -132,11 +125,11 @@ class Delete extends AbstractModel
         $client->setMethod(ZendClient::DELETE);
 
         try {
-            $result = $client->request()->getBody();
+            $status = $client->request()->getStatus();
 
             return [
                 'success' => true,
-                'status'  => $client->request()->getStatus(),
+                'status'  => $status,
             ];
         } catch (Exception $e) {
             return ['success' => true, 'error' =>  $e->getMessage()];
