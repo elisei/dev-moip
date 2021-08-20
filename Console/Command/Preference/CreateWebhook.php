@@ -10,35 +10,34 @@ declare(strict_types=1);
 
 namespace Moip\Magento2\Console\Command\Preference;
 
-use Moip\Magento2\Model\Console\Command\Preference\Create;
 use Magento\Framework\App\State;
+use Moip\Magento2\Model\Console\Command\Preference\Create;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 
 class CreateWebhook extends Command
 {
-
-    const WEBHOOK_LINK = "link";
+    const WEBHOOK_LINK = 'link';
 
     /**
-     * Create
-     * 
+     * Create.
+     *
      * @var Moip\Magento2\Model\Console\Command\Preference\Create
      */
     protected $create;
 
     /**
-     * State
-     * 
+     * State.
+     *
      * @var \Magento\Framework\App\State
      */
     protected $state;
 
     /**
      * CreateWebhook constructor.
-     * 
+     *
      * @param Create $create
      */
     public function __construct(
@@ -59,7 +58,7 @@ class CreateWebhook extends Command
     ) {
         $this->state->setAreaCode(\Magento\Framework\App\Area::AREA_ADMINHTML);
         $this->create->setOutput($output);
-        
+
         $link = $input->getArgument(self::WEBHOOK_LINK);
         $this->create->preference($link);
     }
@@ -69,10 +68,10 @@ class CreateWebhook extends Command
      */
     protected function configure()
     {
-        $this->setName("moip:webhooks:set_preference");
-        $this->setDescription("Manually set the preferred url for Webhooks");
+        $this->setName('moip:webhooks:set_preference');
+        $this->setDescription('Manually set the preferred url for Webhooks');
         $this->setDefinition(
-            [new InputArgument(self::WEBHOOK_LINK, InputArgument::REQUIRED, "Domain")]
+            [new InputArgument(self::WEBHOOK_LINK, InputArgument::REQUIRED, 'Domain')]
         );
         parent::configure();
     }

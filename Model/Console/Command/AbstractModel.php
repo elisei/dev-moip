@@ -7,7 +7,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AbstractModel
 {
-
     /**
      * @var LoggerInterface
      */
@@ -25,8 +24,9 @@ class AbstractModel
 
     /**
      * AbstractModel constructor.
+     *
      * @param LoggerInterface $logger
-     * @param Filesystem $filesystem
+     * @param Filesystem      $filesystem
      */
     public function __construct(
         LoggerInterface $logger

@@ -11,82 +11,81 @@ declare(strict_types=1);
 namespace Moip\Magento2\Model\Console\Command\Preference;
 
 use Exception;
-
-use Moip\Magento2\Gateway\Config\Config as MoipConfig;
-use Moip\Magento2\Model\Console\Command\AbstractModel;
-use Magento\Framework\App\State;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Config\Model\ResourceModel\Config;
-use Magento\Framework\Url\Validator;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\State;
 use Magento\Framework\HTTP\ZendClient;
 use Magento\Framework\HTTP\ZendClientFactory;
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\Url\Validator;
+use Moip\Magento2\Gateway\Config\Config as MoipConfig;
+use Moip\Magento2\Model\Console\Command\AbstractModel;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class Create Preference Webhook
+ * Class Create Preference Webhook.
  */
 class Create extends AbstractModel
 {
     /**
-     * State
+     * State.
      *
      * @var \Magento\Framework\App\State
      */
     private $state;
 
     /**
-     * ScopeConfigInterface
-     * 
+     * ScopeConfigInterface.
+     *
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     protected $scopeConfig;
 
     /**
-     * Config
-     * 
+     * Config.
+     *
      * @var \Magento\Config\Model\ResourceModel\Config
      */
     private $config;
 
     /**
-     * moipConfig
+     * moipConfig.
      *
      * @var Moip\Magento2\Gateway\Config\Config
      */
     private $moipConfig;
 
     /**
-     * Validator
-     * 
+     * Validator.
+     *
      * @var \Magento\Framework\Url\Validator
      */
     private $validator;
 
     /**
-     * ZendClientFactory
-     * 
+     * ZendClientFactory.
+     *
      * @var \Magento\Framework\HTTP\ZendClientFactory
      */
     private $httpClientFactory;
 
     /**
-     * Json
-     * 
+     * Json.
+     *
      * @var \Magento\Framework\Serialize\Serializer\Json
      */
     private $json;
 
     /**
      * Create constructor.
-     * 
-     * @param LoggerInterface $logger
+     *
+     * @param LoggerInterface      $logger
      * @param ScopeConfigInterface $scopeConfig
-     * @param State $state
-     * @param MoipConfig $moipConfig
-     * @param Config $config
-     * @param Json $json
-     * @param ZendClientFactory $httpClientFactory
+     * @param State                $state
+     * @param MoipConfig           $moipConfig
+     * @param Config               $config
+     * @param Json                 $json
+     * @param ZendClientFactory    $httpClientFactory
      */
     public function __construct(
         LoggerInterface $logger,
@@ -112,79 +111,83 @@ class Create extends AbstractModel
 
     public function preference(string $baseUrl)
     {
-        $this->writeln("Init Set Preference");
-        $this->writeln(__("<info>Setting preferences for the domain: %1</info>", $baseUrl));
-        
+        $this->writeln('Init Set Preference');
+        $this->writeln(__('<info>Setting preferences for the domain: %1</info>', $baseUrl));
+
         $valid = $this->validator->isValid($baseUrl);
-        if(!$valid) {
-            $this->writeln(__("<error>The URL entered is invalid %1, it must contain https://...</error>", $baseUrl));
+        if (!$valid) {
+            $this->writeln(__('<error>The URL entered is invalid %1, it must contain https://...</error>', $baseUrl));
+
             return $this;
         }
 
         $formatValid = str_ends_with($baseUrl, '/');
-        if(!$formatValid) {
+        if (!$formatValid) {
             $this->writeln(__("<error>Your url %1 is valid, but must end with '/'</error>", $baseUrl));
+
             return $this;
         }
 
         $this->createPreference($baseUrl, 'accept');
         $this->createPreference($baseUrl, 'deny');
         $this->createPreference($baseUrl, 'refund');
-        $this->writeln(__("Finished"));
+        $this->writeln(__('Finished'));
+
         return $this;
     }
 
     /**
-     * Create Preference
+     * Create Preference.
      *
      * @param $baseUrl
      * @param $type
+     *
      * @return array
      */
     private function createPreference(string $baseUrl, string $type)
     {
         $data = $this->createWebhookData($baseUrl, $type);
         $create = $this->sendPreference($data);
-        
-        if($create["success"]) {
-            $preference = $create["preference"];
-            if(isset($preference["id"])){
-                $this->writeln(__("<info>Your preference for method %1 has been successfully created: %2</info>", $type,  $preference["id"]));
+
+        if ($create['success']) {
+            $preference = $create['preference'];
+            if (isset($preference['id'])) {
+                $this->writeln(__('<info>Your preference for method %1 has been successfully created: %2</info>', $type, $preference['id']));
                 $registryConfig = $this->setConfigPreferenceInfo($preference, $type);
 
-                if(!$registryConfig) {
-                    $this->writeln(__("<error>Error saving information in database: %1</error>", $registryConfig["error"])); 
+                if (!$registryConfig) {
+                    $this->writeln(__('<error>Error saving information in database: %1</error>', $registryConfig['error']));
                 }
-                
-            } elseif(isset($preference["code"])) {
-                $this->writeln(__("<error>Error creating preference %1: %2</error>", $type, $preference["description"])); 
+            } elseif (isset($preference['code'])) {
+                $this->writeln(__('<error>Error creating preference %1: %2</error>', $type, $preference['description']));
             }
-            
         } else {
-            $this->writeln(__("<error>Error creating preference %1: %2</error>", $type, $create["error"])); 
+            $this->writeln(__('<error>Error creating preference %1: %2</error>', $type, $create['error']));
         }
+
         return $this;
     }
 
     /**
-     * Set Config Preference Info
+     * Set Config Preference Info.
      *
      * @param $baseUrl
      * @param $type
+     *
      * @return array
      */
     private function setConfigPreferenceInfo(array $data, string $type): array
     {
         $environment = $this->moipConfig->getEnvironmentMode();
-        $pathPattern = "payment/moip_magento2/%s_%s_%s";
+        $pathPattern = 'payment/moip_magento2/%s_%s_%s';
 
-        if($type === "accept"){
+        if ($type === 'accept') {
             $pathConfigId = sprintf($pathPattern, 'capture', 'id', $environment);
             $pathConfigToken = sprintf($pathPattern, 'capture', 'token', $environment);
-        } elseif ($type === "deny"){
+        } elseif ($type === 'deny') {
             $pathConfigId = sprintf($pathPattern, 'cancel', 'id', $environment);
             $pathConfigToken = sprintf($pathPattern, 'cancel', 'token', $environment);
-        } elseif ($type === "refund"){
+        } elseif ($type === 'refund') {
             $pathConfigId = sprintf($pathPattern, 'refund', 'id', $environment);
             $pathConfigToken = sprintf($pathPattern, 'refund', 'token', $environment);
         }
@@ -203,15 +206,15 @@ class Create extends AbstractModel
                 0
             );
         } catch (Exception $e) {
-            return ["success" => false, "error" => $e->getMessage()];
+            return ['success' => false, 'error' => $e->getMessage()];
         }
 
-        return ["success" => true];
+        return ['success' => true];
     }
 
     /**
-     * Create Url For Accept
-     * 
+     * Create Url For Accept.
+     *
      * @return string
      */
     private function createUrlForAccept($baseUrl): string
@@ -220,8 +223,8 @@ class Create extends AbstractModel
     }
 
     /**
-     * Create Url For Deny
-     * 
+     * Create Url For Deny.
+     *
      * @return string
      */
     private function createUrlForDeny($baseUrl): string
@@ -230,8 +233,8 @@ class Create extends AbstractModel
     }
 
     /**
-     * Create Url For Refund
-     * 
+     * Create Url For Refund.
+     *
      * @return string
      */
     private function createUrlForRefund($baseUrl): string
@@ -240,23 +243,24 @@ class Create extends AbstractModel
     }
 
     /**
-     * Create Webhook Data
+     * Create Webhook Data.
      *
      * @param $baseUrl
      * @param $type
+     *
      * @return array
      */
-    private function createWebhookData(string $baseUrl, string $type) : array
+    private function createWebhookData(string $baseUrl, string $type): array
     {
-        if($type === 'accept'){
-           $event = ['ORDER.PAID'];
-           $url = $this->createUrlForAccept($baseUrl);
-        } elseif($type === 'deny'){
-           $event = ['ORDER.NOT_PAID'];
-           $url = $this->createUrlForDeny($baseUrl);
-        } elseif($type === 'refund'){
-           $event = ['REFUND.COMPLETED','REFUND.FAILED'];
-           $url = $this->createUrlForRefund($baseUrl);
+        if ($type === 'accept') {
+            $event = ['ORDER.PAID'];
+            $url = $this->createUrlForAccept($baseUrl);
+        } elseif ($type === 'deny') {
+            $event = ['ORDER.NOT_PAID'];
+            $url = $this->createUrlForDeny($baseUrl);
+        } elseif ($type === 'refund') {
+            $event = ['REFUND.COMPLETED', 'REFUND.FAILED'];
+            $url = $this->createUrlForRefund($baseUrl);
         }
 
         $webhook = [
@@ -274,15 +278,14 @@ class Create extends AbstractModel
      * @param $webhook
      * @return array
      */
-    private function sendPreference($data) : array
+    private function sendPreference($data): array
     {
-       
         $uri = $this->moipConfig->getApiUrl();
         $apiBearer = $this->moipConfig->getMerchantGatewayOauth();
         $client = $this->httpClientFactory->create();
         $dataSend = $this->json->serialize($data);
 
-        $client->setUri($uri."preferences/notifications");
+        $client->setUri($uri.'preferences/notifications');
         $client->setConfig(['maxredirects' => 0, 'timeout' => 30]);
         $client->setHeaders('Authorization', 'Bearer '.$apiBearer);
         $client->setRawData($dataSend, 'application/json');
@@ -290,12 +293,13 @@ class Create extends AbstractModel
 
         try {
             $result = $client->request()->getBody();
+
             return [
-                "success" => true, 
-                "preference" => $this->json->unserialize($result)
+                'success'    => true,
+                'preference' => $this->json->unserialize($result),
             ];
         } catch (Exception $e) {
-            return ["success" => true, "error" =>  $e->getMessage()];
+            return ['success' => true, 'error' =>  $e->getMessage()];
         }
     }
 }

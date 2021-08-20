@@ -11,72 +11,71 @@ declare(strict_types=1);
 namespace Moip\Magento2\Model\Console\Command\Preference;
 
 use Exception;
-
-use Moip\Magento2\Gateway\Config\Config as MoipConfig;
-use Moip\Magento2\Model\Console\Command\AbstractModel;
-use Magento\Framework\App\State;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\State;
 use Magento\Framework\HTTP\ZendClient;
 use Magento\Framework\HTTP\ZendClientFactory;
 use Magento\Framework\Serialize\Serializer\Json;
+use Moip\Magento2\Gateway\Config\Config as MoipConfig;
+use Moip\Magento2\Model\Console\Command\AbstractModel;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class All Preference Webhook
+ * Class All Preference Webhook.
  */
 class All extends AbstractModel
 {
     /**
-     * State
+     * State.
      *
      * @var \Magento\Framework\App\State
      */
     private $state;
 
     /**
-     * ScopeConfigInterface
-     * 
+     * ScopeConfigInterface.
+     *
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     protected $scopeConfig;
 
     /**
-     * moipConfig
+     * moipConfig.
      *
      * @var Moip\Magento2\Gateway\Config\Config
      */
     private $moipConfig;
 
     /**
-     * Validator
-     * 
+     * Validator.
+     *
      * @var \Magento\Framework\Url\Validator
      */
     private $validator;
 
     /**
-     * ZendClientFactory
-     * 
+     * ZendClientFactory.
+     *
      * @var \Magento\Framework\HTTP\ZendClientFactory
      */
     private $httpClientFactory;
 
     /**
-     * Json
-     * 
+     * Json.
+     *
      * @var \Magento\Framework\Serialize\Serializer\Json
      */
     private $json;
 
     /**
      * All constructor.
-     * 
-     * @param LoggerInterface $logger
+     *
+     * @param LoggerInterface      $logger
      * @param ScopeConfigInterface $scopeConfig
-     * @param State $state
-     * @param MoipConfig $moipConfig
-     * @param Json $json
-     * @param ZendClientFactory $httpClientFactory
+     * @param State                $state
+     * @param MoipConfig           $moipConfig
+     * @param Json                 $json
+     * @param ZendClientFactory    $httpClientFactory
      */
     public function __construct(
         LoggerInterface $logger,
@@ -101,20 +100,21 @@ class All extends AbstractModel
      */
     public function all()
     {
-        $this->writeln("List All Preference");
+        $this->writeln('List All Preference');
         $preference = $this->getPreferenceWebhooks();
-        if(!$preference) {
-            $this->writeln(__("<error>Error %1</error>", $preference["error"]));
+        if (!$preference) {
+            $this->writeln(__('<error>Error %1</error>', $preference['error']));
+
             return $this;
         }
-       
-        foreach($preference["preference"] as $webhooks){
-            if(isset($webhooks["id"])){
-                $this->writeln(__("<info>Preference ID: %1 Target Uri: %2</info>",$webhooks["id"], $webhooks["target"]));
+
+        foreach ($preference['preference'] as $webhooks) {
+            if (isset($webhooks['id'])) {
+                $this->writeln(__('<info>Preference ID: %1 Target Uri: %2</info>', $webhooks['id'], $webhooks['target']));
             }
         }
-        $this->writeln(__("Finished"));
-       
+        $this->writeln(__('Finished'));
+
         return $this;
     }
 
@@ -123,26 +123,26 @@ class All extends AbstractModel
      *
      * @return array
      */
-    private function getPreferenceWebhooks() : array
+    private function getPreferenceWebhooks(): array
     {
-       
         $uri = $this->moipConfig->getApiUrl();
         $apiBearer = $this->moipConfig->getMerchantGatewayOauth();
         $client = $this->httpClientFactory->create();
 
-        $client->setUri($uri."preferences/notifications");
+        $client->setUri($uri.'preferences/notifications');
         $client->setConfig(['maxredirects' => 0, 'timeout' => 30]);
         $client->setHeaders('Authorization', 'Bearer '.$apiBearer);
         $client->setMethod(ZendClient::GET);
 
         try {
             $result = $client->request()->getBody();
+
             return [
-                "success" => true, 
-                "preference" => $this->json->unserialize($result)
+                'success'    => true,
+                'preference' => $this->json->unserialize($result),
             ];
         } catch (Exception $e) {
-            return ["success" => true, "error" =>  $e->getMessage()];
+            return ['success' => true, 'error' =>  $e->getMessage()];
         }
     }
 }
