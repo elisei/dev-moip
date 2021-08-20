@@ -132,7 +132,6 @@ class SellerDataRequest implements BuilderInterface
         $addition = $orderAdapter->getTaxAmount();
         $interest = $orderAdapter->getBaseMoipInterestAmount();
         $grandTotal = $order->getGrandTotalAmount();
-        $discount = $orderAdapter->getDiscountAmount();
         $total = $grandTotal;
 
         $secondaryMPA = $this->config->getSplitValue('secondary_mpa', $storeId);
@@ -141,8 +140,8 @@ class SellerDataRequest implements BuilderInterface
         $commiUseInterest = $this->config->getSplitValue('secondary_percent_include_interest', $storeId);
 
         if (!$commiUseInterest) {
-            if ($interest > 0) {
-                $total = $grandTotal - $interest;
+            if($interest > 0) {
+                $total = $grandTotal - $interest;  
             } elseif ($interest < 0) {
                 $total = $grandTotal + $interest;
             }
