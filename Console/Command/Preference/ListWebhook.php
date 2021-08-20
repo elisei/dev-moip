@@ -10,12 +10,11 @@ declare(strict_types=1);
 
 namespace Moip\Magento2\Console\Command\Preference;
 
-use Moip\Magento2\Model\Console\Command\Preference\All;
 use Magento\Framework\App\State;
+use Moip\Magento2\Model\Console\Command\Preference\All;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 
 class ListWebhook extends Command
 {
@@ -29,12 +28,11 @@ class ListWebhook extends Command
      */
     protected $state;
 
-    
     /**
      * CreateWebhook constructor.
-     * 
+     *
      * @param State $state
-     * @param All $all
+     * @param All   $all
      */
     public function __construct(
         State $state,
@@ -62,8 +60,8 @@ class ListWebhook extends Command
      */
     protected function configure()
     {
-        $this->setName("moip:webhooks:list_preference");
-        $this->setDescription("List of preferred urls for Webhooks");
+        $this->setName('moip:webhooks:list_preference');
+        $this->setDescription('List of preferred urls for Webhooks');
         parent::configure();
     }
 }

@@ -10,36 +10,35 @@ declare(strict_types=1);
 
 namespace Moip\Magento2\Console\Command\Preference;
 
-use Moip\Magento2\Model\Console\Command\Preference\Delete;
 use Magento\Framework\App\State;
+use Moip\Magento2\Model\Console\Command\Preference\Delete;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 
 class DeleteWebhook extends Command
 {
-
-    const WEBHOOK_ID = "id";
+    const WEBHOOK_ID = 'id';
 
     /**
-     * Delete
-     * 
+     * Delete.
+     *
      * @var Moip\Magento2\Model\Console\Command\Preference\Delete
      */
     protected $delete;
 
     /**
-     * State
-     * 
+     * State.
+     *
      * @var \Magento\Framework\App\State
      */
     protected $state;
 
     /**
      * DeleteWebhook constructor.
-     * 
-     * @param State $state
+     *
+     * @param State  $state
      * @param Delete $delete
      */
     public function __construct(
@@ -70,10 +69,10 @@ class DeleteWebhook extends Command
      */
     protected function configure()
     {
-        $this->setName("moip:webhooks:delete_preference");
-        $this->setDescription("Manually delete the preferred url for Webhooks");
+        $this->setName('moip:webhooks:delete_preference');
+        $this->setDescription('Manually delete the preferred url for Webhooks');
         $this->setDefinition(
-            [new InputArgument(self::WEBHOOK_ID, InputArgument::REQUIRED, "ID Webhook - NPR-xxxx")]
+            [new InputArgument(self::WEBHOOK_ID, InputArgument::REQUIRED, 'ID Webhook - NPR-xxxx')]
         );
         parent::configure();
     }
