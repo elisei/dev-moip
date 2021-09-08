@@ -20,7 +20,7 @@ class Totals extends Template
     /**
      * Retrieve current order model instance.
      *
-     * @return Order
+     * @return \Magento\Sales\Model\Order
      */
     public function getOrder()
     {
@@ -30,7 +30,7 @@ class Totals extends Template
     /**
      * Get Source.
      *
-     * @return Source
+     * @return \Magento\Sales\Model\Order
      */
     public function getSource()
     {

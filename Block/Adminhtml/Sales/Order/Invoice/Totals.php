@@ -21,7 +21,7 @@ class Totals extends Template
     /**
      * Get data (totals) source model.
      *
-     * @return Source
+     * @return \Magento\Sales\Model\Order
      */
     public function getSource()
     {
@@ -31,7 +31,7 @@ class Totals extends Template
     /**
      * Get Invoice data.
      *
-     * @return Invoice
+     * @return \Magento\Sales\Model\Order
      */
     public function getInvoice()
     {
