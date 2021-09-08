@@ -207,7 +207,8 @@ class FormCc extends Cc
     }
 
     /**
-     * Get configured vault payment
+     * Get configured vault payment.
+     *
      * @return VaultPaymentInterface
      */
     private function getVaultPayment()
@@ -216,13 +217,14 @@ class FormCc extends Cc
     }
 
     /**
-     * Check if vault enabled
+     * Check if vault enabled.
+     *
      * @return bool
      */
     public function isVaultEnabled()
     {
         $vaultPayment = $this->getVaultPayment();
+
         return $vaultPayment->isActive();
     }
-
 }

@@ -74,7 +74,7 @@ class Success extends \Magento\Framework\View\Element\Template
     /**
      * Info payment.
      *
-     * @param  $info
+     * @param $info
      *
      * @return string
      */

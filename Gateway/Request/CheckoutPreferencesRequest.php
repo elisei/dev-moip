@@ -113,24 +113,24 @@ class CheckoutPreferencesRequest implements BuilderInterface
         $orderId = $orderAdapter->getId();
         //tanto order adapter como o order do pay retorna null para getOrderId(), getId() ou getEntityId()... o.O
         // $urlViewOrder = $this->urlHelper->getUrl('sales/order/view/', [ '_scope' => $storeId, 'order_id' => $orderId, '_nosid' => true ]);
-        $urlViewOrder = $this->urlHelper->getUrl('sales/order/history/', [ '_scope' => $storeId, '_nosid' => true ]);
+        $urlViewOrder = $this->urlHelper->getUrl('sales/order/history/', ['_scope' => $storeId, '_nosid' => true]);
 
         $result[self::CHECKOUT_PREFERENCE][self::REDIRECT_URLS] = [
             self::REDIRECT_URL_SUCCESS => $urlViewOrder,
-            self::REDIRECT_URL_FAILURE => $urlViewOrder
+            self::REDIRECT_URL_FAILURE => $urlViewOrder,
         ];
         if ($payment->getAdditionalInformation('checkout_enable_installments')) {
             $result[self::CHECKOUT_PREFERENCE][self::INSTALLMENTS][] = [
                 self::INSTALLMENTS_QTY => [
                     1,
-                    $this->configCheckout->getMaxInstallments()
-                ]
+                    $this->configCheckout->getMaxInstallments(),
+                ],
             ];
         } else {
             $result[self::CHECKOUT_PREFERENCE][self::INSTALLMENTS][] = [
                 self::INSTALLMENTS_QTY => [
-                    1
-                ]
+                    1,
+                ],
             ];
         }
 

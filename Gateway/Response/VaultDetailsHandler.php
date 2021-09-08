@@ -111,7 +111,7 @@ class VaultDetailsHandler implements HandlerInterface
         $ccId = null;
         $ccType = null;
         $ccLast4 = null;
-        
+
         if (isset($paymentAddtional['creditCard'])) {
             if (isset($paymentAddtional['creditCard']['id'])) {
                 $ccId = $paymentAddtional['creditCard']['id'];

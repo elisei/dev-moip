@@ -67,8 +67,8 @@ class ConfigCheckout extends PaymentConfig
     const USE_GET_INSTALLMENTS = 'get_enable_installments';
 
     /**
-     * Maximum installments allowed - Moip Checkout
-     * 
+     * Maximum installments allowed - Moip Checkout.
+     *
      * @const string
      */
     const USE_MAX_INSTALLMENTS = 'max_installments';
@@ -85,7 +85,7 @@ class ConfigCheckout extends PaymentConfig
 
     /**
      * @param ScopeConfigInterface $scopeConfig
-     * @param METHOD   $methodCode
+     * @param METHOD               $methodCode
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -98,7 +98,7 @@ class ConfigCheckout extends PaymentConfig
     /**
      * Get Payment configuration status.
      *
-     * @return boolean
+     * @return bool
      */
     public function isActive($storeId = null): bool
     {
@@ -146,7 +146,7 @@ class ConfigCheckout extends PaymentConfig
     /**
      * Get if you use document capture on the form.
      *
-     * @return boolean
+     * @return bool
      */
     public function getUseTaxDocumentCapture($storeId = null): bool
     {
@@ -162,7 +162,7 @@ class ConfigCheckout extends PaymentConfig
     /**
      * Get if you use name capture on the form.
      *
-     * @return boolean
+     * @return bool
      */
     public function getUseNameCapture($storeId = null): bool
     {
@@ -178,7 +178,7 @@ class ConfigCheckout extends PaymentConfig
     /**
      * Get if you use installments.
      *
-     * @return boolean
+     * @return bool
      */
     public function getUseInstallments($storeId = null): bool
     {

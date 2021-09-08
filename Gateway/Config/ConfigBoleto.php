@@ -245,7 +245,7 @@ class ConfigBoleto extends PaymentConfig
     /**
      * Get if you use document capture on the form.
      *
-     * @return boolean
+     * @return bool
      */
     public function getUseTaxDocumentCapture($storeId = null): ?bool
     {
@@ -261,7 +261,7 @@ class ConfigBoleto extends PaymentConfig
     /**
      * Get if you use name capture on the form.
      *
-     * @return boolean
+     * @return bool
      */
     public function getUseNameCapture($storeId = null): ?bool
     {

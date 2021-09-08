@@ -34,7 +34,7 @@ class ConfigCcVault extends PaymentConfig
      * Config constructor.
      *
      * @param ScopeConfigInterface $scopeConfig
-     * @param METHOD   $methodCode
+     * @param METHOD               $methodCode
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -48,7 +48,7 @@ class ConfigCcVault extends PaymentConfig
      * @throws InputException
      * @throws NoSuchEntityException
      *
-     * @return boolean
+     * @return bool
      */
     public function useCvv($storeId = null): bool
     {

@@ -435,7 +435,7 @@ class PaymentDataRequest implements BuilderInterface
     /**
      * StructurePhone.
      *
-     * @param  $phone
+     * @param $phone
      *
      * @return array
      */

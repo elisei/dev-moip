@@ -228,7 +228,7 @@ class Config extends PaymentConfig
     /**
      * @param ScopeConfigInterface $scopeConfig
      * @param Json                 $json
-     * @param METHOD   $methodCode
+     * @param METHOD               $methodCode
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
