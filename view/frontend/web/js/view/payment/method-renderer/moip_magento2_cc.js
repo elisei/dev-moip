@@ -259,8 +259,6 @@ define([
             var min_installment = window.checkoutConfig.payment[this.getCode()].min_installment;
             var max_installment = window.checkoutConfig.payment[this.getCode()].max_installment;
             var installmentsCalcValues = {};
-            var count = 0;
-            
             var max_div = (calcTotal/min_installment);
                 max_div = parseInt(max_div);
             if(max_div > max_installment) {

@@ -51,7 +51,7 @@ class Create extends AbstractModel
     /**
      * moipConfig.
      *
-     * @var Moip\Magento2\Gateway\Config\Config
+     * @var \Moip\Magento2\Gateway\Config\Config
      */
     private $moipConfig;
 

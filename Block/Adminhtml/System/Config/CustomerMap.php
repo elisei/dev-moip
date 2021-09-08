@@ -10,19 +10,20 @@ namespace Moip\Magento2\Block\Adminhtml\System\Config;
 
 use Magento\Customer\Model\Customer;
 use Magento\Framework\ObjectManagerInterface;
+use Magento\Framework\Option\ArrayInterface;
 
 /**
  * Class CustomerMap - Maps customer attributes.
  */
-class CustomerMap implements \Magento\Framework\Option\ArrayInterface
+class CustomerMap implements ArrayInterface
 {
     /**
-     * @var objectManager
+     * @var ObjectManagerInterface
      */
     protected $objectManager;
 
     /**
-     * @var customer
+     * @var Customer
      */
     protected $customer;
 
@@ -40,7 +41,7 @@ class CustomerMap implements \Magento\Framework\Option\ArrayInterface
     /**
      * Returns Options.
      *
-     * @return array | attributesArrays
+     * @return array
      */
     public function toOptionArray()
     {

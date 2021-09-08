@@ -8,13 +8,14 @@
 
 namespace Moip\Magento2\Block\Adminhtml\System\Config;
 
+use Magento\Config\Block\System\Config\Form\Fieldset;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
 
 /**
  * Class PaymentGroup - Fieldset renderer for moip.
  */
-class PaymentGroup extends \Magento\Config\Block\System\Config\Form\Fieldset
+class PaymentGroup extends Fieldset
 {
     /**
      * @var \Magento\Config\Model\Config

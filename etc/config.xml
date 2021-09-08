@@ -70,7 +70,7 @@
                 <title>Cartão de Crédito</title>
                 <currency>BRL</currency>
                 <debugReplaceKeys>MERCHANT_KEY</debugReplaceKeys>
-                <paymentInfoKeys>method_name,cc_installments,cc_installment_interest,cc_type,cc_number,cc_holder_fullname,cc_holder_birth_date,tax_document,cc_holder_tax_document,cc_holder_phone,device</paymentInfoKeys>
+                <paymentInfoKeys>method_name,cc_installments,cc_installment_interest,cc_type,cc_number,cc_holder_fullname,cc_holder_birth_date,cc_holder_tax_document,cc_holder_phone,device</paymentInfoKeys>
                 <privateInfoKeys>device,cc_installment_interest</privateInfoKeys>
                 <is_gateway>1</is_gateway>
                 <can_use_internal>1</can_use_internal>
@@ -159,6 +159,42 @@ Não parcelamos no boleto.]]></instruction_checkout>
                 <get_name>1</get_name>
                 <get_tax_document>1</get_tax_document>
             </moip_magento2_boleto>
+            <moip_magento2_checkout>
+                <active>1</active>
+                <model>Magento2CheckoutFacade</model>
+                <order_status>payment_review</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Moip Checkout</title>
+                <debugReplaceKeys>MERCHANT_KEY</debugReplaceKeys>
+                <paymentInfoKeys>method_name,instructions,checkout_url,checkout_cc,checkout_boleto,checkout_payer_fullname,checkout_payer_tax_document</paymentInfoKeys>
+                <privateInfoKeys>checkout_cc,checkout_boleto,checkout_payer_fullname,checkout_payer_tax_document</privateInfoKeys>
+                <is_gateway>1</is_gateway>
+                <can_use_internal>1</can_use_internal>
+                <can_use_checkout>1</can_use_checkout>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_refund>1</can_refund>
+                <can_void>1</can_void>
+                <can_cancel>1</can_cancel>
+                <can_review_payment>1</can_review_payment>
+                <!-- Magento Issue 20139 -->
+                <can_fetch_transaction_information>1</can_fetch_transaction_information>
+                <can_fetch_transaction_info>1</can_fetch_transaction_info>
+                <!-- Magento Issue 20139 -->
+                <can_deny_payment>1</can_deny_payment>
+                <can_accept_payment>1</can_accept_payment>
+                <group>moip_group</group>
+                <expiration>3</expiration>
+                <instruction_checkout><![CDATA[O cliente receberá o email de pedido contendo o link para o pagamento.
+O pagamento será feito diretamente no Moip.
+Não é possível cobrar juros no parcelamento ofertado.]]></instruction_checkout>
+                <get_enable_installments>1</get_enable_installments>
+                <max_installments>12</max_installments>
+                <get_name>0</get_name>
+                <get_tax_document>0</get_tax_document>
+            </moip_magento2_checkout>
         </payment>
     </default>
 </config>

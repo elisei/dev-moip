@@ -14,8 +14,10 @@ use Magento\Framework\View\Element\Template\Context;
 use Magento\Payment\Block\Form\Cc;
 use Magento\Payment\Helper\Data;
 use Magento\Payment\Model\Config;
+use Magento\Vault\Model\VaultPaymentInterface;
 use Moip\Magento2\Gateway\Config\Config as ConfigBase;
 use Moip\Magento2\Gateway\Config\ConfigCc;
+use Moip\Magento2\Gateway\Config\ConfigCcVault;
 
 /**
  * Class FormCc - Form for payment by cc.
@@ -40,12 +42,7 @@ class FormCc extends Cc
     protected $configCc;
 
     /**
-     * @var configProvider
-     */
-    protected $configProvider;
-
-    /**
-     * @var paymentDataHelper
+     * @var Data
      */
     private $paymentDataHelper;
 
@@ -129,8 +126,6 @@ class FormCc extends Cc
     public function getInstallments($amount)
     {
         $typeInstallment = $this->configCc->getTypeInstallment();
-        $limitByInstallment = $this->configCc->getMaxInstallment();
-        $limitInstallmentValue = $this->configCc->getMinInstallment();
         $interestByInstallment = $this->configCc->getInfoInterest();
         $plotlist = [];
         foreach ($interestByInstallment as $key => $_interest) {
@@ -210,4 +205,24 @@ class FormCc extends Cc
     {
         return $this->configCc->getUsePhoneCapture();
     }
+
+    /**
+     * Get configured vault payment
+     * @return VaultPaymentInterface
+     */
+    private function getVaultPayment()
+    {
+        return $this->paymentDataHelper->getMethodInstance(ConfigCcVault::METHOD);
+    }
+
+    /**
+     * Check if vault enabled
+     * @return bool
+     */
+    public function isVaultEnabled()
+    {
+        $vaultPayment = $this->getVaultPayment();
+        return $vaultPayment->isActive();
+    }
+
 }

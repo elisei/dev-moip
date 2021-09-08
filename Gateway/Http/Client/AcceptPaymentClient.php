@@ -23,7 +23,7 @@ use Moip\Magento2\Gateway\Config\Config;
 class AcceptPaymentClient implements ClientInterface
 {
     /**
-     * @var LoggerInterface
+     * @var Logger
      */
     private $logger;
 

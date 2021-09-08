@@ -40,11 +40,6 @@ class MoipInterestManagement implements MoipInterestManagementInterface
     protected $priceCurrency;
 
     /**
-     * @var total
-     */
-    protected $total;
-
-    /**
      * @var Config
      */
     private $config;
@@ -136,7 +131,7 @@ class MoipInterestManagement implements MoipInterestManagementInterface
             if ($interest[$installment] > 0) {
                 $installmentInterest = $this->getInterestCompound($total, $interest[$installment], $installment);
                 if ($typeInstallment === 'simple') {
-                    $installmentInterest = $this->getInterestSimple($total, $interest[$installment], $installment);
+                    $installmentInterest = $this->getInterestSimple($total, $interest[$installment]);
                 }
             } elseif ($interest[$installment] < 0) {
                 $installmentInterest = $this->getInterestSimple($total, $interest[$installment]);

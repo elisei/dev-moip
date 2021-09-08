@@ -7,16 +7,17 @@
  */
 
 namespace Moip\Magento2\Block\Adminhtml\System\Config;
+use Magento\Framework\Option\ArrayInterface;
 
 /**
  * Class TypeCPF - Defines tax document.
  */
-class TypeCPF implements \Magento\Framework\Option\ArrayInterface
+class TypeCPF implements ArrayInterface
 {
     /**
      * Returns Options.
      *
-     * @return array attributesArrays
+     * @return array
      */
     public function toOptionArray()
     {

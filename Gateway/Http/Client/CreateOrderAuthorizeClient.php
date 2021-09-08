@@ -25,7 +25,7 @@ use Moip\Magento2\Gateway\Config\Config;
 class CreateOrderAuthorizeClient implements ClientInterface
 {
     /**
-     * @var LoggerInterface
+     * @var Logger
      */
     private $logger;
 

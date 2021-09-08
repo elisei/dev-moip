@@ -5,16 +5,19 @@
  * @author    Bruno Elisei <brunoelisei@o2ti.com>
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
 namespace Moip\Magento2\Gateway\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Payment\Gateway\Config\Config as PaymentConfig;
 use Magento\Store\Model\ScopeInterface;
 
 /**
  * Class Config - Returns form of payment configuration properties.
  */
-class Config extends \Magento\Payment\Gateway\Config\Config
+class Config extends PaymentConfig
 {
     /**
      * Method code - Base.
@@ -218,14 +221,23 @@ class Config extends \Magento\Payment\Gateway\Config\Config
     private $scopeConfig;
 
     /**
+     * @var Json
+     */
+    protected $json;
+
+    /**
      * @param ScopeConfigInterface $scopeConfig
+     * @param Json                 $json
+     * @param METHOD   $methodCode
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        $methodCode = null
+        Json $json,
+        $methodCode = self::METHOD
     ) {
-        \Magento\Payment\Gateway\Config\Config::__construct($scopeConfig, $methodCode);
+        PaymentConfig::__construct($scopeConfig, $methodCode);
         $this->scopeConfig = $scopeConfig;
+        $this->json = $json;
     }
 
     /**
@@ -233,9 +245,9 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      *
      * @param int $amount
      *
-     * @return int
+     * @return float
      */
-    public function formatPrice($amount)
+    public function formatPrice($amount): float
     {
         return $amount * self::ROUND_UP;
     }
@@ -247,7 +259,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string
      */
-    public function getApiUrl($storeId = null)
+    public function getApiUrl($storeId = null): ?string
     {
         $environment = $this->getEnvironmentMode($storeId);
 
@@ -263,7 +275,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string
      */
-    public function getEnvironmentMode($storeId = null): string
+    public function getEnvironmentMode($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -285,7 +297,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string
      */
-    public function getMerchantGatewayOauth($storeId = null): string
+    public function getMerchantGatewayOauth($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -315,7 +327,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string
      */
-    public function getMerchantGatewayKeyPublic($storeId = null): string
+    public function getMerchantGatewayKeyPublic($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -344,7 +356,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string
      */
-    public function getMerchantGatewayCaptureToken($storeId = null): string
+    public function getMerchantGatewayCaptureToken($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -374,7 +386,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string
      */
-    public function getMerchantGatewayCancelToken($storeId = null): string
+    public function getMerchantGatewayCancelToken($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -404,7 +416,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string
      */
-    public function getMerchantGatewayRefundToken($storeId = null): string
+    public function getMerchantGatewayRefundToken($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -434,7 +446,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string
      */
-    public function getMerchantGatewayUsername($storeId = null): string
+    public function getMerchantGatewayUsername($storeId = null): ?string
     {
         $environment = $this->getEnvironmentMode($storeId);
 
@@ -462,7 +474,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
-        $result = json_decode($ccTypesMapper, true);
+        $result = $this->json->unserialize($ccTypesMapper);
 
         return is_array($result) ? $result : [];
     }
@@ -476,7 +488,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string
      */
-    public function getAddtionalValue($field, $storeId = null): string
+    public function getAddtionalValue($field, $storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -496,7 +508,7 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string
      */
-    public function getSplitValue($field, $storeId = null): string
+    public function getSplitValue($field, $storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 

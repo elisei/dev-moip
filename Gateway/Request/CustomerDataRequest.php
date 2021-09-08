@@ -145,8 +145,8 @@ class CustomerDataRequest implements BuilderInterface
     /**
      * StructurePhone.
      *
-     * @param  $phone full phone number,
-     * @param  $defaultCountryCode,
+     * @param  $phone
+     * @param  $defaultCountryCode
      *
      * @return array
      */
@@ -192,6 +192,10 @@ class CustomerDataRequest implements BuilderInterface
         //* sobrescreve na order o name caso seja capturado no formulario de pagamento
         if ($payment->getAdditionalInformation('boleto_payer_fullname')) {
             $name = $payment->getAdditionalInformation('boleto_payer_fullname');
+        }
+
+        if ($payment->getAdditionalInformation('checkout_payer_fullname')) {
+            $name = $payment->getAdditionalInformation('checkout_payer_fullname');
         }
 
         if (!$name) {

@@ -70,7 +70,7 @@ class TaxDocumentDataRequest implements BuilderInterface
      *
      * @param $orderAdapter
      *
-     * @return value
+     * @return string
      */
     public function getValueForTaxDocument($orderAdapter)
     {
@@ -126,6 +126,10 @@ class TaxDocumentDataRequest implements BuilderInterface
 
         if ($payment->getAdditionalInformation('boleto_payer_tax_document')) {
             $taxDocument = $payment->getAdditionalInformation('boleto_payer_tax_document');
+        }
+
+        if ($payment->getAdditionalInformation('checkout_payer_tax_document')) {
+            $taxDocument = $payment->getAdditionalInformation('checkout_payer_tax_document');
         }
 
         if (!$taxDocument) {

@@ -21,7 +21,7 @@ class Totals extends Template
     /**
      * Get data (totals) source model.
      *
-     * @return DataObject
+     * @return Source
      */
     public function getSource()
     {
@@ -31,7 +31,7 @@ class Totals extends Template
     /**
      * Get Creditmemo.
      *
-     * @return creditmemo
+     * @return Creditmemo
      */
     public function getCreditmemo()
     {

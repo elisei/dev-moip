@@ -20,7 +20,7 @@ use Magento\Payment\Gateway\Helper;
 class SubjectReader
 {
     /**
-     * @var Checkout Session
+     * @var Session
      */
     private $checkoutSession;
 
@@ -38,7 +38,7 @@ class SubjectReader
     /**
      * Reads payment from subject.
      *
-     * @param array $subject
+     * @param array
      *
      * @return PaymentDataObjectInterface
      */
@@ -54,7 +54,7 @@ class SubjectReader
      *
      * @return int|null
      */
-    public function readStoreId(array $subject): int
+    public function readStoreId(array $subject): ?int
     {
         $storeId = $subject['store_id'] ?? null;
 
@@ -87,7 +87,7 @@ class SubjectReader
     /**
      * Reads response from subject.
      *
-     * @param array $subject
+     * @param array
      *
      * @return array
      */

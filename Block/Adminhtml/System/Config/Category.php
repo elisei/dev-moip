@@ -8,10 +8,12 @@
 
 namespace Moip\Magento2\Block\Adminhtml\System\Config;
 
+use Magento\Framework\Option\ArrayInterface;
+
 /**
  * Class Category - Defines Category types.
  */
-class Category implements \Magento\Framework\Option\ArrayInterface
+class Category implements ArrayInterface
 {
     /**
      * Returns Options.

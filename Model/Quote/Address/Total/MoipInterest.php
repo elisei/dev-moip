@@ -136,7 +136,7 @@ class MoipInterest extends AbstractTotal
     /**
      * Get Subtotal label by Interest.
      *
-     * @param $interest | float
+     * @param $interest
      *
      * @return Phrase
      */

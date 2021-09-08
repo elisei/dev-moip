@@ -30,7 +30,7 @@ class Totals extends Template
     /**
      * Get Source.
      *
-     * @return source
+     * @return Source
      */
     public function getSource()
     {

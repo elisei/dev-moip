@@ -10,10 +10,4 @@
     <head>
         <css src="Moip_Magento2::css/payment.css"/>
     </head>
-    <referenceBlock name="order_create_billing_form">
-        <action method="setMethodFormTemplate">
-            <argument name="method" xsi:type="string">moip_magento2_cc_vault</argument>
-            <argument name="template" xsi:type="string">Moip_Magento2::form/vault.phtml</argument>
-        </action>
-    </referenceBlock>
 </page>

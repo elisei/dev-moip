@@ -27,7 +27,7 @@ class RefundClient implements ClientInterface
     const MOIP_ORDER_ID = 'moip_order_id';
 
     /**
-     * @var LoggerInterface
+     * @var Logger
      */
     private $logger;
 

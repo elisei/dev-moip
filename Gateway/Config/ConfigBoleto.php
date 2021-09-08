@@ -5,17 +5,19 @@
  * @author    Bruno Elisei <brunoelisei@o2ti.com>
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
 namespace Moip\Magento2\Gateway\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
+use Magento\Payment\Gateway\Config\Config as PaymentConfig;
 use Magento\Store\Model\ScopeInterface;
 
 /**
  * Class ConfigBoleto - Returns form of payment configuration properties.
  */
-class ConfigBoleto extends \Magento\Payment\Gateway\Config\Config
+class ConfigBoleto extends PaymentConfig
 {
     /**
      * Method code - Boleto.
@@ -102,8 +104,10 @@ class ConfigBoleto extends \Magento\Payment\Gateway\Config\Config
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        DateTime $date
+        DateTime $date,
+        $methodCode = null
     ) {
+        PaymentConfig::__construct($scopeConfig, $methodCode);
         $this->scopeConfig = $scopeConfig;
         $this->date = $date;
     }
@@ -129,7 +133,7 @@ class ConfigBoleto extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string|null
      */
-    public function getTitle($storeId = null)
+    public function getTitle($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -145,7 +149,7 @@ class ConfigBoleto extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string|null
      */
-    public function getInstructionCheckout($storeId = null)
+    public function getInstructionCheckout($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -159,9 +163,9 @@ class ConfigBoleto extends \Magento\Payment\Gateway\Config\Config
     /**
      * Get Expiration.
      *
-     * @return date
+     * @return string
      */
-    public function getExpiration($storeId = null)
+    public function getExpiration($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
         $due = $this->scopeConfig->getValue(
@@ -176,9 +180,9 @@ class ConfigBoleto extends \Magento\Payment\Gateway\Config\Config
     /**
      * Get Expiration Formart.
      *
-     * @return date
+     * @return string
      */
-    public function getExpirationFormat($storeId = null)
+    public function getExpirationFormat($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
         $due = $this->scopeConfig->getValue(
@@ -195,7 +199,7 @@ class ConfigBoleto extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string|null
      */
-    public function getInstructionLineFirst($storeId = null)
+    public function getInstructionLineFirst($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -211,7 +215,7 @@ class ConfigBoleto extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string|null
      */
-    public function getInstructionLineSecond($storeId = null)
+    public function getInstructionLineSecond($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -227,7 +231,7 @@ class ConfigBoleto extends \Magento\Payment\Gateway\Config\Config
      *
      * @return string|null
      */
-    public function getInstructionLineThird($storeId = null)
+    public function getInstructionLineThird($storeId = null): ?string
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -241,9 +245,9 @@ class ConfigBoleto extends \Magento\Payment\Gateway\Config\Config
     /**
      * Get if you use document capture on the form.
      *
-     * @return string|null
+     * @return boolean
      */
-    public function getUseTaxDocumentCapture($storeId = null)
+    public function getUseTaxDocumentCapture($storeId = null): ?bool
     {
         $pathPattern = 'payment/%s/%s';
 
@@ -257,9 +261,9 @@ class ConfigBoleto extends \Magento\Payment\Gateway\Config\Config
     /**
      * Get if you use name capture on the form.
      *
-     * @return string|null
+     * @return boolean
      */
-    public function getUseNameCapture($storeId = null)
+    public function getUseNameCapture($storeId = null): ?bool
     {
         $pathPattern = 'payment/%s/%s';
 

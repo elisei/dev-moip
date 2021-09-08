@@ -20,9 +20,9 @@ use Magento\Payment\Model\Method\Logger;
 use Moip\Magento2\Gateway\Config\Config;
 
 /**
- * Class FetchTransactionInfoClient - Returns order query.
+ * Class AuthorizeClient - Returns authorization for payment.
  */
-class FetchTransactionInfoClient implements ClientInterface
+class AuthorizeCheckoutClient implements ClientInterface
 {
     const MOIP_ORDER_ID = 'moip_order_id';
 
@@ -80,33 +80,19 @@ class FetchTransactionInfoClient implements ClientInterface
         $orderMoip = $request[self::MOIP_ORDER_ID];
 
         try {
-            $client->setUri($url.'orders/'.$orderMoip);
+            $client->setUri($url.'orders/'.$orderMoip.'/payments');
             $client->setConfig(['maxredirects' => 0, 'timeout' => 120]);
             $client->setHeaders('Authorization', 'Bearer '.$apiBearer);
-            $client->setMethod(ZendClient::GET);
+            $client->setRawData($this->json->serialize($request['paymentInstrument']), 'application/json');
+            $client->setMethod(ZendClient::POST);
 
             $responseBody = $client->request()->getBody();
             $data = $this->json->unserialize($responseBody);
-            if (isset($data['status'])) {
-                $cancelDetailsAdmin = __('We did not record the payment.');
-                $cancelDetailsCus = __('The payment deadline has been exceeded.');
-                if (isset($data['payments'])) {
-                    foreach ($data['payments'] as $payment) {
-                        if (isset($payment['cancellationDetails'])) {
-                            $cancelCode = $payment['cancellationDetails']['code'];
-                            $cancelDescription = $payment['cancellationDetails']['description'];
-                            $cancelBy = $payment['cancellationDetails']['cancelledBy'];
-                            $cancelDetailsAdmin = __('%1, code %2, by %3', $cancelDescription, $cancelCode, $cancelBy);
-                            $cancelDetailsCus = __('%1', $cancelDescription);
-                        }
-                    }
-                }
+            if (isset($data['id'])) {
                 $response = array_merge(
                     [
-                        'RESULT_CODE'                   => 1,
-                        'STATUS'                        => $data['status'],
-                        'CANCELLATION_DETAILS_CUSTOMER' => $cancelDetailsCus,
-                        'CANCELLATION_DETAILS_ADMIN'    => $cancelDetailsAdmin,
+                        'RESULT_CODE' => 1,
+                        'TXN_ID'      => $data['id'],
                     ],
                     $data
                 );
@@ -120,11 +106,19 @@ class FetchTransactionInfoClient implements ClientInterface
             }
             $this->logger->debug(
                 [
-                    'url'      => $url.'orders/'.$orderMoip,
+                    'url'      => $url.$orderMoip.'/payments',
+                    'send'     => $this->json->serialize($request['paymentInstrument']),
                     'response' => $responseBody,
                 ]
             );
         } catch (InvalidArgumentException $e) {
+            $this->logger->debug(
+                [
+                    'url'      => $url.$orderMoip.'/payments',
+                    'send'     => $this->json->serialize($request['paymentInstrument']),
+                    'response' => $responseBody,
+                ]
+            );
             // phpcs:ignore Magento2.Exceptions.DirectThrow
             throw new \Exception('Invalid JSON was returned by the gateway');
         }

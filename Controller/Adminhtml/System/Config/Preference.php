@@ -19,50 +19,56 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\HTTP\ZendClient;
 use Magento\Framework\HTTP\ZendClientFactory;
+use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Store\Model\StoreManagerInterface;
 use Moip\Magento2\Gateway\Config\Config as ConfigBase;
 
 /*
- * Class Preferenc
+ * Class Preference - define webhooks
  */
 class Preference extends \Magento\Backend\App\Action
 {
-    /*
+    /**
      * @var cacheTypeList
      */
     protected $cacheTypeList;
 
-    /*
+    /**
      * @var cacheFrontendPool
      */
     protected $cacheFrontendPool;
 
-    /*
+    /**
      * @var resultJsonFactory
      */
     protected $resultJsonFactory;
 
-    /*
-     * @var configInterface
+    /**
+     *  @var configInterface
      */
     protected $configInterface;
 
-    /*
+    /**
      * @var configBase
      */
     protected $configBase;
 
-    /*
+    /**
      * @var resourceConfig
      */
     protected $resourceConfig;
 
-    /*
+    /**
      * @var storeManager
      */
     protected $storeManager;
 
-    /*
+    /**
+     * @var Json
+     */
+    protected $json;
+
+    /**
      * @param Context
      * @param TypeListInterface
      * @param Pool
@@ -71,6 +77,8 @@ class Preference extends \Magento\Backend\App\Action
      * @param Config
      * @param ConfigBase
      * @param StoreManagerInterface
+     * @param ZendClientFactory
+     * @param Json
      */
     public function __construct(
         Context $context,
@@ -81,7 +89,8 @@ class Preference extends \Magento\Backend\App\Action
         Config $resourceConfig,
         ConfigBase $configBase,
         StoreManagerInterface $storeManager,
-        ZendClientFactory $httpClientFactory
+        ZendClientFactory $httpClientFactory,
+        Json $json
     ) {
         $this->cacheTypeList = $cacheTypeList;
         $this->cacheFrontendPool = $cacheFrontendPool;
@@ -91,6 +100,7 @@ class Preference extends \Magento\Backend\App\Action
         $this->configBase = $configBase;
         $this->storeManager = $storeManager;
         $this->httpClientFactory = $httpClientFactory;
+        $this->json = $json;
         parent::__construct($context);
     }
 
@@ -346,11 +356,11 @@ class Preference extends \Magento\Backend\App\Action
         $client->setUri($url);
         $client->setConfig(['maxredirects' => 0, 'timeout' => 30]);
         $client->setHeaders('Authorization', 'Bearer '.$apiBearer);
-        $client->setRawData(json_encode($webhook), 'application/json');
+        $client->setRawData($this->json->serialize($webhook), 'application/json');
         $client->setMethod(ZendClient::POST);
 
         $result = $client->request()->getBody();
 
-        return json_decode($result, true);
+        return $this->json->unserialize($result);
     }
 }

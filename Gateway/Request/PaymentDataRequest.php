@@ -243,6 +243,7 @@ class PaymentDataRequest implements BuilderInterface
      */
     public function getDataPaymetBoleto($storeId)
     {
+        $instruction = [];
         $instruction[self::PAYMENT_INSTRUMENT] = [
             self::FUNDING_INSTRUMENT => [
                 self::STATEMENT_DESCRIPTOR => substr($this->config->getStatementDescriptor($storeId), 0, 13),
@@ -276,6 +277,7 @@ class PaymentDataRequest implements BuilderInterface
      */
     public function getDataPaymetCCVault($payment, $storeId)
     {
+        $instruction = [];
         $extensionAttributes = $payment->getExtensionAttributes();
         $paymentToken = $extensionAttributes->getVaultPaymentToken();
 
@@ -307,6 +309,7 @@ class PaymentDataRequest implements BuilderInterface
      */
     public function getDataPaymetCC($payment, $orderAdapter, $storeId)
     {
+        $instruction = [];
         $phone = $payment->getAdditionalInformation('cc_holder_phone');
         if (!$phone) {
             $phone = $orderAdapter->getBillingAddress()->getTelephone();
@@ -362,7 +365,7 @@ class PaymentDataRequest implements BuilderInterface
      * @param $param_telefone
      * @param $return_ddd
      *
-     * @return string value
+     * @return string
      */
     public function getNumberOrDDD($param_telefone, $return_ddd = false)
     {
@@ -394,7 +397,7 @@ class PaymentDataRequest implements BuilderInterface
      *
      * @param $orderAdapter
      *
-     * @return value
+     * @return string
      */
     public function getValueForTaxDocument($orderAdapter)
     {

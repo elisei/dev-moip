@@ -13,11 +13,6 @@ class AbstractModel
     protected $logger;
 
     /**
-     * @var Filesystem
-     */
-    protected $_filesystem;
-
-    /**
      * @var OutputInterface
      */
     protected $_output;

@@ -7,16 +7,17 @@
  */
 
 namespace Moip\Magento2\Block\Adminhtml\System\Config;
+use Magento\Framework\Option\ArrayInterface;
 
 /**
  * Class Street - Defines address lines.
  */
-class Street implements \Magento\Framework\Option\ArrayInterface
+class Street implements ArrayInterface
 {
     /**
      * Returns Options.
      *
-     * @return array attributesArrays
+     * @return array
      */
     public function toOptionArray()
     {

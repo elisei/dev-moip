@@ -28,7 +28,7 @@ class FormBoleto extends \Magento\Payment\Block\Form
      */
     protected $configBoleto;
 
-    /*
+    /**
      * @param Context
      * @param ConfigBoleto
      */

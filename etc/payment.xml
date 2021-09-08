@@ -20,6 +20,9 @@
         <method name="moip_magento2_boleto">
             <allow_multiple_address>1</allow_multiple_address>
         </method>
+        <method name="moip_magento2_checkout">
+            <allow_multiple_address>1</allow_multiple_address>
+        </method>
     </methods>
     <credit_cards>
         <type id="HC" order="130">

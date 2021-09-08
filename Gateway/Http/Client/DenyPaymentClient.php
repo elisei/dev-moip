@@ -23,7 +23,7 @@ use Moip\Magento2\Gateway\Config\Config;
 class DenyPaymentClient implements ClientInterface
 {
     /**
-     * @var LoggerInterface
+     * @var Logger
      */
     private $logger;
 

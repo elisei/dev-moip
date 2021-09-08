@@ -48,7 +48,7 @@ class Totals extends Template
     }
 
     /**
-     * @return store
+     * @return string
      */
     public function getStore()
     {
@@ -56,7 +56,7 @@ class Totals extends Template
     }
 
     /**
-     * @return Order
+     * @return order
      */
     public function getOrder()
     {
@@ -99,7 +99,7 @@ class Totals extends Template
     /**
      * Get Subtotal label by Interest.
      *
-     * @param $interest | float
+     * @param $interest
      *
      * @return Phrase
      */

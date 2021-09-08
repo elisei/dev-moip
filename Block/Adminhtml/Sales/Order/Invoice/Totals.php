@@ -21,7 +21,7 @@ class Totals extends Template
     /**
      * Get data (totals) source model.
      *
-     * @return DataObject
+     * @return Source
      */
     public function getSource()
     {
@@ -31,7 +31,7 @@ class Totals extends Template
     /**
      * Get Invoice data.
      *
-     * @return invoice
+     * @return Invoice
      */
     public function getInvoice()
     {

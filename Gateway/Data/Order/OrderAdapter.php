@@ -31,7 +31,7 @@ class OrderAdapter implements OrderAdapterInterface
      * OrderAdapter constructor.
      *
      * @param Order
-     * @param AddressAdapterFactory
+     * @param AddressAdapter
      */
     public function __construct(
         Order $order,
@@ -156,7 +156,7 @@ class OrderAdapter implements OrderAdapterInterface
     /**
      * Gets the Dob for the customer.
      *
-     * @return date|null Dob.
+     * @return string.
      */
     public function getCustomerDob()
     {

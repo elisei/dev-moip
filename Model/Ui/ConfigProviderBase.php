@@ -38,6 +38,11 @@ class ConfigProviderBase implements ConfigProviderInterface
      */
     const METHOD_CODE_BOLETO = 'moip_magento2_boleto';
 
+    /*
+     * @var METHOD CODE CHECKOUT
+     */
+    const METHOD_CODE_CHECKOUT = 'moip_magento2_checkout';
+
     /**
      * @var Config
      */

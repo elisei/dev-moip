@@ -7,11 +7,12 @@
  */
 
 namespace Moip\Magento2\Block\Adminhtml\System\Config;
+use Magento\Framework\Option\ArrayInterface;
 
 /**
  * Class TypeInterest - Define Type Interest.
  */
-class TypeInterest implements \Magento\Framework\Option\ArrayInterface
+class TypeInterest implements ArrayInterface
 {
     /**
      * Returns Options.
@@ -21,8 +22,8 @@ class TypeInterest implements \Magento\Framework\Option\ArrayInterface
     public function toOptionArray()
     {
         return [
-            'simple'   => 'Juros Simples',
-            'compound' => 'Juros Composto',
+            'simple'   => __('Juros Simples'),
+            'compound' => __('Juros Composto'),
         ];
     }
 }

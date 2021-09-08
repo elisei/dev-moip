@@ -9,7 +9,9 @@
 namespace Moip\Magento2\Model\Ui\Vault\Adminhtml;
 
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Vault\Api\Data\PaymentTokenInterface;
+use Magento\Vault\Model\Ui\TokenUiComponentInterface;
 use Magento\Vault\Model\Ui\TokenUiComponentInterfaceFactory;
 use Magento\Vault\Model\Ui\TokenUiComponentProviderInterface;
 use Moip\Magento2\Model\Ui\ConfigProviderCc;
@@ -22,14 +24,22 @@ class TokenUiComponentProvider implements TokenUiComponentProviderInterface
     private $componentFactory;
 
     /**
+     * @var Json
+     */
+    protected $json;
+
+    /**
      * TokenUiComponentProvider constructor.
      *
      * @param TokenUiComponentInterfaceFactory $componentFactory
+     * @param Json                             $json
      */
     public function __construct(
-        TokenUiComponentInterfaceFactory $componentFactory
+        TokenUiComponentInterfaceFactory $componentFactory,
+        Json $json
     ) {
         $this->componentFactory = $componentFactory;
+        $this->json = $json;
     }
 
     /**
@@ -37,7 +47,7 @@ class TokenUiComponentProvider implements TokenUiComponentProviderInterface
      */
     public function getComponentForToken(PaymentTokenInterface $paymentToken)
     {
-        $details = json_decode($paymentToken->getTokenDetails() ?: '{}', true);
+        $details = $this->json->unserialize($paymentToken->getTokenDetails());
         $component = $this->componentFactory->create(
             [
                 'config' => [

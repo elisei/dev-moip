@@ -91,7 +91,7 @@ class SellerDataRequest implements BuilderInterface
      * @param OrderAdapterFactory $orderAdapterFactory
      * @param Config              $Config
      * @param ConfigCc            $ConfigCc
-     * @param CheckoutHelper      $checkoutHelper
+     * @param PriceHelper         $checkoutHelper
      */
     public function __construct(
         SubjectReader $subjectReader,

@@ -11,9 +11,10 @@ namespace Moip\Magento2\Gateway\Config;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Payment\Gateway\Config\Config as PaymentConfig;
 use Magento\Store\Model\ScopeInterface;
 
-class ConfigCcVault extends \Magento\Payment\Gateway\Config\Config
+class ConfigCcVault extends PaymentConfig
 {
     /**
      * CVV Enabled - Cc Vault.
@@ -33,13 +34,13 @@ class ConfigCcVault extends \Magento\Payment\Gateway\Config\Config
      * Config constructor.
      *
      * @param ScopeConfigInterface $scopeConfig
-     * @param null                 $methodCode
+     * @param METHOD   $methodCode
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        $methodCode = null
+        $methodCode = self::METHOD
     ) {
-        \Magento\Payment\Gateway\Config\Config::__construct($scopeConfig, $methodCode);
+        PaymentConfig::__construct($scopeConfig, $methodCode);
         $this->scopeConfig = $scopeConfig;
     }
 
@@ -47,9 +48,9 @@ class ConfigCcVault extends \Magento\Payment\Gateway\Config\Config
      * @throws InputException
      * @throws NoSuchEntityException
      *
-     * @return bool
+     * @return boolean
      */
-    public function useCvv($storeId = null)
+    public function useCvv($storeId = null): bool
     {
         $pathPattern = 'payment/%s/%s';
 

@@ -34,9 +34,9 @@ use Moip\Magento2\Gateway\Config\Config;
 class Refund extends Action implements Crsf
 {
     /**
-     * createCsrfValidationException.
+     * Create Csrf Validation Exception.
      *
-     * @param RequestInterface $request
+     * @param $request
      *
      * @return null
      */
@@ -48,11 +48,11 @@ class Refund extends Action implements Crsf
     }
 
     /**
-     * validateForCsrf.
+     * Validate For Csrf.
      *
-     * @param RequestInterface $request
+     * @param $request
      *
-     * @return bool true
+     * @return bool
      */
     public function validateForCsrf(RequestInterface $request): bool
     {
@@ -67,17 +67,17 @@ class Refund extends Action implements Crsf
     protected $logger;
 
     /**
-     * @var orderFactory
+     * @var OrderInterfaceFactory
      */
     protected $orderFactory;
 
     /**
-     * @var resultJsonFactory
+     * @var JsonFactory
      */
     protected $resultJsonFactory;
 
     /**
-     * @var storeManager
+     * @var StoreManagerInterface
      */
     protected $storeManager;
 
@@ -92,7 +92,7 @@ class Refund extends Action implements Crsf
     private $creditmemoRepository;
 
     /**
-     * @var schCriteriaBuilder
+     * @var SearchCriteriaBuilder
      */
     protected $schCriteriaBuilder;
 
@@ -185,8 +185,9 @@ class Refund extends Action implements Crsf
                 }
             } else {
                 $extOrderId = $resource['refund']['_links']['order']['title'];
-                $creditmemo = $this->createNewCreditMemo($extOrderId, $extRefundId);
-                if ($creditmemo) {
+                $newCreditmemo = $this->createNewCreditMemo($extOrderId, $extRefundId);
+                if ($newCreditmemo) {
+                    $creditmemo = $newCreditmemo;
                     if ($extStatus === 'REQUESTED') {
                         $creditmemo->setState(Creditmemo::STATE_OPEN);
                     } elseif ($extStatus === 'COMPLETED') {

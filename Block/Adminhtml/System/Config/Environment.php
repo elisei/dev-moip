@@ -7,16 +7,17 @@
  */
 
 namespace Moip\Magento2\Block\Adminhtml\System\Config;
+use Magento\Framework\Option\ArrayInterface;
 
 /**
  * Class Environment - Defines environment types.
  */
-class Environment implements \Magento\Framework\Option\ArrayInterface
+class Environment implements ArrayInterface
 {
     /**
      * Returns Options.
      *
-     * @return array attributesArrays
+     * @return array
      */
     public function toOptionArray()
     {

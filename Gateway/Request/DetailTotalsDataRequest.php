@@ -92,7 +92,7 @@ class DetailTotalsDataRequest implements BuilderInterface
      * @param OrderAdapterFactory $orderAdapterFactory
      * @param Config              $Config
      * @param ConfigCc            $ConfigCc
-     * @param CheckoutHelper      $checkoutHelper
+     * @param PriceHelper         $checkoutHelper
      */
     public function __construct(
         SubjectReader $subjectReader,
@@ -144,7 +144,7 @@ class DetailTotalsDataRequest implements BuilderInterface
                     if ($interestInfo[$installment] > 0) {
                         $installmentInterest = $this->getInterestCompound($total, $interestInfo[$installment], $installment);
                         if ($typeInstallment === 'simple') {
-                            $installmentInterest = $this->getInterestSimple($total, $interestInfo[$installment], $installment);
+                            $installmentInterest = $this->getInterestSimple($total, $interestInfo[$installment]);
                         }
 
                         if ($installmentInterest) {

@@ -20,6 +20,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Framework\HTTP\ZendClient;
 use Magento\Framework\HTTP\ZendClientFactory;
+use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Store\Model\StoreManagerInterface;
 use Moip\Magento2\Gateway\Config\Config as ConfigBase;
 
@@ -43,6 +44,11 @@ class Oauth extends \Magento\Backend\App\Action
 
     private $httpClientFactory;
 
+    /**
+     * @var Json
+     */
+    protected $json;
+
     public function __construct(
         Context $context,
         TypeListInterface $cacheTypeList,
@@ -53,7 +59,8 @@ class Oauth extends \Magento\Backend\App\Action
         ConfigBase $configBase,
         StoreManagerInterface $storeManager,
         EncryptorInterface $encryptor,
-        ZendClientFactory $httpClientFactory
+        ZendClientFactory $httpClientFactory,
+        Json $json
     ) {
         $this->cacheTypeList = $cacheTypeList;
         $this->cacheFrontendPool = $cacheFrontendPool;
@@ -64,6 +71,7 @@ class Oauth extends \Magento\Backend\App\Action
         $this->storeManager = $storeManager;
         $this->encryptor = $encryptor;
         $this->httpClientFactory = $httpClientFactory;
+        $this->json = $json;
         parent::__construct($context);
     }
 
@@ -80,7 +88,7 @@ class Oauth extends \Magento\Backend\App\Action
         if (isset($params['code'])) {
             $oauthResponse = $this->getAuthorize($params['code']);
             if ($oauthResponse) {
-                $oauthResponse = json_decode($oauthResponse, true);
+                $oauthResponse = $this->json->unserialize($oauthResponse);
                 if (isset($oauthResponse['access_token'])) {
                     $oauth = $oauthResponse['access_token'];
                     $this->setOauth($oauth);
@@ -210,7 +218,7 @@ class Oauth extends \Magento\Backend\App\Action
         $client->setHeaders($header);
         $client->setMethod(ZendClient::GET);
         $result = $client->request()->getBody();
-        $result = json_decode($result, true);
+        $result = $this->json->unserialize($result);
 
         return $result['keys']['encryption'];
     }

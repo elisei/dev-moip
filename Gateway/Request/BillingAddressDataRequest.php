@@ -112,6 +112,7 @@ class BillingAddressDataRequest implements BuilderInterface
     public function getValueForAddress($adress, $field)
     {
         $value = (int) $this->config->getAddtionalValue($field);
+        $limitSend = 57;
 
         if ($field === self::STREET) {
             $limitSend = 57;

@@ -114,9 +114,10 @@ class AddressDataRequest implements BuilderInterface
      *
      * @return string|null
      */
-    public function getValueForAddress($adress, $field)
+    public function getValueForAddress($adress, $field): ?string
     {
         $value = (int) $this->config->getAddtionalValue($field);
+        $limitSend = 57;
 
         if ($field === self::STREET) {
             $limitSend = 57;
@@ -153,7 +154,7 @@ class AddressDataRequest implements BuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build(array $buildSubject)
+    public function build(array $buildSubject): array
     {
         $paymentDO = $this->subjectReader->readPayment($buildSubject);
         $payment = $paymentDO->getPayment();
