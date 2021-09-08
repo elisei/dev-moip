@@ -47,7 +47,7 @@ class DataAssignCheckoutObserver extends AbstractDataAssignObserver
     protected $addInformationList = [
         self::PAYER_FULLNAME,
         self::PAYER_TAX_DOCUMENT,
-        self::ENABLE_INSTALLMENTS
+        self::ENABLE_INSTALLMENTS,
     ];
 
     /**

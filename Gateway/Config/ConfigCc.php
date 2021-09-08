@@ -90,7 +90,7 @@ class ConfigCc extends PaymentConfig
     /**
      * @param ScopeConfigInterface $scopeConfig
      * @param Json                 $json
-     * @param METHOD   $methodCode
+     * @param METHOD               $methodCode
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -155,7 +155,7 @@ class ConfigCc extends PaymentConfig
     /**
      * Get if you use document capture on the form.
      *
-     * @return boolean
+     * @return bool
      */
     public function getUseTaxDocumentCapture($storeId = null): bool
     {
@@ -171,7 +171,7 @@ class ConfigCc extends PaymentConfig
     /**
      * Get if you use birth date capture on the form.
      *
-     * @return boolean
+     * @return bool
      */
     public function getUseBirthDateCapture($storeId = null): bool
     {
@@ -346,7 +346,7 @@ class ConfigCc extends PaymentConfig
      */
     public function getMaxInstallment($storeId = null): ?int
     {
-        return (int)$this->scopeConfig->getValue(
+        return (int) $this->scopeConfig->getValue(
             'payment/moip_magento2_cc/installment_max_installment',
             ScopeInterface::SCOPE_STORE,
             $storeId
@@ -360,7 +360,7 @@ class ConfigCc extends PaymentConfig
      */
     public function getEnableInstantPurchase($storeId = null): ?bool
     {
-        return (bool)$this->scopeConfig->getValue(
+        return (bool) $this->scopeConfig->getValue(
             'payment/moip_magento2_cc/instant_purchase_enable',
             ScopeInterface::SCOPE_STORE,
             $storeId

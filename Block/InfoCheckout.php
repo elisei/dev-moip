@@ -47,10 +47,10 @@ class InfoCheckout extends ConfigurableInfo
             return implode('; ', $value);
         }
 
-        if($field == 'checkout_url') {
-            $value = '<a href="'.$value.'">'. __('To make payment click here') .'</a>';
+        if ($field == 'checkout_url') {
+            $value = '<a href="'.$value.'">'.__('To make payment click here').'</a>';
         }
-        
+
         return parent::getValueView($field, $value);
     }
 }

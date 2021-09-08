@@ -7,6 +7,7 @@
  */
 
 namespace Moip\Magento2\Block\Adminhtml\System\Config;
+
 use Magento\Framework\Option\ArrayInterface;
 
 /**

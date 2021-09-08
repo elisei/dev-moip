@@ -145,8 +145,8 @@ class CustomerDataRequest implements BuilderInterface
     /**
      * StructurePhone.
      *
-     * @param  $phone
-     * @param  $defaultCountryCode
+     * @param $phone
+     * @param $defaultCountryCode
      *
      * @return array
      */
