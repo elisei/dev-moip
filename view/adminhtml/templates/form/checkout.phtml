@@ -10,6 +10,7 @@
  * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
  */
 $code = $block->escapeHtml($block->getMethodCode());
+$ccInstallment = $block->getInfoData('checkout_qty_installments');
 ?>
 <fieldset class="admin__fieldset payment-method" id="payment_form_<?= $block->escapeHtml($block->getMethodCode()) ?>" >
     <?php if ($block->getTaxDocumentCapture()): ?>
@@ -48,16 +49,32 @@ $code = $block->escapeHtml($block->getMethodCode());
             <div class="admin__field-control">
                 <select id="<?= /* @noEscape */ $code ?>_enable_installments" name="payment[checkout_enable_installments]"
                         class="admin__control-select required-entry">
-                    <option value="0" selected="selected">
+                    <option value="0">
                             <?= __('No') ?>
                     </option>
-                    <option value="1">
+                    <option value="1" selected="selected">
                             <?= __('Yes') ?>
                     </option>
                 </select>
             </div>
         </div>
     <?php endif; ?>
+    <div class="field-number admin__field _required">
+        <label class="admin__field-label" for="<?= /* @noEscape */ $code ?>_expiration">
+            <span><?= $block->escapeHtml(__('Select Instalmment')) ?></span>
+        </label>
+        <div class="admin__field-control">
+            <select id="<?= /* @noEscape */ $code ?>_qty_installments" name="payment[checkout_qty_installments]"
+                        class="admin__control-select required-entry">
+                <?php foreach ($block->getSelectInstallments() as $k => $v): ?>
+                    <option value="<?= $block->escapeHtml($k) ?>"
+                            <?php if ($k == $ccInstallment): ?>selected="selected"<?php endif ?>>
+                        <?= $block->escapeHtml($v) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
     <div class="admin__field">
         <label class="admin__field-label"><span><?= $block->escapeHtml(__('Instruction')) ?></span></label>
         <div class="admin__field-control checkmo-mailing-address">

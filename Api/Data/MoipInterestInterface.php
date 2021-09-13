@@ -16,12 +16,12 @@ namespace Moip\Magento2\Api\Data;
 interface MoipInterestInterface
 {
     /**
-     * @var string
+     * @const string
      */
     const MOIP_INTEREST_AMOUNT = 'moip_interest_amount';
 
     /**
-     * @var string
+     * @const string
      */
     const BASE_MOIP_INTEREST_AMOUNT = 'base_moip_interest_amount';
 

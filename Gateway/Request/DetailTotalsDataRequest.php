@@ -78,12 +78,12 @@ class DetailTotalsDataRequest implements BuilderInterface
     private $config;
 
     /**
-     * @var configCc
+     * @var ConfigCc
      */
     private $configCc;
 
     /**
-     * @var priceHelper
+     * @var PriceHelper
      */
     private $priceHelper;
 

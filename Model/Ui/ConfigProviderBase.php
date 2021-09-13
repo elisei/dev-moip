@@ -19,7 +19,7 @@ use Moip\Magento2\Gateway\Config\Config;
 class ConfigProviderBase implements ConfigProviderInterface
 {
     /*
-     * @var CODE
+     * @const string
      */
     const CODE = 'moip_magento2';
 
@@ -66,6 +66,7 @@ class ConfigProviderBase implements ConfigProviderInterface
     /**
      * @param Config        $config
      * @param CartInterface $cart
+     * @param CcConfig $ccConfig
      */
     public function __construct(
         Config $config,

@@ -20,7 +20,7 @@ class SetBoletoDataToCreditmemo implements ObserverInterface
     /**
      * Set boleto data to creditmemo before register.
      *
-     * @param \Magento\Framework\Event\Observer $observer
+     * @param Observer $observer
      *
      * @return $this
      */

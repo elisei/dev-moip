@@ -21,7 +21,7 @@ use Moip\Magento2\Gateway\Config\ConfigCheckout;
 class ConfigProviderCheckout implements ConfigProviderInterface
 {
     /*
-     * @var CODE - Checkout
+     * @const string
      */
     const CODE = 'moip_magento2_checkout';
 
@@ -46,13 +46,16 @@ class ConfigProviderCheckout implements ConfigProviderInterface
     protected $ccConfig;
 
     /**
-     * @var \Magento\Framework\View\Asset\Source
+     * @var Source
      */
     protected $assetSource;
 
     /**
-     * @param Config        $config
+     * @param ConfigCheckout        $config
      * @param CartInterface $cart
+     * @param CcConfig $ccConfig
+     * @param Escaper $escaper
+     * @param Source $assetSource
      */
     public function __construct(
         ConfigCheckout $config,

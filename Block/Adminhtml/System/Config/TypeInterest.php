@@ -18,9 +18,9 @@ class TypeInterest implements ArrayInterface
     /**
      * Returns Options.
      *
-     * @return array attributesArrays
+     * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         return [
             'simple'   => __('Juros Simples'),

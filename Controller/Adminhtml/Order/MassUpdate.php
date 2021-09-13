@@ -49,7 +49,7 @@ class MassUpdate extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassA
      *
      * @param collection
      *
-     * @return Url
+     * @return string
      */
     protected function massAction(AbstractCollection $collection)
     {

@@ -37,7 +37,7 @@ class FormCc extends Cc
     protected $session;
 
     /**
-     * @var configCc
+     * @var ConfigCc
      */
     protected $configCc;
 
@@ -47,12 +47,12 @@ class FormCc extends Cc
     private $paymentDataHelper;
 
     /**
-     * @var configBase
+     * @var ConfigBase
      */
     private $configBase;
 
     /**
-     * @var priceHelper
+     * @var PriceHelper
      */
     private $priceHelper;
 
@@ -87,23 +87,11 @@ class FormCc extends Cc
      * Title - Cc.
      *
      * @var string
+     * @return string
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->configCc->getTitle();
-    }
-
-    /**
-     * Select Installment - Cc.
-     *
-     * @var string
-     */
-    public function getSelectInstallments()
-    {
-        $total = $this->session->getQuote()->getGrandTotal();
-        $installments = $this->getInstallments($total);
-
-        return $installments;
     }
 
     /**
@@ -114,66 +102,6 @@ class FormCc extends Cc
     public function getKeyPublic()
     {
         return $this->configBase->getMerchantGatewayKeyPublic();
-    }
-
-    /**
-     * Installments - Cc.
-     *
-     * @param float $amount
-     *
-     * @var string
-     */
-    public function getInstallments($amount)
-    {
-        $typeInstallment = $this->configCc->getTypeInstallment();
-        $interestByInstallment = $this->configCc->getInfoInterest();
-        $plotlist = [];
-        foreach ($interestByInstallment as $key => $_interest) {
-            if ($key > 0) {
-                $plotValue = $this->getInterestCompound($amount, $_interest, $key);
-                if ($typeInstallment === 'simple') {
-                    $plotValue = $this->getInterestSimple($amount, $_interest, $key);
-                }
-                $plotValue = number_format((float) $plotValue, 2, '.', '');
-                $installmentPrice = $this->priceHelper->currency($plotValue, true, false);
-                $plotlist[$key] = $key.__('x of ').$installmentPrice;
-            }
-        }
-
-        return $plotlist;
-    }
-
-    /**
-     * Interest Simple - Cc.
-     *
-     * @var float
-     */
-    public function getInterestSimple($total, $interest, $portion)
-    {
-        if ($interest) {
-            $taxa = $interest / 100;
-            $valinterest = $total * $taxa;
-
-            return ($total + $valinterest) / $portion;
-        }
-
-        return $total / $portion;
-    }
-
-    /**
-     * Interest Compound - Cc.
-     *
-     * @var float
-     */
-    public function getInterestCompound($total, $interest, $portion)
-    {
-        if ($interest) {
-            $taxa = $interest / 100;
-
-            return (($total * $taxa) * 1) / (1 - (pow(1 / (1 + $taxa), $portion)));
-        }
-
-        return 0;
     }
 
     /**
@@ -226,5 +154,96 @@ class FormCc extends Cc
         $vaultPayment = $this->getVaultPayment();
 
         return $vaultPayment->isActive();
+    }
+
+    /**
+     * Use Enable Installments - Moip Checkout.
+     *
+     * @var bool
+     */
+    public function getEnableInstallments(): ?bool
+    {
+        return (bool)$this->configCheckout->getUseInstallments();
+    }
+
+    /**
+     * Select Installment - Cc.
+     *
+     * @return array
+     */
+    public function getSelectInstallments(): array
+    {
+        $total = $this->session->getQuote()->getGrandTotal();
+        $installments = $this->getInstallments($total);
+
+        return $installments;
+    }
+
+    /**
+     * Installments - Cc.
+     *
+     * @param $amount
+     *
+     * @return array
+     */
+    public function getInstallments($amount): array
+    {
+        $typeInstallment = $this->configCc->getTypeInstallment();
+        $interestByInstallment = $this->configCc->getInfoInterest();
+        $plotlist = [];
+        foreach ($interestByInstallment as $key => $_interest) {
+            if ($key > 0) {
+                $plotValue = $this->getInterestCompound($amount, $_interest, $key);
+                if ($typeInstallment === 'simple') {
+                    $plotValue = $this->getInterestSimple($amount, $_interest, $key);
+                }
+                $plotValue = number_format((float) $plotValue, 2, '.', '');
+                $installmentPrice = $this->priceHelper->currency($plotValue, true, false);
+                $plotlist[$key] = $key.__('x of ').$installmentPrice;
+            }
+        }
+
+        return $plotlist;
+    }
+
+    /**
+     * Interest Simple - Cc.
+     *
+     * @param total
+     * @param $interest
+     * @param $portion
+     * 
+     * @return float
+     */
+    public function getInterestSimple($total, $interest, $portion): float
+    {
+        if ($interest) {
+            $taxa = $interest / 100;
+            $valinterest = $total * $taxa;
+
+            return ($total + $valinterest) / $portion;
+        }
+
+        return $total / $portion;
+    }
+
+    /**
+     * Interest Compound - Cc.
+     *
+     * @param total
+     * @param $interest
+     * @param $portion
+     * 
+     * @return float
+     */
+    public function getInterestCompound($total, $interest, $portion): ?float
+    {
+        if ($interest) {
+            $taxa = $interest / 100;
+
+            return (($total * $taxa) * 1) / (1 - (pow(1 / (1 + $taxa), $portion)));
+        }
+
+        return 0;
     }
 }

@@ -45,7 +45,7 @@ class MoipInterestManagement implements MoipInterestManagementInterface
     private $config;
 
     /**
-     * @var configCc
+     * @var ConfigCc
      */
     private $configCc;
 
@@ -116,7 +116,7 @@ class MoipInterestManagement implements MoipInterestManagementInterface
      * @param $quote
      * @param $installment
      *
-     * @return $installmentInterest
+     * @return float
      */
     public function calcInterest($quote, $installment)
     {

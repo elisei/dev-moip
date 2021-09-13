@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ListWebhook extends Command
 {
     /**
-     * @var all
+     * @var All
      */
     protected $all;
 

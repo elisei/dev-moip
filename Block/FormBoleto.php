@@ -24,7 +24,7 @@ class FormBoleto extends \Magento\Payment\Block\Form
     protected $_template = 'Moip_Magento2::form/boleto.phtml';
 
     /**
-     * @var configBoleto
+     * @var ConfigBoleto
      */
     protected $configBoleto;
 
@@ -44,6 +44,7 @@ class FormBoleto extends \Magento\Payment\Block\Form
      * Title - Boleto.
      *
      * @var string
+     * @return string
      */
     public function getTitle()
     {
@@ -54,6 +55,7 @@ class FormBoleto extends \Magento\Payment\Block\Form
      * Instruction - Boleto.
      *
      * @var string
+     * @return string
      */
     public function getInstruction()
     {
@@ -64,6 +66,7 @@ class FormBoleto extends \Magento\Payment\Block\Form
      * Expiration - Boleto.
      *
      * @var date
+     * @return string
      */
     public function getExpiration()
     {

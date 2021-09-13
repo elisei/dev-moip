@@ -28,35 +28,35 @@ class All extends AbstractModel
     /**
      * State.
      *
-     * @var \Magento\Framework\App\State
+     * @var State
      */
     private $state;
 
     /**
      * ScopeConfigInterface.
      *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     protected $scopeConfig;
 
     /**
-     * moipConfig.
+     * MoipConfig.
      *
-     * @var \Moip\Magento2\Gateway\Config\Config
+     * @var MoipConfig
      */
     private $moipConfig;
 
     /**
      * ZendClientFactory.
      *
-     * @var \Magento\Framework\HTTP\ZendClientFactory
+     * @var ZendClientFactory
      */
     private $httpClientFactory;
 
     /**
      * Json.
      *
-     * @var \Magento\Framework\Serialize\Serializer\Json
+     * @var Json
      */
     private $json;
 

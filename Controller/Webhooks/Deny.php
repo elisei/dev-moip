@@ -59,24 +59,44 @@ class Deny extends Action implements Csrf
     }
 
     /**
-     * @var logger
+     * @var Config
+     */
+    protected $config;
+
+    /**
+     * @var Logger
      */
     protected $logger;
 
     /**
-     * @var orderFactory
+     * @var OrderInterfaceFactory
      */
     protected $orderFactory;
 
     /**
-     * @var resultJsonFactory
+     * @var CreditmemoFactory
      */
-    protected $resultJsonFactory;
+    protected $creditmemoFactory;
 
     /**
-     * @var storeManager
+     * @var CreditmemoService
+     */
+    protected $creditmemoService;
+
+    /**
+     * @var Invoice
+     */
+    protected $invoice;
+
+    /**
+     * @var StoreManagerInterface
      */
     protected $storeManager;
+
+    /**
+     * @var JsonFactory
+     */
+    protected $resultJsonFactory;
 
     /**
      * @var Json
@@ -84,17 +104,21 @@ class Deny extends Action implements Csrf
     protected $json;
 
     /**
-     * @var orderCommentSender
+     * @var OrderCommentSender
      */
     protected $orderCommentSender;
 
     /**
      * @param Context               $context
-     * @param logger                $logger
+     * @param Logger                $logger
      * @param Config                $config
      * @param OrderInterfaceFactory $orderFactory
+     * @param CreditmemoFactory     $creditmemoFactory
+     * @param Invoice               $invoice
+     * @param StoreManagerInterface $storeManager
      * @param JsonFactory           $resultJsonFactory
      * @param Json                  $json
+     * @param OrderCommentSender    $orderCommentSender
      */
     public function __construct(
         Context $context,

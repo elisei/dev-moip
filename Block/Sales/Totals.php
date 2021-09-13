@@ -30,6 +30,8 @@ class Totals extends Template
     protected $_source;
 
     /**
+     * Type display in Full Sumary
+     * 
      * @return bool
      */
     public function displayFullSummary()
@@ -48,6 +50,8 @@ class Totals extends Template
     }
 
     /**
+     * Get Store
+     * 
      * @return string
      */
     public function getStore()
@@ -56,6 +60,8 @@ class Totals extends Template
     }
 
     /**
+     * Get Order
+     * 
      * @return order
      */
     public function getOrder()

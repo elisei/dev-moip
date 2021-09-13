@@ -29,6 +29,7 @@ class CustomerMap implements ArrayInterface
 
     /**
      * @param ObjectManagerInterface $objectManager
+     * @param Customer $customer
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
@@ -43,7 +44,7 @@ class CustomerMap implements ArrayInterface
      *
      * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         $customer_attributes = $this->customer->getAttributes();
         $attributesArrays = [];

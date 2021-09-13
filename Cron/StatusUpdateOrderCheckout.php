@@ -11,12 +11,12 @@ namespace Moip\Magento2\Cron;
 use Magento\Payment\Model\Method\Logger;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
-use Moip\Magento2\Gateway\Config\ConfigBoleto;
+use Moip\Magento2\Gateway\Config\ConfigCheckout;
 
 /*
- * Class StatusUpdateOrderBoleto - Cron fetch order
+ * Class StatusUpdateOrderCheckout - Cron fetch order
  */
-class StatusUpdateOrderBoleto
+class StatusUpdateOrderCheckout
 {
     /**
      * @var Logger
@@ -34,25 +34,25 @@ class StatusUpdateOrderBoleto
     protected $collectionFactory;
 
     /**
-     * @var ConfigBoleto
+     * @var ConfigCheckout
      */
-    protected $configBoleto;
+    protected $configCheckout;
 
     /*
-     * @param order
-     * @param logger
-     * @param configBoleto
+     * @param Order
+     * @param Logger
+     * @param ConfigCheckout
      * @param collectionFactory
      */
     public function __construct(
         Order $order,
         Logger $logger,
-        ConfigBoleto $configBoleto,
+        ConfigCheckout $configCheckout,
         CollectionFactory $collectionFactory
     ) {
         $this->order = $order;
         $this->logger = $logger;
-        $this->configBoleto = $configBoleto;
+        $this->configCheckout = $configCheckout;
         $this->collectionFactory = $collectionFactory;
     }
 
@@ -71,7 +71,7 @@ class StatusUpdateOrderBoleto
                     'main_table.entity_id = sop.parent_id',
                     ['method']
                 )
-                ->where('sop.method = ?', ConfigBoleto::METHOD);
+                ->where('sop.method = ?', ConfigCheckout::METHOD);
 
         foreach ($orders as $order) {
             if (!$order->getEntityId()) {
@@ -86,14 +86,14 @@ class StatusUpdateOrderBoleto
                     $payment->update(true);
                     $loadedOrder->save();
                     $this->logger->debug([
-                        'cron'      => 'boleto',
+                        'cron'      => 'checkout',
                         'type'      => 'updateStatus',
                         'order'     => $loadedOrder->getIncrementId(),
                         'new_state' => $loadedOrder->getStatus(),
                     ]);
                 } catch (\Exception $exc) {
                     $this->logger->debug([
-                        'cron'  => 'boleto',
+                        'cron'  => 'checkout',
                         'type'  => 'updateStatus',
                         'order' => $loadedOrder->getIncrementId(),
                         'error' => $exc->getMessage(),

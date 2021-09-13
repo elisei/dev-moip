@@ -18,22 +18,22 @@ use Magento\Quote\Api\Data\PaymentInterface;
 class DataAssignBoletoObserver extends AbstractDataAssignObserver
 {
     /**
-     * @const Method Name Block
+     * @const string
      */
     const METHOD_NAME = 'method_name';
 
     /**
-     * @const Method Name
+     * @const string
      */
     const METHOD_NAME_TYPE = 'Boleto Bancário';
 
     /**
-     * @const Holder Full Nane
+     * @const string
      */
     const PAYER_FULLNAME = 'boleto_payer_fullname';
 
     /**
-     * @const Holder Tax Document
+     * @const string
      */
     const PAYER_TAX_DOCUMENT = 'boleto_payer_tax_document';
 

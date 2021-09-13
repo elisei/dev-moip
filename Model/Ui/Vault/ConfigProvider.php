@@ -46,14 +46,18 @@ class ConfigProvider implements ConfigProviderInterface
     protected $configCc;
 
     /**
-     * @var \Magento\Framework\View\Asset\Source
+     * @var Source
      */
     protected $assetSource;
 
     /**
      * ConfigProvider constructor.
      *
-     * @param Config $config
+     * @param CartInterface $cart
+     * @param ConfigCc $configCc
+     * @param ConfigCcVault $configCcVault
+     * @param CcConfig $ccConfig
+     * @param Source $assetSource
      */
     public function __construct(
         CartInterface $cart,

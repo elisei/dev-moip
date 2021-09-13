@@ -18,26 +18,32 @@ use Magento\Quote\Api\Data\PaymentInterface;
 class DataAssignCheckoutObserver extends AbstractDataAssignObserver
 {
     /**
-     * @const Method Name Block
+     * @const string
      */
     const METHOD_NAME = 'method_name';
 
     /**
-     * @const Method Name
+     * @const string
      */
     const METHOD_NAME_TYPE = 'Moip Checkout';
 
     /**
-     * @const Enable Installments
+     * @const string
      */
     const ENABLE_INSTALLMENTS = 'checkout_enable_installments';
+
     /**
-     * @const Holder Full Nane
+     * @const string
+     */
+    const QTY_INSTALLMENTS = 'checkout_qty_installments';
+
+    /**
+     * @const string
      */
     const PAYER_FULLNAME = 'checkout_payer_fullname';
 
     /**
-     * @const Holder Tax Document
+     * @const string
      */
     const PAYER_TAX_DOCUMENT = 'checkout_payer_tax_document';
 
@@ -48,6 +54,7 @@ class DataAssignCheckoutObserver extends AbstractDataAssignObserver
         self::PAYER_FULLNAME,
         self::PAYER_TAX_DOCUMENT,
         self::ENABLE_INSTALLMENTS,
+        self::QTY_INSTALLMENTS
     ];
 
     /**

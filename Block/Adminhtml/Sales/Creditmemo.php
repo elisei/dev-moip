@@ -12,20 +12,44 @@ use Moip\Magento2\Model\Ui\ConfigProviderBoleto;
 
 class Creditmemo extends \Magento\Backend\Block\Template
 {
+    /**
+     * @const string
+     */
     const BANK_NUMBER = 'moip_magento2_boleto_bank_number';
 
+    /**
+     * @const string
+     */
     const AGENCY_NUMBER = 'moip_magento2_boleto_agency_number';
 
+    /**
+     * @const string
+     */
     const AGENCY_CHECK_NUMBER = 'moip_magento2_boleto_agency_check_number';
 
+    /**
+     * @const string
+     */
     const ACCOUNT_NUMBER = 'moip_magento2_boleto_account_number';
 
+    /**
+     * @const string
+     */
     const ACCOUNT_CHECK_NUMBER = 'moip_magento2_boleto_account_check_number';
 
+    /**
+     * @const string
+     */
     const HOLDER_FULLNAME = 'moip_magento2_boleto_account_holder_fullname';
 
+    /**
+     * @const string
+     */
     const HOLDER_DOCUMENT_NUMBER = 'moip_magento2_boleto_account_holder_document_number';
 
+    /**
+     * @const string
+     */
     const CREDITMEMO_COMMENT_TEXT = 'comment_text';
 
     /**

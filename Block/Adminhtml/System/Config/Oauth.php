@@ -69,7 +69,7 @@ class Oauth extends Field
     /*
      * Ajax Url
      *
-     * @return url
+     * @return string
      */
     public function getAjaxUrl()
     {
@@ -79,7 +79,7 @@ class Oauth extends Field
     /*
      * Url Authorize
      *
-     * @return url
+     * @return string
      */
     public function getUrlAuthorize()
     {

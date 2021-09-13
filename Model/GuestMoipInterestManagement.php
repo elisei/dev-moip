@@ -21,12 +21,12 @@ use Moip\Magento2\Api\MoipInterestManagementInterface;
 class GuestMoipInterestManagement implements GuestMoipInterestManagementInterface
 {
     /**
-     * @var \Magento\Quote\Model\QuoteIdMaskFactory
+     * @var QuoteIdMaskFactory
      */
     protected $quoteIdMaskFactory;
 
     /**
-     * @var \Magento\Checkout\Api\ShippingInformationManagementInterface
+     * @var MoipInterestManagementInterface
      */
     protected $moipInterestInterface;
 

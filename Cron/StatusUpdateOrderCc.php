@@ -14,7 +14,7 @@ use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Moip\Magento2\Gateway\Config\ConfigCc;
 
 /*
- * Class StatusUpdateOrderCc
+ * Class StatusUpdateOrderCc - Cron fetch order
  */
 class StatusUpdateOrderCc
 {

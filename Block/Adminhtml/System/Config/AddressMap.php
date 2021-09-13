@@ -29,6 +29,7 @@ class AddressMap implements ArrayInterface
 
     /**
      * @param ObjectManagerInterface $objectManager
+     * @param Address $address
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
@@ -43,7 +44,7 @@ class AddressMap implements ArrayInterface
      *
      * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         $customer_attributes = $this->address->getAttributes();
 

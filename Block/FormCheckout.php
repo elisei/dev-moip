@@ -8,7 +8,10 @@
 
 namespace Moip\Magento2\Block;
 
+use Magento\Backend\Model\Session\Quote;
+use Magento\Framework\Pricing\Helper\Data as PriceHelper;
 use Magento\Framework\View\Element\Template\Context;
+use Moip\Magento2\Gateway\Config\ConfigCc;
 use Moip\Magento2\Gateway\Config\ConfigCheckout;
 
 /**
@@ -24,20 +27,44 @@ class FormCheckout extends \Magento\Payment\Block\Form
     protected $_template = 'Moip_Magento2::form/checkout.phtml';
 
     /**
-     * @var configCheckout
+     * @var ConfigCheckout
      */
     protected $configCheckout;
 
     /**
+     * @var ConfigCc
+     */
+    protected $configCc;
+
+    /**
+     * @var Quote
+     */
+    protected $session;
+
+    /**
+     * @var PriceHelper
+     */
+    private $priceHelper;
+
+    /**
      * @param Context
+     * @param Quote
+     * @param ConfigCc
      * @param ConfigCheckout
+     * @param PriceHelper
      */
     public function __construct(
         Context $context,
-        ConfigCheckout $configCheckout
+        Quote $session,
+        ConfigCc $configCc,
+        ConfigCheckout $configCheckout,
+        PriceHelper $priceHelper
     ) {
         parent::__construct($context);
+        $this->session = $session;
+        $this->configCc = $configCc;
         $this->configCheckout = $configCheckout;
+        $this->priceHelper = $priceHelper;
     }
 
     /**
@@ -77,7 +104,7 @@ class FormCheckout extends \Magento\Payment\Block\Form
      */
     public function getNameCapture(): ?bool
     {
-        return $this->configCheckout->getUseNameCapture();
+        return (bool)$this->configCheckout->getUseNameCapture();
     }
 
     /**
@@ -87,6 +114,87 @@ class FormCheckout extends \Magento\Payment\Block\Form
      */
     public function getEnableInstallments(): ?bool
     {
-        return $this->configCheckout->getUseInstallments();
+        return (bool)$this->configCheckout->getUseInstallments();
+    }
+
+    /**
+     * Select Installment - Cc.
+     *
+     * @return array
+     */
+    public function getSelectInstallments(): array
+    {
+        $total = $this->session->getQuote()->getGrandTotal();
+        $installments = $this->getInstallments($total);
+
+        return $installments;
+    }
+
+    /**
+     * Installments - Cc.
+     *
+     * @param $amount
+     *
+     * @return array
+     */
+    public function getInstallments($amount): array
+    {
+        $typeInstallment = $this->configCc->getTypeInstallment();
+        $interestByInstallment = $this->configCc->getInfoInterest();
+        $plotlist = [];
+        foreach ($interestByInstallment as $key => $_interest) {
+            if ($key > 0) {
+                $plotValue = $this->getInterestCompound($amount, $_interest, $key);
+                if ($typeInstallment === 'simple') {
+                    $plotValue = $this->getInterestSimple($amount, $_interest, $key);
+                }
+                $plotValue = number_format((float) $plotValue, 2, '.', '');
+                $installmentPrice = $this->priceHelper->currency($plotValue, true, false);
+                $plotlist[$key] = $key.__('x of ').$installmentPrice;
+            }
+        }
+
+        return $plotlist;
+    }
+
+    /**
+     * Interest Simple - Cc.
+     *
+     * @param total
+     * @param $interest
+     * @param $portion
+     * 
+     * @return float
+     */
+    public function getInterestSimple($total, $interest, $portion): float
+    {
+        if ($interest) {
+            $taxa = $interest / 100;
+            $valinterest = $total * $taxa;
+
+            return ($total + $valinterest) / $portion;
+        }
+
+        return $total / $portion;
+    }
+
+    /**
+     * Interest Compound - Cc.
+     *
+     * @param total
+     * @param $interest
+     * @param $portion
+     * 
+     * @return float
+     */
+    public function getInterestCompound($total, $interest, $portion): ?float
+    {
+        if ($interest) {
+            $taxa = $interest / 100;
+
+            return (($total * $taxa) * 1) / (1 - (pow(1 / (1 + $taxa), $portion)));
+        }
+
+        return 0;
     }
 }

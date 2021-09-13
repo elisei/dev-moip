@@ -21,7 +21,7 @@ use Moip\Magento2\Gateway\Config\ConfigBoleto;
 class ConfigProviderBoleto implements ConfigProviderInterface
 {
     /*
-     * @var CODE - Boleto
+     * @const string
      */
     const CODE = 'moip_magento2_boleto';
 
@@ -46,13 +46,16 @@ class ConfigProviderBoleto implements ConfigProviderInterface
     protected $ccConfig;
 
     /**
-     * @var \Magento\Framework\View\Asset\Source
+     * @var Source
      */
     protected $assetSource;
 
     /**
-     * @param Config        $config
-     * @param CartInterface $cart
+     * @param ConfigBoleto        $config
+     * @param CartInterface        $cart
+     * @param CcConfig $ccConfig
+     * @param Escaper        $escaper
+     * @param Source        $assetSource
      */
     public function __construct(
         ConfigBoleto $config,

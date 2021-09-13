@@ -18,9 +18,9 @@ class Category implements ArrayInterface
     /**
      * Returns Options.
      *
-     * @return array attributesArrays
+     * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         return [
             null                                         => __('Select the store segment.'),

@@ -30,49 +30,49 @@ class Create extends AbstractModel
     /**
      * State.
      *
-     * @var \Magento\Framework\App\State
+     * @var State
      */
     private $state;
 
     /**
      * ScopeConfigInterface.
      *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     protected $scopeConfig;
 
     /**
      * Config.
      *
-     * @var \Magento\Config\Model\ResourceModel\Config
+     * @var Config
      */
     private $config;
 
     /**
-     * moipConfig.
+     * MoipConfig.
      *
-     * @var \Moip\Magento2\Gateway\Config\Config
+     * @var MoipConfig
      */
     private $moipConfig;
 
     /**
      * Validator.
      *
-     * @var \Magento\Framework\Url\Validator
+     * @var Validator
      */
     private $validator;
 
     /**
      * ZendClientFactory.
      *
-     * @var \Magento\Framework\HTTP\ZendClientFactory
+     * @var ZendClientFactory
      */
     private $httpClientFactory;
 
     /**
      * Json.
      *
-     * @var \Magento\Framework\Serialize\Serializer\Json
+     * @var Json
      */
     private $json;
 
@@ -116,18 +116,10 @@ class Create extends AbstractModel
 
         $valid = $this->validator->isValid($baseUrl);
         if (!$valid) {
-            $this->writeln(__('<error>The URL entered is invalid %1, it must contain https://...</error>', $baseUrl));
+            $this->writeln(__('<error>The URL entered is invalid %1, it must contain https://.../</error>', $baseUrl));
 
             return $this;
         }
-
-        $formatValid = str_ends_with($baseUrl, '/');
-        if (!$formatValid) {
-            $this->writeln(__("<error>Your url %1 is valid, but must end with '/'</error>", $baseUrl));
-
-            return $this;
-        }
-
         $this->createPreference($baseUrl, 'accept');
         $this->createPreference($baseUrl, 'deny');
         $this->createPreference($baseUrl, 'refund');

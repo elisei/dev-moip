@@ -11,6 +11,7 @@ namespace Moip\Magento2\Gateway\Request;
 use Magento\Framework\Url;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Moip\Magento2\Gateway\Config\Config;
+use Moip\Magento2\Gateway\Config\ConfigCc;
 use Moip\Magento2\Gateway\Config\ConfigCheckout;
 use Moip\Magento2\Gateway\Data\Order\OrderAdapterFactory;
 use Moip\Magento2\Gateway\SubjectReader;
@@ -51,6 +52,11 @@ class CheckoutPreferencesRequest implements BuilderInterface
     const INSTALLMENTS_QTY = 'quantity';
 
     /**
+     * Addition Qty Block name.
+     */
+    const ADDITION = 'addition';
+
+    /**
      * @var SubjectReader
      */
     private $subjectReader;
@@ -71,6 +77,11 @@ class CheckoutPreferencesRequest implements BuilderInterface
     private $config;
 
     /**
+     * @var ConfigCc
+     */
+    private $configCc;
+
+    /**
      * @var Url
      */
     private $urlHelper;
@@ -79,17 +90,22 @@ class CheckoutPreferencesRequest implements BuilderInterface
      * @param SubjectReader       $subjectReader
      * @param OrderAdapterFactory $orderAdapterFactory
      * @param Config              $config
+     * @param ConfigCc            $configCc
+     * @param ConfigCheckout      $configCheckout
+     * @param Url                 $urlHelper
      */
     public function __construct(
         SubjectReader $subjectReader,
         OrderAdapterFactory $orderAdapterFactory,
         Config $config,
+        ConfigCc $configCc,
         ConfigCheckout $configCheckout,
         Url $urlHelper
     ) {
         $this->subjectReader = $subjectReader;
         $this->orderAdapterFactory = $orderAdapterFactory;
         $this->config = $config;
+        $this->configCc = $configCc;
         $this->configCheckout = $configCheckout;
         $this->urlHelper = $urlHelper;
     }
@@ -119,12 +135,28 @@ class CheckoutPreferencesRequest implements BuilderInterface
             self::REDIRECT_URL_SUCCESS => $urlViewOrder,
             self::REDIRECT_URL_FAILURE => $urlViewOrder,
         ];
+        $addition = 0;
         if ($payment->getAdditionalInformation('checkout_enable_installments')) {
+            $installment = $payment->getAdditionalInformation('checkout_qty_installments');
+            if((int)$installment !== 1) {
+                $interestInfo = $this->configCc->getInfoInterest($storeId);
+
+                if($interestInfo > 0) {
+                    $grandTotal = $order->getGrandTotalAmount();
+                    $typeInstallment = $this->configCc->getTypeInstallment($storeId);
+                    $addition = $this->getInterestCompound($grandTotal, $interestInfo[$installment], $installment);
+                    if ($typeInstallment === 'simple') {
+                        $addition = $this->getInterestSimple($grandTotal, $interestInfo[$installment]);
+                    }
+                }
+            }
+            
             $result[self::CHECKOUT_PREFERENCE][self::INSTALLMENTS][] = [
                 self::INSTALLMENTS_QTY => [
                     1,
                     $this->configCheckout->getMaxInstallments(),
                 ],
+                self::ADDITION => ceil($this->config->formatPrice($addition))
             ];
         } else {
             $result[self::CHECKOUT_PREFERENCE][self::INSTALLMENTS][] = [
@@ -135,5 +167,45 @@ class CheckoutPreferencesRequest implements BuilderInterface
         }
 
         return $result;
+    }
+
+    /**
+     * Get Intereset for Simple.
+     *
+     * @param $total
+     * @param $interest
+     *
+     * @return float
+     */
+    public function getInterestSimple($total, $interest)
+    {
+        if ($interest) {
+            $taxa = $interest / 100;
+
+            return $total * $taxa;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Get Intereset for Compound.
+     *
+     * @param $total
+     * @param $interest
+     * @param $portion
+     *
+     * @return float
+     */
+    public function getInterestCompound($total, $interest, $portion)
+    {
+        if ($interest) {
+            $taxa = $interest / 100;
+            $calc = (($total * $taxa) * 1) / (1 - (pow(1 / (1 + $taxa), $portion)));
+
+            return $total - $calc;
+        }
+
+        return 0;
     }
 }

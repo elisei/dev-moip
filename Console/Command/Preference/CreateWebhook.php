@@ -19,25 +19,25 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateWebhook extends Command
 {
+    /**
+     * @const string
+     */
     const WEBHOOK_LINK = 'link';
 
     /**
-     * Create.
-     *
-     * @var Moip\Magento2\Model\Console\Command\Preference\Create
+     * @var Create
      */
     protected $create;
 
     /**
-     * State.
-     *
-     * @var \Magento\Framework\App\State
+     * @var State
      */
     protected $state;
 
     /**
      * CreateWebhook constructor.
      *
+     * @param State $state
      * @param Create $create
      */
     public function __construct(

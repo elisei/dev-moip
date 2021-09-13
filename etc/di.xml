@@ -535,6 +535,12 @@
         </arguments>
     </type>
 
+    <type name="Moip\Magento2\Observer\AddMoipInterestToOrderObserver">
+        <arguments>
+            <argument name="logger" xsi:type="object">Magento2Logger</argument>
+        </arguments>
+    </type>
+
     <!-- Logger, initialized with Magento2BaseConfig -->
     <virtualType name="Magento2Logger" type="Magento\Payment\Model\Method\Logger">
         <arguments>
@@ -573,6 +579,18 @@
     </type>
 
     <type name="Moip\Magento2\Cron\StatusUpdateOrderCc">
+        <arguments>
+            <argument name="logger" xsi:type="object">Magento2Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="Moip\Magento2\Cron\StatusUpdateOrderBoleto">
+        <arguments>
+            <argument name="logger" xsi:type="object">Magento2Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="Moip\Magento2\Cron\StatusUpdateOrderCheckout">
         <arguments>
             <argument name="logger" xsi:type="object">Magento2Logger</argument>
         </arguments>

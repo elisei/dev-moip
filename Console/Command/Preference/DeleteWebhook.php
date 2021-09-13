@@ -19,19 +19,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DeleteWebhook extends Command
 {
+    /**
+     * @const string
+     */
     const WEBHOOK_ID = 'id';
 
     /**
-     * Delete.
-     *
-     * @var Moip\Magento2\Model\Console\Command\Preference\Delete
+     * @var Delete
      */
     protected $delete;
 
     /**
-     * State.
-     *
-     * @var \Magento\Framework\App\State
+     * @var State
      */
     protected $state;
 

@@ -61,8 +61,14 @@ class Refund extends Action implements Crsf
         }
     }
 
+   
     /**
-     * @var logger
+     * @var Config
+     */
+    protected $config;
+
+    /**
+     * @var Logger
      */
     protected $logger;
 
@@ -72,9 +78,19 @@ class Refund extends Action implements Crsf
     protected $orderFactory;
 
     /**
-     * @var JsonFactory
+     * @var CreditmemoFactory
      */
-    protected $resultJsonFactory;
+    protected $creditmemoFactory;
+
+    /**
+     * @var CreditmemoService
+     */
+    protected $creditmemoService;
+
+    /**
+     * @var Invoice
+     */
+    protected $invoice;
 
     /**
      * @var StoreManagerInterface
@@ -82,9 +98,19 @@ class Refund extends Action implements Crsf
     protected $storeManager;
 
     /**
+     * @var JsonFactory
+     */
+    protected $resultJsonFactory;
+
+    /**
      * @var Json
      */
     protected $json;
+
+    /**
+     * @var OrderCommentSender
+     */
+    protected $orderCommentSender;
 
     /**
      * @var CreditmemoRepositoryInterface
@@ -98,11 +124,16 @@ class Refund extends Action implements Crsf
 
     /**
      * @param Context               $context
-     * @param logger                $logger
+     * @param Logger                $logger
      * @param Config                $config
      * @param OrderInterfaceFactory $orderFactory
+     * @param CreditmemoFactory     $creditmemoFactory
+     * @param Invoice               $invoice
+     * @param StoreManagerInterface $storeManager
      * @param JsonFactory           $resultJsonFactory
      * @param Json                  $json
+     * @param CreditmemoRepositoryInterface    $creditmemoRepository
+     * @param SearchCriteriaBuilder    $schCriteriaBuilder
      */
     public function __construct(
         Context $context,

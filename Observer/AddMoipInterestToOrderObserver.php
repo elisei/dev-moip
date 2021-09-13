@@ -19,7 +19,7 @@ use Moip\Magento2\Api\Data\MoipInterestInterface;
 class AddMoipInterestToOrderObserver implements ObserverInterface
 {
     /**
-     * @param \Magento\Framework\Event\Observer $observer
+     * @param Observer $observer
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
