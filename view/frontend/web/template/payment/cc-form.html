@@ -1,6 +1,6 @@
 <!--
 /**
- * Copyright © Wirecard Brasil. All rights reserved.
+ * Copyright © Moip by PagSeguro. All rights reserved.
  * @author    Bruno Elisei <brunoelisei@o2ti.com>
  * See COPYING.txt for license details.
  */
@@ -8,7 +8,7 @@
 <!-- ko if: TaxDocumentCapture() || BirthDateCapture()  || PhoneCapture-->
 <fieldset data-bind="attr: {class: 'fieldset payment items ccard ' + getCode(), id: 'payment_form_cc_persona' + getCode()}">
       <!-- ko if: TaxDocumentCapture() -->
-      <div class="field wirecard-input-group holder tax-document required">
+      <div class="field moip-input-group holder tax-document required">
         <div class="control">
           <input type="text" name="payment[cc_holder_tax_document]" class="input-text" value=""
                  data-bind="attr: {
@@ -28,7 +28,7 @@
       </div>
       <!-- /ko -->
       <!-- ko if: PhoneCapture() -->
-      <div class="field wirecard-input-group holder phone required">
+      <div class="field moip-input-group holder phone required">
         <div class="control">
           <input type="text" name="payment[cc_holder_phone]" class="input-text" value=""
                  data-bind="attr: {
@@ -48,7 +48,7 @@
       </div>
       <!-- /ko -->
       <!-- ko if: BirthDateCapture() -->
-      <div class="field wirecard-input-group holder birth-date required">
+      <div class="field moip-input-group holder birth-date required">
         <div class="control">
           <input type="text" name="payment[cc_holder_birth_date]" class="input-text " id="moip_magento2_cc_cc_holder_birth_date" value=""
                  data-bind="
@@ -104,7 +104,7 @@
       <p class="not-editable-title"><!-- ko i18n: 'Waiting...'--><!-- /ko --></p>
     </div>
     <div class="field-to-pay"  data-bind="css: { _hidden:!isPlaceOrderActionAllowed() }">
-      <div class="field wirecard-input-group type">
+      <div class="field moip-input-group type">
           <div class="control">
               
               <input type="hidden"
@@ -117,7 +117,7 @@
           </div>
       </div>
       
-      <div class="field wirecard-input-group holder fullname required">
+      <div class="field moip-input-group holder fullname required">
           <div class="control">
               <input type="text" name="payment[cc_holder_fullname]" class="input-text" value=""
                      data-bind="attr: {
@@ -136,7 +136,7 @@
           </div>
       </div>
 
-      <div class="field wirecard-input-group number required">
+      <div class="field moip-input-group number required">
           <div class="control">
               <input type="tel" name="payment[cc_number]" class="input-text" value=""
                      data-bind="attr: {
@@ -174,7 +174,7 @@
           </div>
       </div>
       <!-- ko if: (hasVerification())-->
-      <div class="field wirecard-input-group cvv required" data-bind="attr: {id: getCode() + '_cc_type_cvv_div'}">
+      <div class="field moip-input-group cvv required" data-bind="attr: {id: getCode() + '_cc_type_cvv_div'}">
           <div class="control _with-tooltip">
               <input type="number"
                      class="input-text cvv"
@@ -206,10 +206,10 @@
           </div>
       </div>
       <!-- /ko -->
-      <div class="field wirecard-input-group date required" data-bind="attr: {id: getCode() + '_cc_type_exp_div'}">
+      <div class="field moip-input-group date required" data-bind="attr: {id: getCode() + '_cc_type_exp_div'}">
           <div class="control">
               <div class="fields group group-2">
-                  <div class="field wirecard-input-group month">
+                  <div class="field moip-input-group month">
 
                       <div class="control">
                           <select  name="payment[cc_exp_month]"
@@ -227,7 +227,7 @@
                           </label>
                       </div>
                   </div>
-                  <div class="field wirecard-input-group year">
+                  <div class="field moip-input-group year">
                       <div class="control">
                           <select name="payment[cc_exp_year]"
                                   class="select select-year"
@@ -248,7 +248,7 @@
           </div>
       </div>
 
-      <div class="field wirecard-input-group installments">
+      <div class="field moip-input-group installments">
           <div class="control">
               <select name="payment[cc_installments]"
                       class="select select-year"

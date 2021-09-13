@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © Wirecard Brasil. All rights reserved.
+ * Copyright © Moip by PagSeguro. All rights reserved.
  *
  * @author    Bruno Elisei <brunoelisei@o2ti.com>
  * See COPYING.txt for license details.
@@ -178,7 +178,7 @@ class ConfigProviderCc implements ConfigProviderInterface
                 'url'    => $asset->getUrl(),
                 'width'  => $width,
                 'height' => $height,
-                'title'  => __('Wirecard'),
+                'title'  => __('Moip by PagSeguro'),
             ];
         }
 

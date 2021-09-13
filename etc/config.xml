@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © Wirecard Brasil. All rights reserved.
+ * Copyright © Moip by PagSeguro. All rights reserved.
  * @author    Bruno Elisei <brunoelisei@o2ti.com>
  * See COPYING.txt for license details.
  */
@@ -21,7 +21,7 @@
                 <model>Magento2BaseFacade</model>
                 <order_status>payment_review</order_status>
                 <payment_action>authorize</payment_action>
-                <title>Wirecard</title>
+                <title>Moip by PagSeguro</title>
                 <currency>BRL</currency>
                 <is_gateway>1</is_gateway>
                 <can_use_internal>1</can_use_internal>
@@ -118,7 +118,7 @@
             <moip_magento2_cc_vault>
                 <active>1</active>
                 <model>Magento2CcVaultFacade</model>
-                <title>Stored Cards (Wirecard)</title>
+                <title>Stored Cards (Moip by PagSeguro)</title>
                 <cvv_enabled>1</cvv_enabled>
                 <group>moip_group</group>
             </moip_magento2_cc_vault>

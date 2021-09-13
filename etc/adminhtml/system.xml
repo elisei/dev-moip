@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © Wirecard Brasil. All rights reserved.
+ * Copyright © Moip by PagSeguro. All rights reserved.
  * @author    Bruno Elisei <brunoelisei@o2ti.com>
  * See COPYING.txt for license details.
  */
@@ -10,7 +10,7 @@
     <system>
         <section id="payment">
             <group id="moip_base" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                <label><![CDATA[<div class='moip-payment-logo'></div><div class='moip-payment-byline'><p>Wirecard Brasil (formerly Moip) is a complete payment solution exclusive to <b>Brazil</b>.</p><p>The complete solution for receiving payments and simplifying your business finances. Our solution has everything you need to accept all payment methods.</p></div>]]></label>
+                <label><![CDATA[<div class='moip-payment-logo'></div><div class='moip-payment-byline'><p>Moip by PagSeguro is a complete payment solution exclusive to <b>Brazil</b>.</p><p>The complete solution for receiving payments and simplifying your business finances. Our solution has everything you need to accept all payment methods.</p></div>]]></label>
                 <fieldset_css>complex moip-payment-section</fieldset_css>
                 <frontend_model>Moip\Magento2\Block\Adminhtml\System\Config\PaymentGroup</frontend_model>
                 <group id="attribute_relationship" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
