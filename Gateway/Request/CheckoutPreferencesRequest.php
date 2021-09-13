@@ -138,10 +138,10 @@ class CheckoutPreferencesRequest implements BuilderInterface
         $addition = 0;
         if ($payment->getAdditionalInformation('checkout_enable_installments')) {
             $installment = $payment->getAdditionalInformation('checkout_qty_installments');
-            if((int)$installment !== 1) {
+            if ((int) $installment !== 1) {
                 $interestInfo = $this->configCc->getInfoInterest($storeId);
 
-                if($interestInfo > 0) {
+                if ($interestInfo > 0) {
                     $grandTotal = $order->getGrandTotalAmount();
                     $typeInstallment = $this->configCc->getTypeInstallment($storeId);
                     $addition = $this->getInterestCompound($grandTotal, $interestInfo[$installment], $installment);
@@ -150,13 +150,13 @@ class CheckoutPreferencesRequest implements BuilderInterface
                     }
                 }
             }
-            
+
             $result[self::CHECKOUT_PREFERENCE][self::INSTALLMENTS][] = [
                 self::INSTALLMENTS_QTY => [
                     1,
                     $this->configCheckout->getMaxInstallments(),
                 ],
-                self::ADDITION => ceil($this->config->formatPrice($addition))
+                self::ADDITION => ceil($this->config->formatPrice($addition)),
             ];
         } else {
             $result[self::CHECKOUT_PREFERENCE][self::INSTALLMENTS][] = [

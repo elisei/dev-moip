@@ -104,7 +104,7 @@ class FormCheckout extends \Magento\Payment\Block\Form
      */
     public function getNameCapture(): ?bool
     {
-        return (bool)$this->configCheckout->getUseNameCapture();
+        return (bool) $this->configCheckout->getUseNameCapture();
     }
 
     /**
@@ -114,7 +114,7 @@ class FormCheckout extends \Magento\Payment\Block\Form
      */
     public function getEnableInstallments(): ?bool
     {
-        return (bool)$this->configCheckout->getUseInstallments();
+        return (bool) $this->configCheckout->getUseInstallments();
     }
 
     /**
@@ -163,7 +163,7 @@ class FormCheckout extends \Magento\Payment\Block\Form
      * @param total
      * @param $interest
      * @param $portion
-     * 
+     *
      * @return float
      */
     public function getInterestSimple($total, $interest, $portion): float
@@ -184,7 +184,7 @@ class FormCheckout extends \Magento\Payment\Block\Form
      * @param total
      * @param $interest
      * @param $portion
-     * 
+     *
      * @return float
      */
     public function getInterestCompound($total, $interest, $portion): ?float

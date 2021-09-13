@@ -37,7 +37,7 @@ class CreateWebhook extends Command
     /**
      * CreateWebhook constructor.
      *
-     * @param State $state
+     * @param State  $state
      * @param Create $create
      */
     public function __construct(

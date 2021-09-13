@@ -54,10 +54,10 @@ class ConfigProvider implements ConfigProviderInterface
      * ConfigProvider constructor.
      *
      * @param CartInterface $cart
-     * @param ConfigCc $configCc
+     * @param ConfigCc      $configCc
      * @param ConfigCcVault $configCcVault
-     * @param CcConfig $ccConfig
-     * @param Source $assetSource
+     * @param CcConfig      $ccConfig
+     * @param Source        $assetSource
      */
     public function __construct(
         CartInterface $cart,

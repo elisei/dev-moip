@@ -66,7 +66,7 @@ class ConfigProviderBase implements ConfigProviderInterface
     /**
      * @param Config        $config
      * @param CartInterface $cart
-     * @param CcConfig $ccConfig
+     * @param CcConfig      $ccConfig
      */
     public function __construct(
         Config $config,

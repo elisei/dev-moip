@@ -44,6 +44,7 @@ class FormBoleto extends \Magento\Payment\Block\Form
      * Title - Boleto.
      *
      * @var string
+     *
      * @return string
      */
     public function getTitle()
@@ -55,6 +56,7 @@ class FormBoleto extends \Magento\Payment\Block\Form
      * Instruction - Boleto.
      *
      * @var string
+     *
      * @return string
      */
     public function getInstruction()
@@ -66,6 +68,7 @@ class FormBoleto extends \Magento\Payment\Block\Form
      * Expiration - Boleto.
      *
      * @var date
+     *
      * @return string
      */
     public function getExpiration()

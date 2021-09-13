@@ -87,6 +87,7 @@ class FormCc extends Cc
      * Title - Cc.
      *
      * @var string
+     *
      * @return string
      */
     public function getTitle(): ?string
@@ -163,7 +164,7 @@ class FormCc extends Cc
      */
     public function getEnableInstallments(): ?bool
     {
-        return (bool)$this->configCheckout->getUseInstallments();
+        return (bool) $this->configCheckout->getUseInstallments();
     }
 
     /**
@@ -212,7 +213,7 @@ class FormCc extends Cc
      * @param total
      * @param $interest
      * @param $portion
-     * 
+     *
      * @return float
      */
     public function getInterestSimple($total, $interest, $portion): float
@@ -233,7 +234,7 @@ class FormCc extends Cc
      * @param total
      * @param $interest
      * @param $portion
-     * 
+     *
      * @return float
      */
     public function getInterestCompound($total, $interest, $portion): ?float

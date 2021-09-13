@@ -245,9 +245,10 @@ class Preference extends \Magento\Backend\App\Action
     }
 
     /**
-     * Set Url Info Cancel
-     * 
+     * Set Url Info Cancel.
+     *
      * @param $webhook
+     *
      * @return $this
      */
     private function setUrlInfoCancel($webhook)
@@ -272,9 +273,10 @@ class Preference extends \Magento\Backend\App\Action
     }
 
     /**
-     * Set Url Info Capture
-     * 
+     * Set Url Info Capture.
+     *
      * @param $webhook
+     *
      * @return $this
      */
     private function setUrlInfoCapture($webhook)
@@ -299,9 +301,10 @@ class Preference extends \Magento\Backend\App\Action
     }
 
     /**
-     * Set Url Webook Refund
-     * 
+     * Set Url Webook Refund.
+     *
      * @param $webhook
+     *
      * @return $this
      */
     private function setUrlWebhookRefund($url)
@@ -316,9 +319,10 @@ class Preference extends \Magento\Backend\App\Action
     }
 
     /**
-     * Set Url Webook Cancel
-     * 
+     * Set Url Webook Cancel.
+     *
      * @param $url
+     *
      * @return $this
      */
     private function setUrlWebhookCancel($url)
@@ -333,9 +337,10 @@ class Preference extends \Magento\Backend\App\Action
     }
 
     /**
-     * Set Url Webook Capture
-     * 
+     * Set Url Webook Capture.
+     *
      * @param $url
+     *
      * @return $this
      */
     private function setUrlWebhookCapture($url)

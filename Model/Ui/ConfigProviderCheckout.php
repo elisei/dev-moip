@@ -51,11 +51,11 @@ class ConfigProviderCheckout implements ConfigProviderInterface
     protected $assetSource;
 
     /**
-     * @param ConfigCheckout        $config
-     * @param CartInterface $cart
-     * @param CcConfig $ccConfig
-     * @param Escaper $escaper
-     * @param Source $assetSource
+     * @param ConfigCheckout $config
+     * @param CartInterface  $cart
+     * @param CcConfig       $ccConfig
+     * @param Escaper        $escaper
+     * @param Source         $assetSource
      */
     public function __construct(
         ConfigCheckout $config,
