@@ -29,7 +29,7 @@ class CustomerMap implements ArrayInterface
 
     /**
      * @param ObjectManagerInterface $objectManager
-     * @param Customer $customer
+     * @param Customer               $customer
      */
     public function __construct(
         ObjectManagerInterface $objectManager,

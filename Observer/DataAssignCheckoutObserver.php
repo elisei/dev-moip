@@ -54,7 +54,7 @@ class DataAssignCheckoutObserver extends AbstractDataAssignObserver
         self::PAYER_FULLNAME,
         self::PAYER_TAX_DOCUMENT,
         self::ENABLE_INSTALLMENTS,
-        self::QTY_INSTALLMENTS
+        self::QTY_INSTALLMENTS,
     ];
 
     /**

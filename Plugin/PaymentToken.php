@@ -20,12 +20,13 @@ use Magento\Vault\Api\PaymentTokenManagementInterface;
 class PaymentToken
 {
     /**
-     * Around Save Token With Payment Link
-     * 
+     * Around Save Token With Payment Link.
+     *
      * @param PaymentTokenManagementInterface $paymentTokenManagement
-     * @param callable $proceed
-     * @param PaymentTokenInterface $token
-     * @param OrderPaymentInterface $payment
+     * @param callable                        $proceed
+     * @param PaymentTokenInterface           $token
+     * @param OrderPaymentInterface           $payment
+     *
      * @return $proceed
      */
     public function aroundSaveTokenWithPaymentLink(

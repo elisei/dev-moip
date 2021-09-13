@@ -51,10 +51,10 @@ class ConfigProviderBoleto implements ConfigProviderInterface
     protected $assetSource;
 
     /**
-     * @param ConfigBoleto        $config
-     * @param CartInterface        $cart
-     * @param CcConfig $ccConfig
-     * @param Escaper        $escaper
+     * @param ConfigBoleto  $config
+     * @param CartInterface $cart
+     * @param CcConfig      $ccConfig
+     * @param Escaper       $escaper
      * @param Source        $assetSource
      */
     public function __construct(

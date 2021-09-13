@@ -29,7 +29,7 @@ class AddressMap implements ArrayInterface
 
     /**
      * @param ObjectManagerInterface $objectManager
-     * @param Address $address
+     * @param Address                $address
      */
     public function __construct(
         ObjectManagerInterface $objectManager,

@@ -61,11 +61,11 @@ class ConfigProviderCc implements ConfigProviderInterface
     protected $assetSource;
 
     /**
-     * @param ConfigBase        $configBase
-     * @param ConfigCc        $config
+     * @param ConfigBase    $configBase
+     * @param ConfigCc      $config
      * @param CartInterface $cart
-     * @param CcConfig $ccConfig
-     * @param Source $assetSource
+     * @param CcConfig      $ccConfig
+     * @param Source        $assetSource
      */
     public function __construct(
         ConfigBase $configBase,

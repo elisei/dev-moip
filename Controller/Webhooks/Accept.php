@@ -57,7 +57,6 @@ class Accept extends Action implements Csrf
         }
     }
 
-    
     /**
      * @var Config
      */
