@@ -85,7 +85,7 @@ class RefundRequest implements BuilderInterface
         $total = $creditmemoGrandTotal;
 
         //ao enviar o total como nulo a moip irá fazer sempre o reembolso total.
-        if($orderGrandTotal == $creditmemoGrandTotal){
+        if ($orderGrandTotal == $creditmemoGrandTotal) {
             $total = null;
         }
 
@@ -96,7 +96,7 @@ class RefundRequest implements BuilderInterface
             ],
         ];
 
-        if($total) {
+        if ($total) {
             $result['send']['amount'] = $this->configPayment->formatPrice($total);
         }
 
@@ -139,7 +139,7 @@ class RefundRequest implements BuilderInterface
                 ],
             ];
 
-            if($total) {
+            if ($total) {
                 $resultBoleto['send']['amount'] = $this->configPayment->formatPrice($total);
             }
 
