@@ -80,14 +80,25 @@ class RefundRequest implements BuilderInterface
 
         $creditmemo = $payment->getCreditMemo();
 
-        $total = $creditmemo->getGrandTotal();
+        $orderGrandTotal = $order->getGrandTotal();
+        $creditmemoGrandTotal = $creditmemo->getGrandTotal();
+        $total = $creditmemoGrandTotal;
+
+        //ao enviar o total como nulo a moip irá fazer sempre o reembolso total.
+        if($orderGrandTotal == $creditmemoGrandTotal){
+            $total = null;
+        }
 
         $result = [
             self::MOIP_ORDER_ID => $order->getExtOrderId(),
             'send'              => [
-                'amount' => $this->configPayment->formatPrice($total),
+                'amount' => null,
             ],
         ];
+
+        if($total) {
+            $result['send']['amount'] = $this->configPayment->formatPrice($total);
+        }
 
         if ($order->getPayment()->getMethodInstance()->getCode() === ConfigProviderBoleto::CODE) {
             $bankNumber = $creditmemo->getData(self::BANK_NUMBER);
@@ -106,7 +117,7 @@ class RefundRequest implements BuilderInterface
 
             $resultBoleto = [
                 'send' => [
-                    'amount'              => $this->configPayment->formatPrice($total),
+                    'amount'              => null,
                     'refundingInstrument' => [
                         'method'      => 'BANK_ACCOUNT',
                         'bankAccount' => [
@@ -127,6 +138,10 @@ class RefundRequest implements BuilderInterface
                     ],
                 ],
             ];
+
+            if($total) {
+                $resultBoleto['send']['amount'] = $this->configPayment->formatPrice($total);
+            }
 
             $result = array_merge($result, $resultBoleto);
         }

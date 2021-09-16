@@ -447,6 +447,7 @@ Debug,Debug - Úsar apenas em ambiente de teste (Sandbox)
 "boleto_line_code","Linha digitável"
 "boleto_print_href","Link do Boleto"
 "cc_installments","Parcelamento"
+"cc_installment_interest","Juros de Parcelamento"
 "cc_type","Bandeira"
 "cc_number","Número"
 "cc_holder_fullname","Nome impresso"

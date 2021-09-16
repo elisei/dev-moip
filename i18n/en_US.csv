@@ -447,6 +447,7 @@ Debug,Debug
 "boleto_print_href","Url to print"
 "device","Device"
 "cc_installments","Installments"
+"cc_installment_interest","Interest"
 "cc_type","Cc Type"
 "cc_number","Cc Number"
 "cc_holder_fullname","Holder Name"
