@@ -171,7 +171,7 @@ class DetailTotalsDataRequest implements BuilderInterface
     }
 
     /**
-     * Get Calc Moip Interest
+     * Get Calc Moip Interest.
      *
      * @param $buildSubject
      *
