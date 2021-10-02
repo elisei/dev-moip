@@ -44,7 +44,7 @@ class Preference extends \Magento\Backend\App\Action
     protected $resultJsonFactory;
 
     /**
-     *  @var configInterface
+     * @var configInterface
      */
     protected $configInterface;
 

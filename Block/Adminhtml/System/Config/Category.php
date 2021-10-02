@@ -29,7 +29,9 @@ class Category implements ArrayInterface
             'CLOTHING'                                   => __('Apparel and Accessories > Clothing'),
             'CLOTHING_ACCESSORIES'                       => __('Apparel and Accessories > Clothing Accessories'),
             'COSTUMES_AND_ACCESSORIES'                   => __('Apparel and Accessories > Costumes and Accessories'),
+            // @codingStandardsIgnoreLine
             'HANDBAGS_AND_WALLET_ACCESSORIES'            => __('Apparel and Accessories > Handbags and Wallet Accessories'),
+            // @codingStandardsIgnoreLine
             'HANDBAGS_WALLETS_AND_CASES'                 => __('Apparel and Accessories > Handbags and Wallet Accessories'),
             'JEWELRY'                                    => __('Apparel and Accessories > Jewelry'),
             'SHOE_ACCESSORIES'                           => __('Apparel and Accessories > Shoe Accessories'),
@@ -63,6 +65,7 @@ class Category implements ArrayInterface
             'CAMERAS'                                    => __('Camera and Optic Accessories > Cameras'),
             'CAMERA_ACESSORIES'                          => __('Camera and Optic Accessories > Camera Acessories'),
             'PHOTOGRAPHY'                                => __('Camera and Optic Accessories > Photography'),
+            // @codingStandardsIgnoreLine
             'OTHERS_CAMERAS_ACCESSORIES'                 => __('Camera and Optic Accessories > Others Cameras Accessories'),
             'ELECTRONICS'                                => __('Electronics'),
             '3D_PRINTERS'                                => __('Electronics > 3d Printers'),
@@ -76,6 +79,7 @@ class Category implements ArrayInterface
             'GPS_ACCESSORIES'                            => __('Electronics > Gps Accessories'),
             'NETWORKING'                                 => __('Electronics > Networking'),
             'PRINT_COPY_SCAN_AND_FAX'                    => __('Electronics > Print Copy Scan and Fax'),
+            // @codingStandardsIgnoreLine
             'PRINTER_COPIER_AND_FAX_MACHINE_ACCESSORIES' => __('Electronics > Printer Copier and Fax Machine Accessories'),
             'VIDEO'                                      => __('Electronics > Video'),
             'VIDEO_GAME_CONSOLES'                        => __('Electronics > Video Game Consoles'),

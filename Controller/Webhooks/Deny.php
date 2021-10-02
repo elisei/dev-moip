@@ -189,6 +189,7 @@ class Deny extends Action implements Csrf
                                 $cancelCode = $payment['cancellationDetails']['code'];
                                 $cancelDescription = $payment['cancellationDetails']['description'];
                                 $cancelBy = $payment['cancellationDetails']['cancelledBy'];
+                                // @codingStandardsIgnoreFile
                                 $cancelDetailsAdmin = __('%1, code %2, by %3', $cancelDescription, $cancelCode, $cancelBy);
                                 $cancelDetailsCus = __('%1', $cancelDescription);
                             }
@@ -198,7 +199,6 @@ class Deny extends Action implements Csrf
                     $history = $order->addStatusHistoryComment($cancelDetailsCus);
                     $history->setIsVisibleOnFront(1);
                     $history->setIsCustomerNotified(1);
-                    // $order->sendOrderUpdateEmail(1, $cancelDetailsCus);
 
                     /** admin information for cancel **/
                     $history = $order->addStatusHistoryComment($cancelDetailsAdmin);

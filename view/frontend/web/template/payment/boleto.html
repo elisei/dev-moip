@@ -32,13 +32,13 @@
         </label>
     </div>
     <div class="payment-method-content">
-        <each args="getRegion('messages')" render="" />
+        <each args="getRegion('messages')" render=""></each>
         <form class="form" id="co-payment-form" method="post" afterRender="initFormElement">
-            <render args="boletoForm" />
+            <render args="boletoForm"></render>
         </form>
         
         <div class="checkout-agreements-block">
-            <each args="$parent.getRegion('before-place-order')" render="" />
+            <each args="$parent.getRegion('before-place-order')" render=""></each>
         </div>
         <div class="actions-toolbar">
             <div class="primary">

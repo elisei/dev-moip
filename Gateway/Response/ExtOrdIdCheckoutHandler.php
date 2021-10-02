@@ -70,6 +70,7 @@ class ExtOrdIdCheckoutHandler implements HandlerInterface
                 self::TAG_METHOD_NAME,
                 'Moip Checkout'
             );
+            // @codingStandardsIgnoreLine
             $checkoutUrl = $response[self::TAG_LINKS][self::TAG_CHECKOUT][self::TAG_PAY_CHECKOUT][self::TAG_REDIRECT_HREF];
             $payment->setAdditionalInformation(
                 self::TAG_INFO_CHECKOUT,
@@ -80,6 +81,7 @@ class ExtOrdIdCheckoutHandler implements HandlerInterface
                 self::TAG_INFO_CC,
                 $checkoutCc
             );
+            // @codingStandardsIgnoreLine
             $checkoutBoleto = $response[self::TAG_LINKS][self::TAG_CHECKOUT][self::TAG_PAY_BOLETO][self::TAG_REDIRECT_HREF];
             $payment->setAdditionalInformation(
                 self::TAG_INFO_BOLETO,

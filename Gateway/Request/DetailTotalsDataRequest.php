@@ -123,7 +123,6 @@ class DetailTotalsDataRequest implements BuilderInterface
         );
 
         $order = $paymentDO->getOrder();
-        // $quoteId = $orderAdapter->getQuoteId();
         $storeId = $order->getStoreId();
         $addition = $orderAdapter->getTaxAmount();
         $interest = $orderAdapter->getBaseMoipInterestAmount();
@@ -136,43 +135,17 @@ class DetailTotalsDataRequest implements BuilderInterface
         $discount = $orderAdapter->getDiscountAmount();
 
         if ($payment->getMethod() === 'moip_magento2_cc' || $payment->getMethod() === 'moip_magento2_cc_vault') {
-            if ($installment = $payment->getAdditionalInformation('cc_installments')) {
-                // $this->moipInterest->saveMoipInterest($quoteId, (int)$installment);
-                $interestInfo = $this->configCc->getInfoInterest($storeId);
-                if ($installment > 1) {
-                    $typeInstallment = $this->configCc->getTypeInstallment($storeId);
-                    if ($interestInfo[$installment] > 0) {
-                        $installmentInterest = $this->getInterestCompound($total, $interestInfo[$installment], $installment);
-                        if ($typeInstallment === 'simple') {
-                            $installmentInterest = $this->getInterestSimple($total, $interestInfo[$installment]);
-                        }
-
-                        if ($installmentInterest) {
-                            $installmentInterest = number_format((float) $installmentInterest, 2, '.', '');
-                            $payment->setAdditionalInformation(
-                                self::INSTALLMENT_INTEREST,
-                                $this->priceHelper->currency($installmentInterest, true, false)
-                            );
-                            if (!$interest) {
-                                $orderAdapter->setMoipInterestAmount($installmentInterest)->setBaseMoipInterestAmount($installmentInterest);
-                            }
-                            $addition = $addition + $installmentInterest;
-                        }
-                    }
-                } elseif ((int) $installment === 1) {
-                    if ($interestInfo[$installment] < 0) {
-                        $totalWithDiscount = $grandTotal + ($interest * -1);
-                        $discountInterest = $this->getInterestDiscount($totalWithDiscount, $interestInfo[$installment]);
-                        $discountInterest = number_format((float) $discountInterest, 2, '.', '');
-
-                        $payment->setAdditionalInformation(
-                            self::INSTALLMENT_INTEREST,
-                            $this->priceHelper->currency($discountInterest, true, false)
-                        );
-                        if (!$interest) {
-                            $orderAdapter->setMoipInterestAmount($discountInterest)->setBaseMoipInterestAmount($discountInterest);
-                        }
-                        $interest = $discountInterest;
+            if ($payment->getAdditionalInformation('cc_installments')) {
+                $interest = $this->getCalcMoipInterest($buildSubject);
+                if ($interest) {
+                    $payment->setAdditionalInformation(
+                        self::INSTALLMENT_INTEREST,
+                        $this->priceHelper->currency($interest, true, false)
+                    );
+                    $orderAdapter->setMoipInterestAmount($interest)
+                                ->setBaseMoipInterestAmount($interest);
+                    if ($interest > 0) {
+                        $addition = $addition + $interest;
                     }
                 }
             }
@@ -195,6 +168,63 @@ class DetailTotalsDataRequest implements BuilderInterface
         ];
 
         return $result;
+    }
+
+    /**
+     * Get Calc Moip Interest
+     *
+     * @param $buildSubject
+     *
+     * @return ?float
+     */
+    public function getCalcMoipInterest(array $buildSubject): ?float
+    {
+        $paymentDO = $this->subjectReader->readPayment($buildSubject);
+        $payment = $paymentDO->getPayment();
+
+        $result = [];
+
+        $orderAdapter = $this->orderAdapterFactory->create(
+            ['order' => $payment->getOrder()]
+        );
+
+        $order = $paymentDO->getOrder();
+        $storeId = $order->getStoreId();
+        $addition = $orderAdapter->getTaxAmount();
+        $interest = $orderAdapter->getBaseMoipInterestAmount();
+        $grandTotal = $order->getGrandTotalAmount();
+        $total = $grandTotal + $interest;
+        if ($interest > 0) {
+            $total = $grandTotal - $interest;
+        }
+
+        $interestInfo = $this->configCc->getInfoInterest($storeId);
+        $installment = $payment->getAdditionalInformation('cc_installments');
+        $interestBySplot = $interestInfo[$installment];
+
+        if ($installment > 1) {
+            $typeInstallment = $this->configCc->getTypeInstallment($storeId);
+            if ($interestBySplot > 0) {
+                $installmentInterest = $this->getInterestCompound($total, $interestBySplot, $installment);
+                if ($typeInstallment === 'simple') {
+                    $installmentInterest = $this->getInterestSimple($total, $interestBySplot);
+                }
+
+                if ($installmentInterest) {
+                    $installmentInterest = number_format((float) $installmentInterest, 2, '.', '');
+                    $addition = $addition + $installmentInterest;
+                }
+            }
+        } elseif ((int) $installment === 1) {
+            if ($interestBySplot < 0) {
+                $totalWithDiscount = $grandTotal + ($interest * -1);
+                $discountInterest = $this->getInterestDiscount($totalWithDiscount, $interestBySplot);
+                $discountInterest = number_format((float) $discountInterest, 2, '.', '');
+                $interest = $discountInterest;
+            }
+        }
+
+        return $interest;
     }
 
     /**

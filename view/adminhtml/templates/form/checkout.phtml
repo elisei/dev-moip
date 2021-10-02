@@ -47,14 +47,10 @@ $ccInstallment = $block->getInfoData('checkout_qty_installments');
                 <span><?= $block->escapeHtml(__('Allows Installment')) ?></span>
             </label>
             <div class="admin__field-control">
-                <select id="<?= /* @noEscape */ $code ?>_enable_installments" name="payment[checkout_enable_installments]"
-                        class="admin__control-select required-entry">
-                    <option value="0">
-                            <?= __('No') ?>
-                    </option>
-                    <option value="1" selected="selected">
-                            <?= __('Yes') ?>
-                    </option>
+                <select id="<?= /* @noEscape */ $code ?>_enable_installments"
+                        name="payment[checkout_enable_installments]" class="admin__control-select required-entry">
+                    <option value="0"><?= $block->escapeHtml(__('No')) ?></option>
+                    <option value="1" selected="selected"><?= $block->escapeHtml(__('Yes')) ?></option>
                 </select>
             </div>
         </div>

@@ -127,8 +127,6 @@ class CheckoutPreferencesRequest implements BuilderInterface
         $storeId = $order->getStoreId();
 
         $orderId = $orderAdapter->getId();
-        //tanto order adapter como o order do pay retorna null para getOrderId(), getId() ou getEntityId()... o.O
-        // $urlViewOrder = $this->urlHelper->getUrl('sales/order/view/', [ '_scope' => $storeId, 'order_id' => $orderId, '_nosid' => true ]);
         $urlViewOrder = $this->urlHelper->getUrl('sales/order/history/', ['_scope' => $storeId, '_nosid' => true]);
 
         $result[self::CHECKOUT_PREFERENCE][self::REDIRECT_URLS] = [

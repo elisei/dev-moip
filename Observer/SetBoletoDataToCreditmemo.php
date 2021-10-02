@@ -32,30 +32,33 @@ class SetBoletoDataToCreditmemo implements ObserverInterface
         $order = $creditmemo->getOrder();
 
         if ($order->getPayment()->getMethodInstance()->getCode() === ConfigProviderBoleto::CODE) {
-            $bankNumber = !empty($input[CreditmemoBlock::BANK_NUMBER]) ? $input[CreditmemoBlock::BANK_NUMBER] : null;
+            $bankNumber = !empty($input[CreditmemoBlock::BANK_NUMBER]) ?
+                                    $input[CreditmemoBlock::BANK_NUMBER] : null;
             $creditmemo->setData(CreditmemoBlock::BANK_NUMBER, $bankNumber);
 
-            $agencyNumber = !empty($input[CreditmemoBlock::AGENCY_NUMBER]) ? $input[CreditmemoBlock::AGENCY_NUMBER] : null;
+            $agencyNumber = !empty($input[CreditmemoBlock::AGENCY_NUMBER]) ?
+                                        $input[CreditmemoBlock::AGENCY_NUMBER] : null;
             $creditmemo->setData(CreditmemoBlock::AGENCY_NUMBER, $agencyNumber);
 
-            $agencyCheckNumber = !empty($input[CreditmemoBlock::AGENCY_CHECK_NUMBER]) ? $input[CreditmemoBlock::AGENCY_CHECK_NUMBER] : null;
+            $agencyCheckNumber = !empty($input[CreditmemoBlock::AGENCY_CHECK_NUMBER]) ?
+                                            $input[CreditmemoBlock::AGENCY_CHECK_NUMBER] : null;
             $creditmemo->setData(CreditmemoBlock::AGENCY_CHECK_NUMBER, $agencyCheckNumber);
 
-            $accountNumber = !empty($input[CreditmemoBlock::ACCOUNT_NUMBER]) ? $input[CreditmemoBlock::ACCOUNT_NUMBER] : null;
+            $accountNumber = !empty($input[CreditmemoBlock::ACCOUNT_NUMBER]) ?
+                                    $input[CreditmemoBlock::ACCOUNT_NUMBER] : null;
             $creditmemo->setData(CreditmemoBlock::ACCOUNT_NUMBER, $accountNumber);
 
-            $accountCheckNumber = !empty($input[CreditmemoBlock::ACCOUNT_CHECK_NUMBER]) ? $input[CreditmemoBlock::ACCOUNT_CHECK_NUMBER] : null;
+            $accountCheckNumber = !empty($input[CreditmemoBlock::ACCOUNT_CHECK_NUMBER]) ?
+                                            $input[CreditmemoBlock::ACCOUNT_CHECK_NUMBER] : null;
             $creditmemo->setData(CreditmemoBlock::ACCOUNT_CHECK_NUMBER, $accountCheckNumber);
 
-            $holderFullname = !empty($input[CreditmemoBlock::HOLDER_FULLNAME]) ? $input[CreditmemoBlock::HOLDER_FULLNAME] : null;
+            $holderFullname = !empty($input[CreditmemoBlock::HOLDER_FULLNAME]) ?
+                                        $input[CreditmemoBlock::HOLDER_FULLNAME] : null;
             $creditmemo->setData(CreditmemoBlock::HOLDER_FULLNAME, $holderFullname);
 
-            $holderDocumment = !empty($input[CreditmemoBlock::HOLDER_DOCUMENT_NUMBER]) ? $input[CreditmemoBlock::HOLDER_DOCUMENT_NUMBER] : null;
+            $holderDocumment = !empty($input[CreditmemoBlock::HOLDER_DOCUMENT_NUMBER]) ?
+                                        $input[CreditmemoBlock::HOLDER_DOCUMENT_NUMBER] : null;
             $creditmemo->setData(CreditmemoBlock::HOLDER_DOCUMENT_NUMBER, $holderDocumment);
-
-            $comment = !empty($input[CreditmemoBlock::CREDITMEMO_COMMENT_TEXT]) ? $input[CreditmemoBlock::CREDITMEMO_COMMENT_TEXT] : null;
-            $comment = $comment.'\n'.__('Refund Request to Bank %1, Agency Number %2, Agency Check Number %3, Account Number %4, Account Check Number %5, Holder Name %6, Holder Tax Document %7', $bankNumber, $agencyNumber, $agencyCheckNumber, $accountNumber, $accountCheckNumber, $holderFullname, $holderDocumment);
-            $creditmemo->setComment($comment);
         }
 
         return $this;

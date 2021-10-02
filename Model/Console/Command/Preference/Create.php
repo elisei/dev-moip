@@ -144,13 +144,16 @@ class Create extends AbstractModel
         if ($create['success']) {
             $preference = $create['preference'];
             if (isset($preference['id'])) {
+                // @codingStandardsIgnoreLine
                 $this->writeln(__('<info>Your preference for method %1 has been successfully created: %2</info>', $type, $preference['id']));
                 $registryConfig = $this->setConfigPreferenceInfo($preference, $type);
 
                 if (!$registryConfig) {
+                    // @codingStandardsIgnoreLine
                     $this->writeln(__('<error>Error saving information in database: %1</error>', $registryConfig['error']));
                 }
             } elseif (isset($preference['code'])) {
+                // @codingStandardsIgnoreLine
                 $this->writeln(__('<error>Error creating preference %1: %2</error>', $type, $preference['description']));
             }
         } else {

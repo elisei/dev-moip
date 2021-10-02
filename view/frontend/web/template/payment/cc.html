@@ -32,10 +32,10 @@
         </label>
     </div>
     <div class="payment-method-content">
-        <each args="getRegion('messages')" render="" />
+        <each args="getRegion('messages')" render=""></each>
         
         <form class="form" id="co-payment-form" method="post" afterRender="initFormElement">
-            <render args="ccForm" />
+            <render args="ccForm"></render>
         </form>
         <div class="payment-method-billing-address">
             <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
@@ -43,7 +43,7 @@
             <!--/ko-->
         </div>
         <div class="checkout-agreements-block">
-            <each args="$parent.getRegion('before-place-order')" render="" />
+            <each args="$parent.getRegion('before-place-order')" render=""></each>
         </div>
         <div class="actions-toolbar">
             <div class="primary">
