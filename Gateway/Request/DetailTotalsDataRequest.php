@@ -209,6 +209,7 @@ class DetailTotalsDataRequest implements BuilderInterface
                 if ($installmentInterest) {
                     $installmentInterest = number_format((float) $installmentInterest, 2, '.', '');
                 }
+                $interest = $installmentInterest;
             }
         } elseif ((int) $installment === 1) {
             if ($interestBySplot < 0) {
