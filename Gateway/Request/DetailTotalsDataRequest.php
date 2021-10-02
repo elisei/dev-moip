@@ -181,9 +181,6 @@ class DetailTotalsDataRequest implements BuilderInterface
     {
         $paymentDO = $this->subjectReader->readPayment($buildSubject);
         $payment = $paymentDO->getPayment();
-
-        $result = [];
-
         $orderAdapter = $this->orderAdapterFactory->create(
             ['order' => $payment->getOrder()]
         );
