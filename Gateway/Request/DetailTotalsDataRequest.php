@@ -123,7 +123,6 @@ class DetailTotalsDataRequest implements BuilderInterface
         );
 
         $order = $paymentDO->getOrder();
-        $storeId = $order->getStoreId();
         $addition = $orderAdapter->getTaxAmount();
         $interest = $orderAdapter->getBaseMoipInterestAmount();
         $grandTotal = $order->getGrandTotalAmount();
